@@ -18,6 +18,7 @@
    For example: This is not the time or the place to talk about which programming language and/or framework you are planning to use.
  * **Feel free (and very much encouraged) to include useful diagrams, mock-ups and/or links**.
 
+Our product is a website that helps early-stage startup entrepreneurs by providing valuable guidance and advice to them from different perspectives based on their current situation. Our product offers free legal and financial advice to these entrepreneurs since many early-stage entrepreneurs might not have enough financial support to afford to pay for financial consultations. In order for the advice to get straight to the point, users need to answer a series of questions about their startup idea or their existing startup. For instance, our questions are multiple-choice and users will be matched to different advice depending on which option to the question they select. Therefore, our product aims to provide customized legal, financial, and business advice pertaining to their specific situation. Aside from our home page, we also have an administrative dashboard that provides access to common management tasks for updates. For example, administrators are able to add, remove, and to revise questions and their corresponding options. Our administrative dashboard also serves as a place to record and display user statistics collected from the entrepreneurs.
 
 #### Q2: Who are your target users?
 
