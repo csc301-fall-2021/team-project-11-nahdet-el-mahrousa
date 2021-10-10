@@ -1,4 +1,4 @@
-# YOUR PRODUCT/TEAM NAME
+# NAHDET EL MAHROUSA
 > _Note:_ This document is meant to evolve throughout the planning phase of your project.   That is, it makes sense for you commit regularly to this file while working on the project (especially edits/additions/deletions to the _Highlights_ section). Most importantly, it is a reflection of all the planning you work you've done in the first iteration. 
  > **This document will serve as a master plan between your team, your partner and your TA.**
 
@@ -39,10 +39,29 @@
 #### Q4: How will you build it?
 
 > Short (1-2 min' read max)
- * What is the technology stack? Specify any and all languages, frameworks, libraries, PaaS products or tools. 
- * How will you deploy the application?
- * Describe the architecture - what are the high level components or patterns you will use? Diagrams are useful here. 
- * Will you be using third party applications or APIs? If so, what are they?
+
+* What is the technology stack? Specify any and all languages, frameworks, libraries, PaaS products or tools.
+
+We plan to use the popular MERN stack: MongoDB + Node.js + Express.js + React.
+
+For backend, the app does not have complex features and can be implemented by basic RESTful APIs. Potential dependencies include mongoose, node-session.
+
+For frontend, the main app can be implemented in a single page. However, it needs to store some data so that react-redux might be needed.
+
+For admin dashboard, we plan to use [Ant Design](https://ant.design/) as the UI library since it is developed for React and can provide a lot of useful components to display statistics. To further display statistics, we may use the [Recharts](https://recharts.org/en-US) library which has components to visualize data with simple input.
+
+* How will you deploy the application?
+
+Since the application has the demand of being used in Egypt, AWS might be what we expect in the final stage. However, in the earlier development stages, we will deploy on Heroku for its ease of use and CI/CD.
+
+* Describe the architecture - what are the high level components or patterns you will use? Diagrams are useful here.
+
+The app will decouple frontend and backend, and communicate through RESTful APIs. The frontend will follow [MVC architecture](https://medium.com/geekculture/react-js-architecture-features-folder-structure-design-pattern-70b7b9103f22). The backend will use Controller+Services architecture as proposed in [this blog](https://scoutapm.com/blog/nodejs-architecture-and-12-best-practices-for-nodejs-development).
+
+* Will you be using third party applications or APIs? If so, what are they?
+
+There is the demand of collecting data of user behaviors, so that we may rely on Google Analytics API to provide data about users' behaviors in the app and users' data of locations.
+
  * What is your testing strategy?
 
 #### Q5: What are the user stories that make up the MVP?
