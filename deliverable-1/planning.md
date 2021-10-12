@@ -244,13 +244,13 @@ Yicheng Yin:
 
 Xin Yao Yu:
  * Strength
-    * 
-    * 
-    * 
+    * Have experience working on frontend using HTML, CSS/SCSS, and Vue.js.
+    * Good at communication and working as a team.
+    * Good at negotiating
  * Weakness
-    * 
-    * 
-    * 
+    * Never had backend experience until assignment 1.
+    * Lack of experience in application design.
+    * Never done deployement before.
 
 #### Q7: What operational events will you have as a team?
 
