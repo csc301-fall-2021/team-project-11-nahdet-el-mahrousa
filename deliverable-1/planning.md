@@ -223,13 +223,13 @@ Yuxuan Liu:
 
 Yawen Xiao:
  * Strength
-    * 
-    * 
-    * 
+    * Have some experience in full stack development.
+    * Good at designing and building the user interface.
+    * Quick-learner of new language.
  * Weakness
-    * 
-    * 
-    * 
+    * Not good at dividing the program into structured files.
+    * Do not have enough database experience.
+    * Difficult to make decision or give the opinion.
 
 Yicheng Yin:
  * Strength
