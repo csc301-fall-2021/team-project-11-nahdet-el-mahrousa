@@ -71,12 +71,67 @@ Our product is a website that helps early-stage startup entrepreneurs by providi
 
 #### Q6: What are the roles & responsibilities on the team?
 
-Describe the different roles on the team and the responsibilities associated with each role. 
- * Roles should reflect the structure of your team and be appropriate for your project. Not necessarily one role to one team member.
+Our project has two pages. One is for the advisor bot and the other is for the admin dashboard. Based on this, our team can be divided into two groups where each group takes responsibility for one page. Within each group, we can have one person as a frontend developer and two people as backend developers. However, both pages have shared functionalities. The bot and data collection appears on both pages; thus, there should be one person in each backend group to take care of the advisor bot, and the other two take care of the data collection.
 
-List each team member and:
- * A description of their role(s) and responsibilities including the components they'll work on and non-software related work
- * 3 technical strengths and weaknesses each (e.g. languages, frameworks, libraries, development methodologies, etc.)
+Tianyang Hu:
+ * Strength
+    * Have SQL knowledge from CSC343
+    * Have past experience for frontend development
+    * Have strong basic on OOP languages
+ * Weakness
+    * Never used Javascript before A1
+    * Not good at communication
+    * Didn't know how to estimate the progress of a project
+
+Siyang Liu:
+ * Strength
+    * 
+    * 
+    * 
+ * Weakness
+    * 
+    * 
+    * 
+
+Yuxuan Liu:
+ * Strength
+    * 
+    * 
+    * 
+ * Weakness
+    * 
+    * 
+    * 
+
+Yawen Xiao:
+ * Strength
+    * 
+    * 
+    * 
+ * Weakness
+    * 
+    * 
+    * 
+
+Yicheng Yin:
+ * Strength
+    * 
+    * 
+    * 
+ * Weakness
+    * 
+    * 
+    * 
+
+Xin Yao Yu:
+ * Strength
+    * 
+    * 
+    * 
+ * Weakness
+    * 
+    * 
+    * 
 
 #### Q7: What operational events will you have as a team?
 
@@ -91,15 +146,11 @@ Describe meetings (and other events) you are planning to have.
    * You must have a regular meeting schedule established by the second meeting.  
   
 #### Q8: What artifacts will you use to self-organize?
+ * Notion: for tracking progress on each person and dividing jobs
+ * Wechat: for daily communication. If there is anything that needs to be rescheduled, we will discuss it here
+ * Wechat form: for meeting schedules
+ * Zoom: for actual meetings and during each meeting we will discuss the task for everyone before the next meeting
 
-List/describe the artifacts you will produce in order to organize your team.       
-
- * Artifacts can be To-Do lists, Task boards, schedule(s), meeting minutes, etc.
- * We want to understand:
-   * How do you keep track of what needs to get done?
-   * **How do you prioritize tasks?**
-   * How do tasks get assigned to team members?
-   * How do you determine the status of work from inception to completion?
 
 #### Q9: What are the rules regarding how your team works?
 
