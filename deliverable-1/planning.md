@@ -18,7 +18,11 @@
    For example: This is not the time or the place to talk about which programming language and/or framework you are planning to use.
  * **Feel free (and very much encouraged) to include useful diagrams, mock-ups and/or links**.
 
-Our product is a website that helps early-stage startup entrepreneurs by providing valuable guidance and advice to them from different perspectives based on their current situation. Our product offers free legal and financial advice to these entrepreneurs since many early-stage entrepreneurs might not have enough financial support to afford to pay for financial consultations. In order for the advice to get straight to the point, users need to answer a series of questions about their startup idea or their existing startup. For instance, our questions are multiple-choice and users will be matched to different advice depending on which option to the question they select. Therefore, our product aims to provide customized legal, financial, and business advice pertaining to their specific situation. Aside from our home page, we also have an administrative dashboard that provides access to common management tasks for updates. For example, administrators are able to add, remove, and to revise questions and their corresponding options. Our administrative dashboard also serves as a place to record and display user statistics collected from the entrepreneurs.
+Our product is a website that helps early-stage startup entrepreneurs by providing valuable guidance and advice to them from different perspectives based on their current situation. It offers free legal and financial advice to these entrepreneurs since many early-stage entrepreneurs might not have enough financial support to afford to pay for financial consultations.
+
+In order for the advice to get straight to the point, users need to answer a series of questions about their startup idea or their existing startup. For instance, our questions are multiple-choice and users will be matched to different advice depending on which option to the question they select. Therefore, our product aims to provide customized legal, financial, and business advice pertaining to their specific situation.
+
+Aside from our home page, we also have an administrative dashboard that provides access to common management tasks for updates. For example, administrators are able to add, remove, and to revise questions and their corresponding options. Our administrative dashboard also serves as a place to record and display user statistics collected from the entrepreneurs. Statistics may include: visitors count; where the visitors are from; which questions and categories of questions are picked by the most users; visitors from which area focus on what problems and are working on which sectors.
 
 #### Q2: Who are your target users?
 
@@ -45,25 +49,45 @@ Our product is a website that helps early-stage startup entrepreneurs by providi
 
 We plan to use the popular MERN stack: MongoDB + Node.js + Express.js + React.
 
-For backend, the app does not have complex features and can be implemented by basic RESTful APIs. Potential dependencies include mongoose, node-session.
+For backend, the app does not have complex features and can be implemented by basic RESTful APIs. Potential dependencies include mongoose, node-session, and other node modules.
 
-For frontend, the main app can be implemented in a single page. However, it needs to store some data so that react-redux might be needed.
+For frontend, the main app can be implemented in a single page. However, it needs to store some data so that react-redux might be needed. Bootstrap may be needed for responsive design.
 
-For admin dashboard, we plan to use [Ant Design](https://ant.design/) as the UI library since it is developed for React and can provide a lot of useful components to display statistics. To further display statistics, we may use the [Recharts](https://recharts.org/en-US) library which has components to visualize data with simple input.
+For admin dashboard, we plan to use [Ant Design](https://ant.design/) as the UI library since it is designed for React and can provide a lot of useful components. To further display statistics, we may use the [Recharts](https://recharts.org/en-US) library which has components to visualize data with simple inputs.
+
+Since there is a need for Arabic language, [i18n](https://react.i18next.com/) may be needed for internationalization.
 
 * How will you deploy the application?
 
-Since the application has the demand of being used in Egypt, AWS might be what we expect in the final stage. However, in the earlier development stages, we will deploy on Heroku for its ease of use and CI/CD.
+Since the application has the demand of being used in Egypt, AWS might be what we expect in the final stage. However, in the earlier development stages, we will deploy on Heroku for its ease of use. CI/CD would be set up with GitHub Actions.
 
 * Describe the architecture - what are the high level components or patterns you will use? Diagrams are useful here.
 
-The app will decouple frontend and backend, and communicate through RESTful APIs. The frontend will follow [MVC architecture](https://medium.com/geekculture/react-js-architecture-features-folder-structure-design-pattern-70b7b9103f22). The backend will use Controller+Services architecture as proposed in [this blog](https://scoutapm.com/blog/nodejs-architecture-and-12-best-practices-for-nodejs-development).
+Since the project has a main app (advisor bot) and a admin dashboard, the software should be separated into at least three parts and a database: (1) frontend for advisor bot, (2) frontend for admin dashboard, (3) backend for both functionalities.
+
+The app will decouple frontend and backend, and communicate through RESTful APIs. The frontend will follow [MVC architecture](https://medium.com/geekculture/react-js-architecture-features-folder-structure-design-pattern-70b7b9103f22). The backend will follow the Controllers+Services architecture as proposed in [this blog](https://scoutapm.com/blog/nodejs-architecture-and-12-best-practices-for-nodejs-development).
+
+Design patterns that we will use include dependency injection and adapter to work with different environment. Database access should rely on DAO for easier manipulation when accessing statistics and testing.
+
+Environments for each stage should be setup: DEV environment that runs locally is used for integration and testing; STAGING environment will be set up onto a server for further testing performance and new releases; and PROD environment that is given to the user. This means we should have two databases (one for DEV+STAGING and one for PROD) and a data mock for unit tests.
 
 * Will you be using third party applications or APIs? If so, what are they?
 
-There is the demand of collecting data of user behaviors, so that we may rely on Google Analytics API to provide data about users' behaviors in the app and users' data of locations.
+There is the demand of collecting data of user behaviors, so that we may rely on Google Analytics API to provide data about users' behaviors in the app and users' data of locations. As an add-on feature, we may visualize the process of manipulating advisor questions&options, which the tools would be searched later.
 
- * What is your testing strategy?
+* What is your testing strategy?
+
+Each module will be assigned with a sub-team for cross-testing. DEV environment: unit tests should be done locally with mocks, integrated testings for each API should connect to a testing database. STAGING environment: integrated tests, performance tests, and UAT tests.
+
+Positive, negative, and stressing tests should be designed before implementing functionalities by the developer and run after finishing each function; after that, the cross-testing team should review the test cases and add additional test cases if needed.
+
+In feature branches, developers and cross-testers should implement and run unit tests after a function is finished; after a module is finished, integrated tests should be implemented and run. Passing all tests would allow the branch to be merge into DEV branch.
+
+In DEV, re-run all unit tests and developers should build more complex integrated tests for their function modules. If all tests passed and enough features are implemented, the program can be released into STAGING.
+
+In STAGING, the app should be tested in an environment similar to PROD. APIs should first be tested by Postman. Then, cross-testing teams should test features manually. If possible, performance tests can be implemented. If all tests passed, a test document with every test cases (positive, negative, stressing) for each feature should be created and the partner should be invited to test (UAT).
+
+Possible testing tools include jest, react-testing-library, postman.
 
 #### Q5: What are the user stories that make up the MVP?
 
@@ -77,6 +101,7 @@ There is the demand of collecting data of user behaviors, so that we may rely on
 > Note this section is **not marked** but must be completed briefly if you have a partner. If you have any questions, please contact David and Adam.
 >  
 **By default, you own any work that you do as part of your coursework.** However, some partners may want you to keep the project confidential after the course is complete. As part of your first deliverable, you should discuss and agree upon an option with your partner. Examples include:
+
 1. You can share the software and the code freely with anyone with or without a license, regardless of domain, for any use.
 2. You can upload the code to GitHub or other similar publicly available domains.
 3. You will only share the code under an open-source license with the partner but agree to not distribute it in any way to any other entity or individual. 
@@ -84,15 +109,20 @@ There is the demand of collecting data of user behaviors, so that we may rely on
 
 **Briefly describe which option you have agreed to. Your partner cannot ask you to sign any legally binding agreements or documents pertaining to non-disclosure, confidentiality, IP ownership, etc.**
 
+We agreed that the software can be open-source, but data, including statistics and authentication information, should remain secure and private to the partner.
+
+1. You can share the software and the code freely with anyone with or without a license, regardless of domain, for any use.
+
 ----
 
 ## Process Details
 
 #### Q6: What are the roles & responsibilities on the team?
 
-Our project has two pages. One is for the advisor bot and the other is for the admin dashboard. Based on this, our team can be divided into two groups where each group takes responsibility for one page. Within each group, we can have one person as a frontend developer and two people as backend developers. However, both pages have shared functionalities. The bot and data collection appears on both pages; thus, there should be one person in each backend group to take care of the advisor bot, and the other two take care of the data collection.
+Our project has two parts. One is for the advisor bot and the other is for the admin dashboard. Based on this, our team can be divided into two groups where each group takes responsibility for one page. Within each group, we can have one person as a frontend developer and two people as backend developers. However, both pages have shared functionalities. The bot and data collection appears on both pages; thus, there should be one person in each backend group to take care of the advisor bot, and the other two take care of the data collection.
 
 Tianyang Hu:
+
  * Strength
     * Have SQL knowledge from CSC343
     * Have past experience for frontend development
@@ -114,13 +144,13 @@ Siyang Liu:
 
 Yuxuan Liu:
  * Strength
-    * 
-    * 
-    * 
+    * Have some full-stack experience.
+    * Have experience working with customer/partners' demand.
+    * Have experience with app design.
  * Weakness
-    * 
-    * 
-    * 
+    * New to the tech-stack used in the project.
+    * Too hesitate to make decisions.
+    * Not knowing too much about other tools (deployment, server) outside the core program.
 
 Yawen Xiao:
  * Strength
