@@ -11,7 +11,7 @@
  * Be clear - Describe the problem you are solving in simple terms.
  * Be concrete. For example:
     * What are you planning to build? Is it a website, mobile app,
-   browser extension, command-line app, etc.?      
+   browser extension, command-line app, etc.?
     * When describing the problem/need, give concrete examples of common use cases.
     * Assume your the reader knows nothing about the problem domain and provide the necessary context. 
  * Focus on *what* your product does, and avoid discussing *how* you're going to implement it.      
@@ -31,49 +31,42 @@ Aside from our home page, we also have an administrative dashboard that provides
  * **Feel free to use personas. You can create your personas as part of this Markdown file, or add a link to an external site (for example, [Xtensio](https://xtensio.com/user-persona/)).**
 
  Personas # 1: 
- Joshua is senior year student at University of Toronto for CS Speacilist. Joshua has a great idea about building a mobile application that would made significant 
- improvement in the IT industry. Unfortunately, Joshua have to work for living after graduation so he will barely have time to build the app, unless he could find 
- an investor who could give him financial support for his app.
+ ***Joshua*** is senior year Egyptian student at University of Toronto for CS Specialist. Joshua has a great idea about building a mobile application that would made significant improvement in the IT industry. Unfortunately, Joshua have to work for living after graduation so he will barely have time to build the app, unless he could find an investor who could give him financial support for his app.
 
  Personas # 2: 
- Thomas is a truck driver and he has been work in the shipping industry for 20 years. Thomas knew how the industry work, so he decided to use his savings to start 
- his own shipping company. However, Thomas only knows about shipping process but have no clue about how to start a business. Thomas found out that he need to submit
- many legal papers to the government which he never heared before. Thus, Thomas want to find a reliable agency or lawyer for help.
+ ***Thomas*** is a truck driver and he has been work in the shipping industry for 20 years. Thomas knew how the industry work, so he decided to use his savings to start his own shipping company. However, Thomas only knows about shipping process but have no clue about how to start a business. Thomas found out that he need to submit many legal papers to the government which he never heard before. Thus, Thomas want to find a reliable agency or lawyer for help.
 
  Personas # 3: 
- Robert is an investor, he gives starting up companys financial supports and trade for stocks. If the starting up companys grow up, Robert sell the stocks for 
- profit. Robert recently found out that Egypt has a grown economy and he is planning to invest in Egypt. The problem is, Robert had never been to Egypt and he do not 
- know any starting up companys are there. 
-
+ ***Robert*** is an investor, he gives starting up companies financial supports and trade for stocks. If the starting up companies grow up, Robert sells the stocks for profit. Robert recently found out that Egypt has a grown economy and he is planning to invest in Egypt. The problem is, Robert had never been to Egypt and he do not know any starting up companies are there. 
 
 #### Q3: Why would your users choose your product? What are they using today to solve their problem/need?
 
 > Short (1 - 2 min' read max)
  * We want you to "connect the dots" for us - Why does your product (as described in your answer to Q1) fits the needs of your users (as described in your answer to Q2)?
- For Joshua, our website could help him find a investor so he could work on his project with financial support.
+ For *Joshua*, our website could help him find a investor so he could work on his project with financial support.
 
- For Thomas, our website have the section about legal support and comman questions for starting up businesses. Thomas might be able to find the answer he want in the 
- FAQ section, if not, he could still consult with an agency or laywer suggested by us.
+ For *Thomas*, our website have the section about legal support and common questions for starting up businesses. Thomas might be able to find the answer he want in the 
+ FAQ section, if not, he could still consult with an agency or lawyer suggested by us.
 
- For Robert, the seasonal conference will include hundreds of starting up companys, and he could go through a lot of possible investment. 
+ For *Robert*, the seasonal conference will include hundreds of starting up companies, and he could go through a lot of possible investment. 
 
 
  * Explain the benefits of your product explicitly & clearly. For example:
     * Save users time (how much?)
-    Instead of searching up on google, and go through all diferent kinds of garbage and distribution infromation, our information are collected and well organized. 
+    Instead of searching up on google, and go through all different kinds of unrelated and distribution information, our information are collected and well organized. 
 
     * Allow users to discover new information (which information? And, why couldn't they discover it before?)
     Information about supporting and tricks in the process, these are trade by experience from previous users and will hardly be found out online.
 
     * Provide users with more accurate and/or informative data (what kind of data? Why is it useful to them?)
-    Our data are informations related to all starting ups and investors, so the user will find out more data about people on the same stage with them, and they could
+    Our data are information related to all starting ups and investors, so the user will find out more data about people on the same stage with them, and they could
     know what are the common problems in the process. 
 
     * Does this application exist in another form? If so, how does your differ and provide value to the users?
     This application is similar to an application called CSI. Ours will be very similar, but ours are developed in Egypt. 
 
     * How does this align with your partner's organization's values/mission/mandate?
-    The purpose of this website is same as our partner's organization, make life of starting up sntrepreneurs easier. 
+    The purpose of this website is same as our partner's organization, make life of starting up entrepreneurs easier. 
 
 #### Q4: How will you build it?
 
@@ -128,10 +121,10 @@ Possible testing tools include jest, react-testing-library, postman.
  * At least 5 user stories concerning the main features of the application - note that this can broken down further
  * You must follow proper user story format (as taught in lecture) ```As a <user of the app>, I want to <do something in the app> in order to <accomplish some goal>```
  * User stories must contain acceptance criteria. Examples of user stories with different formats can be found here: https://www.justinmind.com/blog/user-story-examples/. **It is important that you provide a link to an artifact containing your user stories**.
- * If you have a partner, these must be reviewed and accepted by them
+ * If you have a partner, these must be reviewed and accepted by them.
 
 1. As a starting up entrepreneur, 
-I want to find an investor have interestes with my business, 
+I want to find an investor have interests with my business, 
 So that I could get financial supports. 
 Given I do not have enough money to start my business,
 WHEN an investor give me financial supports.
@@ -139,23 +132,23 @@ THEN I can focus on my project without concerning about living.
 
 2. As a starting up entrepreneur, 
 I want to find a reliable agency or lawyer, 
-So that I could prepare all legal pappers required for my business.
+So that I could prepare all legal papers required for my business.
 Given legal documents are sent to my business,
 WHEN a lawyer reviewed and upgrade my papers,
-THEN the government gives me premission/certificate.
+THEN the government gives me permission/certificate.
 
 3.  As a starting up entrepreneur, 
 I want to connect with previous starting up entrepreneurs,
 So that I could learn from their experience. 
 Given I have a question and I do not know where to find the answer,
 WHEN I talk with another entrepreneur,
-THEN he shar his experience with me and help me. 
+THEN he shares his experience with me and help me. 
 
 4. As an investor,  
 I want to know more about situations of the starting up business in my area,
 So that I knew which business should I invest. 
 Given I do not know what is the local trend, 
-WHEN I read through data about starting up companys in my region,
+WHEN I read through data about starting up companies in my region,
 THEN I knew what options do I have. 
 
 5. As an investor,  
@@ -163,7 +156,7 @@ I want to know the starting up business in my area,
 So that I could find out businesses that I am interested in.
 Given I do not know what starting up businesses do we have this year, 
 WHEN I go to the campaign for financial supports,
-THEN I find out the company I have interestes. 
+THEN I find out the company I have interests. 
 
 ----
 ## Intellectual Property Confidentiality Agreement 
@@ -239,7 +232,7 @@ Yicheng Yin:
  * Weakness
     * Do not have Backend programming experience.
     * New to professional fields and do not know the process in professional fields.
-    * Always haveing choice difficults and need a lot of time to make a decision.
+    * Always having choice difficulty and need a lot of time to make a decision.
 
 Xin Yao Yu:
  * Strength
@@ -253,7 +246,7 @@ Xin Yao Yu:
 
 #### Q7: What operational events will you have as a team?
 
-Describe meetings (and other events) you are planning to have. 
+Describe meetings (and other events) you are planning to have.
  * When and where? Recurring or ad hoc? In-person or online?
 
 	* We had our first online meeting with our partner on September 29th as an ad hoc meeting.
@@ -274,16 +267,16 @@ Describe meetings (and other events) you are planning to have.
    * What were the outcomes of each meeting?
       *	During the first meeting, our team and the partner learned about each other. Our group learned about the partner’s company, and we learned more about what this project is build for and how it is planning to be used. Our group learned what the partner expects the final product to be, and the partner understands more about what our group can offer him, and we have come to an agreement on to what extent this MVP should be built. We also set a time to have online meeting bi-weekly in the future so the partner can check in our progress, and we can ask him any further question. Regarding the workflow that we asked from the partner, we have received that during the following weekend.
    * You must provide meeting minutes.
-      *	The first meeting minutes is about ???
+      *	TODO: The first meeting minutes is about ???
    * You must have a regular meeting schedule established by the second meeting.  
-      * The regular meeting schedule is to have a bi-weekly meeting online every ???
+      * The regular meeting schedule is to have a bi-weekly meeting online, the specific time will be determined on the previous weekend through email.
   
 #### Q8: What artifacts will you use to self-organize?
- * Notion: for tracking progress on each person and dividing jobs
- * Wechat: for daily communication. If there is anything that needs to be rescheduled, we will discuss it here
- * Wechat form: for meeting schedules
- * Zoom: for actual meetings and during each meeting we will discuss the task for everyone before the next meeting
-
+ * ***Notion***: for making notes on TODOs, tracking progress on each person and dividing jobs.
+ * ***Wechat***: for daily communication. If there is anything that needs to be rescheduled, we will discuss it here.
+ * ***Wechat form***: for meeting schedules.
+ * ***Zoom***: for actual meetings and during each meeting we will discuss the task for everyone before the next meeting.
+ * ***Whatsapp&Email***: for communicating with our partner.
 
 #### Q9: What are the rules regarding how your team works?
 
@@ -292,17 +285,24 @@ Describe your team's working culture.
 **Communications:**
  * What is the expected frequency? What methods/channels are appropriate? 
  * If you have a partner project, what is your process (in detail) for communicating with your partner?
- 
+
+To ensure the necessary discussion on the project, we will hold the Zoom meetings online or in-person meetings on the campus. The expected frequency is 2 to 4 hours per week. On the other hand, we can message each other through Discord or WeChat group chat.
+
 **Meetings:**
  * How are people held accountable for attending meetings, completing action items? Is there a moderator or process?
- 
+
+When starting a new project, we will first have the meeting, let each member think of the project, and deliver the ideas. Then, by comparing each person’s opinion, we make a complete structure or plan that is the most appropriate and makes everyone agree. If there are any questions or misunderstandings, we will talk during the meeting. When everyone is clear and ready to start, we divide the work into parts. All members get their jobs to do. We will hold meetings every week to demonstrate the progress, ask questions, or connect the work.
+
+The meeting will hold at a time that everyone can attend. Since we have worked together perfectly before in the CSC207 group project, we are sure that everyone is accountable for attending meetings and completing action items.
+
 **Conflict Resolution:**
  * List at least three team scenarios/conflicts you discussed in lecture and how you decided you will resolve them. Indecisions? Non-responsive team members? Any other scenarios you can think of?
 
-    To ensure the necessary discussion on the project, we will hold the Zoom meetings online or in-person meetings on the campus. The expected frequency is 4 to 8 hours per week. On the other hand, we can message each other through Discord or WeChat group chat.
-    When starting a new project, we will first have the meeting, let each member think of the project, and deliver the ideas. Then, by comparing each person’s opinion, we make a complete structure or plan that is the most appropriate and makes everyone agree. If there are any questions or misunderstandings, we will talk during the meeting. When everyone is clear and ready to start, we divide the work into parts. All members get their jobs to do. We will hold meetings every week to demonstrate the progress, ask questions, or connect the work.
-    The meeting will hold at a time that everyone can attend. Since we have worked together perfectly before in the CSC207 group project, we are sure that everyone is accountable for attending meetings and completing action items.
-    If there is a divarication, the group members will vote for the one they prefer. We will choose the one that most people support or compromise the decisions. If someone cannot finish the work for some reason, it should make other people know early. So we can reassign the parts. If someone has problems with the work, it can find help from other members of the TA.
+If there is a divarication, the group members will vote for the one they prefer. We will choose the one that most people support or compromise the decisions.
+
+If someone cannot finish the work for some reason, it should make other people know early. So we can reassign the parts.
+
+If someone has problems with the work, it can find help from other members of the TA.
 
 ----
 ## Highlights
