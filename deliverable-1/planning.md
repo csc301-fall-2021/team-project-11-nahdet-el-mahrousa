@@ -130,8 +130,7 @@ Possible testing tools include jest, react-testing-library, postman.
  * User stories must contain acceptance criteria. Examples of user stories with different formats can be found here: https://www.justinmind.com/blog/user-story-examples/. **It is important that you provide a link to an artifact containing your user stories**.
  * If you have a partner, these must be reviewed and accepted by them
 
-1. 
-As a starting up entrepreneur, 
+1. As a starting up entrepreneur, 
 I want to find an investor have interestes with my business, 
 So that I could get financial supports. 
 Given I do not have enough money to start my business,
@@ -316,3 +315,13 @@ and/or collaborative process.
     * Explain why the option you decided on makes the most sense for your team/product/users.
  * Essentially, we want to understand how (and why) you ended up with your current product and process plan.
  * This section is useful for important information regarding your decision making process that may not necessarily fit in other sections. 
+
+The two options given by our partner is a web application or a mobile application. 
+
+The advantage of web application is easy accessible as it will be the same url link to access from mobile and from computer. On the other 
+hand, the user might not always have their computer beside, but people will always have their phone. Thus, user could use mobile application 
+anywhere with connections of WiFi. Also, the mobile application could have more features than a website. 
+
+In the end, we decided to use web application. The most improtant goal for our partner is to let more people know about their organization, and
+their campaigning event for starting up businesses. In this case, easy accessories is more important than complex feature for this application. 
+Thus, we chose to build an web application. 
