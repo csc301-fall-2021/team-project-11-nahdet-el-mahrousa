@@ -216,13 +216,13 @@ Yuxuan Liu:
 
 Yawen Xiao:
  * Strength
-    * 
-    * 
-    * 
+    * Have some experience in full stack development.
+    * Good at designing and building the user interface.
+    * Quick-learner of new language.
  * Weakness
-    * 
-    * 
-    * 
+    * Not good at dividing the program into structured files.
+    * Do not have enough database experience.
+    * Difficult to make decision or give the opinion.
 
 Yicheng Yin:
  * Strength
@@ -236,13 +236,13 @@ Yicheng Yin:
 
 Xin Yao Yu:
  * Strength
-    * 
-    * 
-    * 
+    * Have experience working on frontend using HTML, CSS/SCSS, and Vue.js.
+    * Good at communication and working as a team.
+    * Good at negotiating
  * Weakness
-    * 
-    * 
-    * 
+    * Never had backend experience until assignment 1.
+    * Lack of experience in application design.
+    * Never done deployement before.
 
 #### Q7: What operational events will you have as a team?
 
@@ -317,3 +317,13 @@ and/or collaborative process.
     * Explain why the option you decided on makes the most sense for your team/product/users.
  * Essentially, we want to understand how (and why) you ended up with your current product and process plan.
  * This section is useful for important information regarding your decision making process that may not necessarily fit in other sections. 
+
+The two options given by our partner is a web application or a mobile application. 
+
+The advantage of web application is easy accessible as it will be the same url link to access from mobile and from computer. On the other 
+hand, the user might not always have their computer beside, but people will always have their phone. Thus, user could use mobile application 
+anywhere with connections of WiFi. Also, the mobile application could have more features than a website. 
+
+In the end, we decided to use web application. The most improtant goal for our partner is to let more people know about their organization, and
+their campaigning event for starting up businesses. In this case, easy accessories is more important than complex feature for this application. 
+Thus, we chose to build an web application. 
