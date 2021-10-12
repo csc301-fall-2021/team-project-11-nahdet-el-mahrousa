@@ -30,16 +30,50 @@ Aside from our home page, we also have an administrative dashboard that provides
  * Be specific (e.g. a 'a third-year university student studying Computer Science' and not 'a student')
  * **Feel free to use personas. You can create your personas as part of this Markdown file, or add a link to an external site (for example, [Xtensio](https://xtensio.com/user-persona/)).**
 
+ Personas # 1: 
+ Joshua is senior year student at University of Toronto for CS Speacilist. Joshua has a great idea about building a mobile application that would made significant 
+ improvement in the IT industry. Unfortunately, Joshua have to work for living after graduation so he will barely have time to build the app, unless he could find 
+ an investor who could give him financial support for his app.
+
+ Personas # 2: 
+ Thomas is a truck driver and he has been work in the shipping industry for 20 years. Thomas knew how the industry work, so he decided to use his savings to start 
+ his own shipping company. However, Thomas only knows about shipping process but have no clue about how to start a business. Thomas found out that he need to submit
+ many legal papers to the government which he never heared before. Thus, Thomas want to find a reliable agency or lawyer for help.
+
+ Personas # 3: 
+ Robert is an investor, he gives starting up companys financial supports and trade for stocks. If the starting up companys grow up, Robert sell the stocks for 
+ profit. Robert recently found out that Egypt has a grown economy and he is planning to invest in Egypt. The problem is, Robert had never been to Egypt and he do not 
+ know any starting up companys are there. 
+
+
 #### Q3: Why would your users choose your product? What are they using today to solve their problem/need?
 
 > Short (1 - 2 min' read max)
  * We want you to "connect the dots" for us - Why does your product (as described in your answer to Q1) fits the needs of your users (as described in your answer to Q2)?
+ For Joshua, our website could help him find a investor so he could work on his project with financial support.
+
+ For Thomas, our website have the section about legal support and comman questions for starting up businesses. Thomas might be able to find the answer he want in the 
+ FAQ section, if not, he could still consult with an agency or laywer suggested by us.
+
+ For Robert, the seasonal conference will include hundreds of starting up companys, and he could go through a lot of possible investment. 
+
+
  * Explain the benefits of your product explicitly & clearly. For example:
     * Save users time (how much?)
+    Instead of searching up on google, and go through all diferent kinds of garbage and distribution infromation, our information are collected and well organized. 
+
     * Allow users to discover new information (which information? And, why couldn't they discover it before?)
+    Information about supporting and tricks in the process, these are trade by experience from previous users and will hardly be found out online.
+
     * Provide users with more accurate and/or informative data (what kind of data? Why is it useful to them?)
+    Our data are informations related to all starting ups and investors, so the user will find out more data about people on the same stage with them, and they could
+    know what are the common problems in the process. 
+
     * Does this application exist in another form? If so, how does your differ and provide value to the users?
+    This application is similar to an application called CSI. Ours will be very similar, but ours are developed in Egypt. 
+
     * How does this align with your partner's organization's values/mission/mandate?
+    The purpose of this website is same as our partner's organization, make life of starting up sntrepreneurs easier. 
 
 #### Q4: How will you build it?
 
@@ -95,6 +129,42 @@ Possible testing tools include jest, react-testing-library, postman.
  * You must follow proper user story format (as taught in lecture) ```As a <user of the app>, I want to <do something in the app> in order to <accomplish some goal>```
  * User stories must contain acceptance criteria. Examples of user stories with different formats can be found here: https://www.justinmind.com/blog/user-story-examples/. **It is important that you provide a link to an artifact containing your user stories**.
  * If you have a partner, these must be reviewed and accepted by them
+
+1. 
+As a starting up entrepreneur, 
+I want to find an investor have interestes with my business, 
+So that I could get financial supports. 
+Given I do not have enough money to start my business,
+WHEN an investor give me financial supports.
+THEN I can focus on my project without concerning about living.
+
+2. As a starting up entrepreneur, 
+I want to find a reliable agency or lawyer, 
+So that I could prepare all legal pappers required for my business.
+Given legal documents are sent to my business,
+WHEN a lawyer reviewed and upgrade my papers,
+THEN the government gives me premission/certificate.
+
+3.  As a starting up entrepreneur, 
+I want to connect with previous starting up entrepreneurs,
+So that I could learn from their experience. 
+Given I have a question and I do not know where to find the answer,
+WHEN I talk with another entrepreneur,
+THEN he shar his experience with me and help me. 
+
+4. As an investor,  
+I want to know more about situations of the starting up business in my area,
+So that I knew which business should I invest. 
+Given I do not know what is the local trend, 
+WHEN I read through data about starting up companys in my region,
+THEN I knew what options do I have. 
+
+5. As an investor,  
+I want to know the starting up business in my area,
+So that I could find out businesses that I am interested in.
+Given I do not know what starting up businesses do we have this year, 
+WHEN I go to the campaign for financial supports,
+THEN I find out the company I have interestes. 
 
 ----
 ## Intellectual Property Confidentiality Agreement 
@@ -164,13 +234,13 @@ Yawen Xiao:
 
 Yicheng Yin:
  * Strength
-    * 
-    * 
-    * 
+    * Have some frontend experience with JavaScript, HTML/CSS, React.
+    * Have experience with application development.
+    * Good leadership, communication and teamwork skills from part time works and voluteer programs.
  * Weakness
-    * 
-    * 
-    * 
+    * Do not have Backend programming experience.
+    * New to professional fields and do not know the process in professional fields.
+    * Always haveing choice difficults and need a lot of time to make a decision.
 
 Xin Yao Yu:
  * Strength
