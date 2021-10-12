@@ -316,6 +316,7 @@ and/or collaborative process.
  * Essentially, we want to understand how (and why) you ended up with your current product and process plan.
  * This section is useful for important information regarding your decision making process that may not necessarily fit in other sections. 
 
+#### Decision 1
 The two options given by our partner is a web application or a mobile application. 
 
 The advantage of web application is easy accessible as it will be the same url link to access from mobile and from computer. On the other 
@@ -325,3 +326,15 @@ anywhere with connections of WiFi. Also, the mobile application could have more 
 In the end, we decided to use web application. The most improtant goal for our partner is to let more people know about their organization, and
 their campaigning event for starting up businesses. In this case, easy accessories is more important than complex feature for this application. 
 Thus, we chose to build an web application. 
+
+#### Decision 2
+During the discussion with our partner, we have made a design decision on the collection of user data.
+
+Our partner will need some user information like the location and answers they gave to the bot. In this case, we choose to embed Google Analytics API into our website and add an admin dashboard for viewing and sorting that information. We might also need to change our choice of database to accommodate Google Analytics.
+
+#### Decision 3
+Since our bot on the website is based on a prefixed flowchart, we have the decision on how does out partner change the flowchart after we finish the project.
+
+One choice is to use a JSON file for updating the flowchart. Although JSON file is relatively easy to read for nonprogrammers, we thought it might be better to design a more straightforward way for that.
+
+In the end, we add a page in the admin dashboard that our partner can modify the flowchart in a more visualized way.
