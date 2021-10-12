@@ -243,13 +243,13 @@ Yicheng Yin:
 
 Xin Yao Yu:
  * Strength
-    * 
-    * 
-    * 
+    * Have experience working on frontend using HTML, CSS/SCSS, and Vue.js.
+    * Good at communication and working as a team.
+    * Good at negotiating
  * Weakness
-    * 
-    * 
-    * 
+    * Never had backend experience until assignment 1.
+    * Lack of experience in application design.
+    * Never done deployement before.
 
 #### Q7: What operational events will you have as a team?
 
@@ -299,8 +299,10 @@ Describe your team's working culture.
 **Conflict Resolution:**
  * List at least three team scenarios/conflicts you discussed in lecture and how you decided you will resolve them. Indecisions? Non-responsive team members? Any other scenarios you can think of?
 
-
-
+    To ensure the necessary discussion on the project, we will hold the Zoom meetings online or in-person meetings on the campus. The expected frequency is 4 to 8 hours per week. On the other hand, we can message each other through Discord or WeChat group chat.
+    When starting a new project, we will first have the meeting, let each member think of the project, and deliver the ideas. Then, by comparing each person’s opinion, we make a complete structure or plan that is the most appropriate and makes everyone agree. If there are any questions or misunderstandings, we will talk during the meeting. When everyone is clear and ready to start, we divide the work into parts. All members get their jobs to do. We will hold meetings every week to demonstrate the progress, ask questions, or connect the work.
+    The meeting will hold at a time that everyone can attend. Since we have worked together perfectly before in the CSC207 group project, we are sure that everyone is accountable for attending meetings and completing action items.
+    If there is a divarication, the group members will vote for the one they prefer. We will choose the one that most people support or compromise the decisions. If someone cannot finish the work for some reason, it should make other people know early. So we can reassign the parts. If someone has problems with the work, it can find help from other members of the TA.
 
 ----
 ## Highlights
