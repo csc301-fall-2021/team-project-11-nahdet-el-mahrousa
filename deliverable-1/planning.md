@@ -134,13 +134,13 @@ Tianyang Hu:
 
 Siyang Liu:
  * Strength
-    * 
-    * 
-    * 
+    * Have some experience in full stack development.
+    * I am easy to get along with 
+    * Have self-taught technologies before 
  * Weakness
-    * 
-    * 
-    * 
+    * Have not used some technologies required for this project
+    * Need more improvement on leading things and making decisions for the team
+    * Not too good at negotiating with/rejecting partner
 
 Yuxuan Liu:
  * Strength
@@ -186,13 +186,28 @@ Xin Yao Yu:
 
 Describe meetings (and other events) you are planning to have. 
  * When and where? Recurring or ad hoc? In-person or online?
+
+	* We had our first online meeting with our partner on September 29th as an ad hoc meeting.
+   *	For now, before the actual implementation and design of the MVP, our team are planning to have ad hoc meetings when we need to discuss about any confusion on features, any future plan, or anything related to any deliverable that we want to discuss before start the actual development process. These meetings are planned to be held online. There is currently not a specific time or frequency for them since they depend on if we have any confusion about the project.
+   *	After we actually start the developing for the MVP, we plan to have a recurring meeting once a week (we might switch it to once every two weeks depending on actual situation). These meeting are planned to be held online for now.
+   * We are planning to have a recurring meeting with the partner once every two weeks online. The specific time will be TBD for now???
+
  * What's the purpose of each meeting?
+    *	The first meeting was mainly to introduce ourselves, learn more details about the project from the partner, discuss about the specific expectation that the partner has for our project, negotiate with the partner about what we can provide to him, and settle down plan for future meetings.
+   *	The purpose of the ad hoc meetings that we plan to hold before the actual development is to discuss and solve any general confusion we may have about the project and deliverable (these general confusions may include not clear about the detail about a specific feature requirement, wishing to set up more meetings with the partner, wishing to contact the TA)
+   *	The purpose of the recurring meeting that we plan to hold after the actual development is to discuss about the technical detail that we need discuss, to update our progress, to assign new tasks to individual team member, discuss the topic that we may need to bring up when meeting with the partner, and to solve any issue that we may encountered together if we can.
+   *	The recurring meeting with the partner will be to tell the partner about our progress and discuss any issue that we discovered when we are developing the MVP that we might need to discuss with the partner. 
+
  * Other events could be coding sessions, code reviews, quick weekly sync meeting online, etc.
  * You must have at least 2 meetings with your project partner (if you have one) before D1 is due. Describe them here:
    * What did you discuss during the meetings?
+      *	During the first meeting, our group and the partner introduced each other. The partner introduced his company, how it works, and how this project comes up of his mind to provide us background on this project. We then discussed more specific detail on what the purpose of this project is, what is his expectation about this project and what we can offer him in our MVP. After that, we discussed our future meeting plan. Our team then asked for the partner to provide us a workflow of an important feature that the partner wants us to build.
    * What were the outcomes of each meeting?
+      *	During the first meeting, our team and the partner learned about each other. Our group learned about the partner’s company, and we learned more about what this project is build for and how it is planning to be used. Our group learned what the partner expects the final product to be, and the partner understands more about what our group can offer him, and we have come to an agreement on to what extent this MVP should be built. We also set a time to have online meeting bi-weekly in the future so the partner can check in our progress, and we can ask him any further question. Regarding the workflow that we asked from the partner, we have received that during the following weekend.
    * You must provide meeting minutes.
+      *	The first meeting minutes is about ???
    * You must have a regular meeting schedule established by the second meeting.  
+      * The regular meeting schedule is to have a bi-weekly meeting online every ???
   
 #### Q8: What artifacts will you use to self-organize?
  * Notion: for tracking progress on each person and dividing jobs
