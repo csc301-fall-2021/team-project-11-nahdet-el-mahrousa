@@ -298,9 +298,9 @@ The meeting will hold at a time that everyone can attend. Since we have worked t
 **Conflict Resolution:**
  * List at least three team scenarios/conflicts you discussed in lecture and how you decided you will resolve them. Indecisions? Non-responsive team members? Any other scenarios you can think of?
 
-- If there is a divarication, the group members will vote for the one they prefer. We will choose the one that most people support or compromise the decisions.
-- If someone cannot finish the work for some reason, it should make other people know early. So we can reassign the parts.
-- If someone has problems with the work, it can find help from other members of the TA.
+If there is a divarication, the group members will vote for the one they prefer. We will choose the one that most people support or compromise the decisions.
+If someone cannot finish the work for some reason, it should make other people know early. So we can reassign the parts.
+If someone has problems with the work, it can find help from other members of the TA.
 
 ----
 ## Highlights
