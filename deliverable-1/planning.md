@@ -130,8 +130,7 @@ Possible testing tools include jest, react-testing-library, postman.
  * User stories must contain acceptance criteria. Examples of user stories with different formats can be found here: https://www.justinmind.com/blog/user-story-examples/. **It is important that you provide a link to an artifact containing your user stories**.
  * If you have a partner, these must be reviewed and accepted by them
 
-1. 
-As a starting up entrepreneur, 
+1. As a starting up entrepreneur, 
 I want to find an investor have interestes with my business, 
 So that I could get financial supports. 
 Given I do not have enough money to start my business,
