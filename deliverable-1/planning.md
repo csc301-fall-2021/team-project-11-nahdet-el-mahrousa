@@ -247,28 +247,32 @@ Xin Yao Yu:
 #### Q7: What operational events will you have as a team?
 
 Describe meetings (and other events) you are planning to have.
- * When and where? Recurring or ad hoc? In-person or online?
+ * Q: When and where? Recurring or ad hoc? In-person or online?
 
 	* We had our first online meeting with our partner on September 29th as an ad hoc meeting.
+   * We had our second online meeting with our partner on October 12th as an ad hoc meeting.
    *	For now, before the actual implementation and design of the MVP, our team are planning to have ad hoc meetings when we need to discuss about any confusion on features, any future plan, or anything related to any deliverable that we want to discuss before start the actual development process. These meetings are planned to be held online. There is currently not a specific time or frequency for them since they depend on if we have any confusion about the project.
    *	After we actually start the developing for the MVP, we plan to have a recurring meeting once a week (we might switch it to once every two weeks depending on actual situation). These meeting are planned to be held online for now.
-   * We are planning to have a recurring meeting with the partner once every two weeks online. The specific time will be TBD for now???
+   * We are planning to have a recurring meeting with the partner once every two weeks online. The specific time will be TBD since the partner might move to Cairo next week for a few days, so we would have different time zone, and we would discuss the specific time on the weekend before our meeting since we might not have too fixed availability time.
 
- * What's the purpose of each meeting?
+ * Q: What's the purpose of each meeting?
     *	The first meeting was mainly to introduce ourselves, learn more details about the project from the partner, discuss about the specific expectation that the partner has for our project, negotiate with the partner about what we can provide to him, and settle down plan for future meetings.
+    * The second meeting was to ask the partner any questions that we found when we were doing the deliverable1, then show the partner our application design, and ask for feedback, and then answer any question that the partner may have.
    *	The purpose of the ad hoc meetings that we plan to hold before the actual development is to discuss and solve any general confusion we may have about the project and deliverable (these general confusions may include not clear about the detail about a specific feature requirement, wishing to set up more meetings with the partner, wishing to contact the TA)
    *	The purpose of the recurring meeting that we plan to hold after the actual development is to discuss about the technical detail that we need discuss, to update our progress, to assign new tasks to individual team member, discuss the topic that we may need to bring up when meeting with the partner, and to solve any issue that we may encountered together if we can.
    *	The recurring meeting with the partner will be to tell the partner about our progress and discuss any issue that we discovered when we are developing the MVP that we might need to discuss with the partner. 
 
- * Other events could be coding sessions, code reviews, quick weekly sync meeting online, etc.
- * You must have at least 2 meetings with your project partner (if you have one) before D1 is due. Describe them here:
-   * What did you discuss during the meetings?
-      *	During the first meeting, our group and the partner introduced each other. The partner introduced his company, how it works, and how this project comes up of his mind to provide us background on this project. We then discussed more specific detail on what the purpose of this project is, what is his expectation about this project and what we can offer him in our MVP. After that, we discussed our future meeting plan. Our team then asked for the partner to provide us a workflow of an important feature that the partner wants us to build.
-   * What were the outcomes of each meeting?
-      *	During the first meeting, our team and the partner learned about each other. Our group learned about the partner’s company, and we learned more about what this project is build for and how it is planning to be used. Our group learned what the partner expects the final product to be, and the partner understands more about what our group can offer him, and we have come to an agreement on to what extent this MVP should be built. We also set a time to have online meeting bi-weekly in the future so the partner can check in our progress, and we can ask him any further question. Regarding the workflow that we asked from the partner, we have received that during the following weekend.
-   * You must provide meeting minutes.
-      *	TODO: The first meeting minutes is about ???
-   * You must have a regular meeting schedule established by the second meeting.  
+ * Q: You must have at least 2 meetings with your project partner (if you have one) before D1 is due. Describe them here:
+   * Q: What did you discuss during the meetings?
+      *	During the first meeting, our group and the partner introduced each other. The partner introduced his company, how it works, and how this project comes up of his mind to provide us background on this project. We then discussed more specific detail on what the purpose of this project is, what is his expectation about this project and what we can offer him in our MVP. After that, we discussed our future meeting plan. Our team then asked for the partner to provide us a workflow of an important feature that the partner wants us to build
+      * During the second meeting, our group firstly asked questions about the things that they think are unclear to us, for example, if the investor will be included as a target user (The answer is no), and the partner promised us to share some personas that his team has for us to refer to. Our group then showed the partner our tech-stack and application design, and we asked the partner to give us any comment or concern he has about them. We then discussed about the data collection and database technologies for this project which the partner cares more about. Our team then asked the partner if he has any further question (he told us that he would go to Cairo for a few days)
+   * Q: What were the outcomes of each meeting?
+      *	During the first meeting, our team and the partner learned about each other. Our group learned about the partner’s company, and we learned more about what this project is build for and how it is planning to be used. Our group learned what the partner expects the final product to be, and the partner understands more about what our group can offer him, and we have come to an agreement on to what extent this MVP should be built. 
+      We also set to an agreement to have online meeting bi-weekly in the future so the partner can check in our progress, and we can ask him any further question. Regarding the workflow that we asked from the partner, we have received that during the following weekend.
+      * Our group gets our questions solved by asking them to the partner during the meeting, and the partner showed high satisfiaction about our application design, and wanted us to share the design link or screenshot to him so he can showed it to his team to cheer them up (and we have done so). The partner told us more specific demands about data collection, and we came to an agreement on what we can achieve. We discussed the partner's schedule for the next weeks, and leared that he would be in Cairo next week, so we would discuss a better meeting time that works for his timezone during the weekend.
+   * Q: You must provide meeting minutes.
+      *	https://docs.google.com/document/d/17TN-Xl904Xk7X4vCk93UpWR7_HItsGQvMl-fz0-EmK4/edit?usp=sharing
+   * Q: You must have a regular meeting schedule established by the second meeting.  
       * The regular meeting schedule is to have a bi-weekly meeting online, the specific time will be determined on the previous weekend through email.
   
 #### Q8: What artifacts will you use to self-organize?
