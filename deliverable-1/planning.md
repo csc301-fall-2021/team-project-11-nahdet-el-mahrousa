@@ -289,10 +289,10 @@ Describe your team's working culture.
 
 To ensure the necessary discussion on the project, we will hold the Zoom meetings online or in-person meetings on the campus. The expected frequency is 2 to 4 hours per week. On the other hand, we can message each other through Discord or WeChat group chat.
 
+When starting a new project, we will first have the meeting, let each member think of the project, and deliver the ideas. Then, by comparing each person’s opinion, we make a complete structure or plan that is the most appropriate and makes everyone agree. If there are any questions or misunderstandings, we will talk during the meeting. When everyone is clear and ready to start, we divide the work into parts. All members get their jobs to do. We will hold meetings every week to demonstrate the progress, ask questions, or connect the work.
+
 **Meetings:**
  * How are people held accountable for attending meetings, completing action items? Is there a moderator or process?
-
-When starting a new project, we will first have the meeting, let each member think of the project, and deliver the ideas. Then, by comparing each person’s opinion, we make a complete structure or plan that is the most appropriate and makes everyone agree. If there are any questions or misunderstandings, we will talk during the meeting. When everyone is clear and ready to start, we divide the work into parts. All members get their jobs to do. We will hold meetings every week to demonstrate the progress, ask questions, or connect the work.
 
 The meeting will hold at a time that everyone can attend. Since we have worked together perfectly before in the CSC207 group project, we are sure that everyone is accountable for attending meetings and completing action items.
 
@@ -300,9 +300,7 @@ The meeting will hold at a time that everyone can attend. Since we have worked t
  * List at least three team scenarios/conflicts you discussed in lecture and how you decided you will resolve them. Indecisions? Non-responsive team members? Any other scenarios you can think of?
 
 If there is a divarication, the group members will vote for the one they prefer. We will choose the one that most people support or compromise the decisions.
-
 If someone cannot finish the work for some reason, it should make other people know early. So we can reassign the parts.
-
 If someone has problems with the work, it can find help from other members of the TA.
 
 ----
@@ -324,4 +322,18 @@ The two options given by our partner is a web application or a mobile applicatio
 
 The advantage of web application is easy accessible as it will be the same url link to access from mobile and from computer. On the other hand, the user might not always have their computer beside, but people will always have their phone. Thus, user could use mobile application anywhere with connections of WiFi. Also, the mobile application could have more features than a website.
 
-In the end, we decided to use web application. The most important goal for our partner is to let more people know about their organization, and their campaigning event for starting up businesses. In this case, easy accessories is more important than complex feature for this application. Thus, we chose to build an web application.
+In the end, we decided to use web application. The most important goal for our partner is to let more people know about their organization, and
+their campaigning event for starting up businesses. In this case, easy accessories is more important than complex feature for this application. 
+Thus, we chose to build an web application. 
+
+#### Decision 2
+During the discussion with our partner, we have made a design decision on the collection of user data.
+
+Our partner will need some user information like the location and answers they gave to the bot. In this case, we choose to embed Google Analytics API into our website and add an admin dashboard for viewing and sorting that information. We might also need to change our choice of database to accommodate Google Analytics.
+
+#### Decision 3
+Since our bot on the website is based on a prefixed flowchart, we have the decision on how does out partner change the flowchart after we finish the project.
+
+One thought was to use a JSON file for updating the flowchart. Although JSON file is relatively easy to read for non-technical users, we thought it might be better to design a more straightforward way for that.
+
+In the end, we add a page in the admin dashboard that our partner can modify the flowchart in a more visualized way.
