@@ -3,7 +3,7 @@
  > **This document will serve as a master plan between your team, your partner and your TA.**
 
 ## Product Details
- 
+
 #### Q1: What are you planning to build?
 
  > Short (1 - 2 min' read)
@@ -14,7 +14,7 @@
    browser extension, command-line app, etc.?
     * When describing the problem/need, give concrete examples of common use cases.
     * Assume your the reader knows nothing about the problem domain and provide the necessary context. 
- * Focus on *what* your product does, and avoid discussing *how* you're going to implement it.      
+ * Focus on *what* your product does, and avoid discussing *how* you're going to implement it.
    For example: This is not the time or the place to talk about which programming language and/or framework you are planning to use.
  * **Feel free (and very much encouraged) to include useful diagrams, mock-ups and/or links**.
 
@@ -24,49 +24,50 @@ In order for the advice to get straight to the point, users need to answer a ser
 
 Aside from our home page, we also have an administrative dashboard that provides access to common management tasks for updates. For example, administrators are able to add, remove, and to revise questions and their corresponding options. Our administrative dashboard also serves as a place to record and display user statistics collected from the entrepreneurs. Statistics may include: visitors count; where the visitors are from; which questions and categories of questions are picked by the most users; visitors from which area focus on what problems and are working on which sectors.
 
+Mockup: <https://www.figma.com/file/TmGYB8Q4o6dPayLtac8czI/D1-Mockup>
+
 #### Q2: Who are your target users?
 
   > Short (1 - 2 min' read max)
  * Be specific (e.g. a 'a third-year university student studying Computer Science' and not 'a student')
  * **Feel free to use personas. You can create your personas as part of this Markdown file, or add a link to an external site (for example, [Xtensio](https://xtensio.com/user-persona/)).**
 
- Personas # 1: 
+ Personas # 1:
  ***Joshua*** is senior year Egyptian student at University of Toronto for CS Specialist. Joshua has a great idea about building a mobile application that would made significant improvement in the IT industry. Unfortunately, Joshua have to work for living after graduation so he will barely have time to build the app, unless he could find an investor who could give him financial support for his app.
 
- Personas # 2: 
+ Personas # 2:
  ***Thomas*** is a truck driver and he has been work in the shipping industry for 20 years. Thomas knew how the industry work, so he decided to use his savings to start his own shipping company. However, Thomas only knows about shipping process but have no clue about how to start a business. Thomas found out that he need to submit many legal papers to the government which he never heard before. Thus, Thomas want to find a reliable agency or lawyer for help.
 
- Personas # 3: 
- ***Robert*** is an investor, he gives starting up companies financial supports and trade for stocks. If the starting up companies grow up, Robert sells the stocks for profit. Robert recently found out that Egypt has a grown economy and he is planning to invest in Egypt. The problem is, Robert had never been to Egypt and he do not know any starting up companies are there. 
+ Personas # 3:
+ ***Robert*** is an investor, he gives starting up companies financial supports and trade for stocks. If the starting up companies grow up, Robert sells the stocks for profit. Robert recently found out that Egypt has a grown economy and he is planning to invest in Egypt. The problem is, Robert had never been to Egypt and he do not know any starting up companies are there.
 
 #### Q3: Why would your users choose your product? What are they using today to solve their problem/need?
 
 > Short (1 - 2 min' read max)
  * We want you to "connect the dots" for us - Why does your product (as described in your answer to Q1) fits the needs of your users (as described in your answer to Q2)?
+
  For *Joshua*, our website could help him find a investor so he could work on his project with financial support.
 
- For *Thomas*, our website have the section about legal support and common questions for starting up businesses. Thomas might be able to find the answer he want in the 
- FAQ section, if not, he could still consult with an agency or lawyer suggested by us.
+ For *Thomas*, our website have the section about legal support and common questions for starting up businesses. Thomas might be able to find the answer he want in the FAQ section, if not, he could still consult with an agency or lawyer suggested by us.
 
- For *Robert*, the seasonal conference will include hundreds of starting up companies, and he could go through a lot of possible investment. 
-
+ For *Robert*, the seasonal conference will include hundreds of starting up companies, and he could go through a lot of possible investment.
 
  * Explain the benefits of your product explicitly & clearly. For example:
     * Save users time (how much?)
-    Instead of searching up on google, and go through all different kinds of unrelated and distribution information, our information are collected and well organized. 
+    Instead of searching up on google, and go through all different kinds of unrelated and distribution information, our information are collected and well organized.
 
     * Allow users to discover new information (which information? And, why couldn't they discover it before?)
     Information about supporting and tricks in the process, these are trade by experience from previous users and will hardly be found out online.
 
     * Provide users with more accurate and/or informative data (what kind of data? Why is it useful to them?)
     Our data are information related to all starting ups and investors, so the user will find out more data about people on the same stage with them, and they could
-    know what are the common problems in the process. 
+    know what are the common problems in the process.
 
     * Does this application exist in another form? If so, how does your differ and provide value to the users?
-    This application is similar to an application called CSI. Ours will be very similar, but ours are developed in Egypt. 
+    This application is similar to an application called CSI. Ours will be very similar, but ours are developed in Egypt.
 
     * How does this align with your partner's organization's values/mission/mandate?
-    The purpose of this website is same as our partner's organization, make life of starting up entrepreneurs easier. 
+    The purpose of this website is same as our partner's organization, make life of starting up entrepreneurs easier.
 
 #### Q4: How will you build it?
 
@@ -137,7 +138,7 @@ Given legal documents are sent to my business,
 WHEN a lawyer reviewed and upgrade my papers,
 THEN the government gives me permission/certificate.
 
-3.  As a starting up entrepreneur, 
+3. As a starting up entrepreneur, 
 I want to connect with previous starting up entrepreneurs,
 So that I could learn from their experience. 
 Given I have a question and I do not know where to find the answer,
@@ -154,9 +155,9 @@ THEN I knew what options do I have.
 5. As an investor,  
 I want to know the starting up business in my area,
 So that I could find out businesses that I am interested in.
-Given I do not know what starting up businesses do we have this year, 
+Given I do not know what starting up businesses do we have this year,
 WHEN I go to the campaign for financial supports,
-THEN I find out the company I have interests. 
+THEN I find out the company I have interests.
 
 ----
 ## Intellectual Property Confidentiality Agreement 
@@ -184,7 +185,6 @@ We agreed that the software can be open-source, but data, including statistics a
 Our project has two parts. One is for the advisor bot and the other is for the admin dashboard. Based on this, our team can be divided into two groups where each group takes responsibility for one page. Within each group, we can have one person as a frontend developer and two people as backend developers. However, both pages have shared functionalities. The bot and data collection appears on both pages; thus, there should be one person in each backend group to take care of the advisor bot, and the other two take care of the data collection.
 
 Tianyang Hu:
-
  * Strength
     * Have SQL knowledge from CSC343
     * Have past experience for frontend development
@@ -228,7 +228,7 @@ Yicheng Yin:
  * Strength
     * Have some frontend experience with JavaScript, HTML/CSS, React.
     * Have experience with application development.
-    * Good leadership, communication and teamwork skills from part time works and voluteer programs.
+    * Good leadership, communication and teamwork skills from part time works and volunteer programs.
  * Weakness
     * Do not have Backend programming experience.
     * New to professional fields and do not know the process in professional fields.
@@ -242,7 +242,7 @@ Xin Yao Yu:
  * Weakness
     * Never had backend experience until assignment 1.
     * Lack of experience in application design.
-    * Never done deployement before.
+    * Never done deployment before.
 
 #### Q7: What operational events will you have as a team?
 
@@ -272,11 +272,12 @@ Describe meetings (and other events) you are planning to have.
       * The regular meeting schedule is to have a bi-weekly meeting online, the specific time will be determined on the previous weekend through email.
   
 #### Q8: What artifacts will you use to self-organize?
- * ***Notion***: for making notes on TODOs, tracking progress on each person and dividing jobs.
- * ***Wechat***: for daily communication. If there is anything that needs to be rescheduled, we will discuss it here.
- * ***Wechat form***: for meeting schedules.
- * ***Zoom***: for actual meetings and during each meeting we will discuss the task for everyone before the next meeting.
- * ***Whatsapp&Email***: for communicating with our partner.
+
+* ***Notion***: for making notes on TODOs, tracking progress on each person and dividing jobs.
+* ***Wechat***: for daily communication. If there is anything that needs to be rescheduled, we will discuss it here.
+* ***Wechat Form***: for meeting schedules.
+* ***Zoom***: for actual meetings and during each meeting we will discuss the task for everyone before the next meeting.
+* ***WhatsApp&Email***: for communicating with our partner.
 
 #### Q9: What are the rules regarding how your team works?
 
@@ -305,6 +306,7 @@ If someone cannot finish the work for some reason, it should make other people k
 If someone has problems with the work, it can find help from other members of the TA.
 
 ----
+
 ## Highlights
 
 Specify 3 - 5 key decisions and/or insights that came up during your meetings
@@ -318,12 +320,8 @@ and/or collaborative process.
  * Essentially, we want to understand how (and why) you ended up with your current product and process plan.
  * This section is useful for important information regarding your decision making process that may not necessarily fit in other sections. 
 
-The two options given by our partner is a web application or a mobile application. 
+The two options given by our partner is a web application or a mobile application.
 
-The advantage of web application is easy accessible as it will be the same url link to access from mobile and from computer. On the other 
-hand, the user might not always have their computer beside, but people will always have their phone. Thus, user could use mobile application 
-anywhere with connections of WiFi. Also, the mobile application could have more features than a website. 
+The advantage of web application is easy accessible as it will be the same url link to access from mobile and from computer. On the other hand, the user might not always have their computer beside, but people will always have their phone. Thus, user could use mobile application anywhere with connections of WiFi. Also, the mobile application could have more features than a website.
 
-In the end, we decided to use web application. The most improtant goal for our partner is to let more people know about their organization, and
-their campaigning event for starting up businesses. In this case, easy accessories is more important than complex feature for this application. 
-Thus, we chose to build an web application. 
+In the end, we decided to use web application. The most important goal for our partner is to let more people know about their organization, and their campaigning event for starting up businesses. In this case, easy accessories is more important than complex feature for this application. Thus, we chose to build an web application.
