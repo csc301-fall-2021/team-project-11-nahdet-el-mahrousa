@@ -145,19 +145,19 @@ Given I have a question and I do not know where to find the answer,
 WHEN I talk with another entrepreneur,
 THEN he shares his experience with me and help me. 
 
-4. As an investor,  
-I want to know more about situations of the starting up business in my area,
-So that I knew which business should I invest. 
+4. As a starting up entrepreneur, 
+I want to know what kind of preparations I need to do before I start up my business,
+So that my business will be ready to start,
 Given I do not know what is the local trend, 
-WHEN I read through data about starting up companies in my region,
-THEN I knew what options do I have. 
+WHEN I meet with the guidance staff from our website,
+THEN I knew that I need to prepare before startups, include funds, certificates etc.
 
-5. As an investor,  
-I want to know the starting up business in my area,
-So that I could find out businesses that I am interested in.
-Given I do not know what starting up businesses do we have this year,
-WHEN I go to the campaign for financial supports,
-THEN I find out the company I have interests.
+5. As a starting up entrepreneur,
+I want to have a proper business model with identified customer
+So that I can specifically target my users.
+Given I have no previous experience,
+WHEN I asked for professional supports from the organization,
+THEN I have the most fit business model for me.
 
 ----
 ## Intellectual Property Confidentiality Agreement 
