@@ -45,13 +45,6 @@ Mockup: <https://www.figma.com/file/TmGYB8Q4o6dPayLtac8czI/D1-Mockup>
 
 > Short (1 - 2 min' read max)
  * We want you to "connect the dots" for us - Why does your product (as described in your answer to Q1) fits the needs of your users (as described in your answer to Q2)?
-
- For *Joshua*, our website could help him find a investor so he could work on his project with financial support.
-
- For *Thomas*, our website have the section about legal support and common questions for startup businesses. Thomas might be able to find the answer he want in the FAQ section, if not, he could still consult with an agency or lawyer suggested by us.
-
- For *Noha*, Noha need guidance to get a certification of informal education and she also need to apply for government grants. She might not how it works but she could find all these information through our website.
-
  * Explain the benefits of your product explicitly & clearly.
     * Save users time:
     Instead of searching up on google, and go through pages of all different kinds of unrelated and disturbing information, user can follow the bot's questions to locate their questions and find *organized* and *analyzed* information provided by our partner that best fit to their situation and concern. For people in rural area, our app provide accessibility such that they do not need to call or travel to where our partner is located to ask for help.
@@ -129,31 +122,31 @@ Possible testing tools include jest, react-testing-library, postman.
 I want to find an investor have interests with my business, 
 So that I could get financial supports. 
 Given I do not have enough money to start my business,
-WHEN an investor give me financial supports,
-THEN I can focus on my project without concerning about living.
+WHEN I go through the instructions about funding on the website,
+THEN I know where to find financial supports or how to apply for government funding,
 
 2. As a startup entrepreneur, 
 I want to find a reliable agency or lawyer, 
 So that I could prepare all legal papers required for my business.
-Given legal documents are sent to my business,
-WHEN a lawyer reviewed and upgrade my papers,
-THEN the government gives me permission/certificate.
+Given legal documents are sent to my business.
+WHEN I read through the brief explanation about legal documents in the FAQ,
+THEN I unsterstand that are the papers asking and what should I say,
 
 3. As a startup entrepreneur, 
 I want to connect with previous startup entrepreneurs,
 So that I could learn from their experience. 
 Given I have a question and I do not know where to find the answer,
-WHEN I talk with another entrepreneur,
-THEN he shares his experience with me and help me. 
+WHEN I find data about other entrepreneurs on the website
+THEN I can avoid the mistakes they made and find the best path for me.
 
-4. As a startup entrepreneur, 
+3. As a startup entrepreneur, 
 I want to know what kind of preparations I need to do before I start up my business,
-So that my business will be ready to start,
+So that my business will be ready to start.
 Given I do not know what is the local trend, 
-WHEN I meet with the guidance staff from our website,
+WHEN I read through the preparation guidance on our website,
 THEN I knew that I need to prepare before startups, include funds, certificates etc.
 
-5. As a startup entrepreneur,
+4 As a startup entrepreneur,
 I want to have a proper business model with identified customer
 So that I can specifically target my users.
 Given I have no previous experience,
@@ -161,14 +154,12 @@ WHEN I asked for professional supports from the organization,
 THEN I have the most fit business model for me.
 
 
-6. As a Nahdet El Mahrousa employee, 
+5. As a Nahdet El Mahrousa employee, 
 I want to know what the startup entrepreneurs are currently concerning
 So that I can design services accordingly.
 Given I have no clue how to gather information about these entrepreneurs,
 WHEN I look at the statistics in the admin dashboard,
 THEN I will see which of our customers' problems is the most urgent to be resolved.
-
-6. As a startup entrepreneur in rural area, 
 
 ----
 ## Intellectual Property Confidentiality Agreement 
