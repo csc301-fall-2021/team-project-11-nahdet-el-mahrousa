@@ -39,7 +39,7 @@ Mockup: <https://www.figma.com/file/TmGYB8Q4o6dPayLtac8czI/D1-Mockup>
  ***Thomas*** is a truck driver and he has been work in the shipping industry for 20 years. Thomas knew how the industry work, so he decided to use his savings to start his own shipping company. However, Thomas only knows about shipping process but have no clue about how to start a business. Thomas found out that he need to submit many legal papers to the government which he never heard before. Thus, Thomas want to find a reliable agency or lawyer for help.
 
  Personas # 3:
- ***Noha*** is a program mangaer for educational programs and she would like to start up an origanization which provide informal education for children and tennagers(4 - 16 years old), she wants to serve underprivileged young females. However, informal education is still an underdeveloped concept and yet to be accpet by the public . Although she thinks that this type of startups have a great potential, her family disagree and give her a hard time as she decide to quite her current dream for something unrealistic. 
+ ***Noha*** is a program manager for educational programs and she would like to start up an organization which provide informal education for children and teenagers(4 - 16 years old), she wants to serve underprivileged young females. However, informal education is still an underdeveloped concept and yet to be accept by the public . Although she thinks that this type of startups have a great potential, her family disagree and give her a hard time as she decide to quite her current dream for something unrealistic. 
 
 #### Q3: Why would your users choose your product? What are they using today to solve their problem/need?
 
@@ -48,26 +48,27 @@ Mockup: <https://www.figma.com/file/TmGYB8Q4o6dPayLtac8czI/D1-Mockup>
 
  For *Joshua*, our website could help him find a investor so he could work on his project with financial support.
 
- For *Thomas*, our website have the section about legal support and common questions for starting up businesses. Thomas might be able to find the answer he want in the FAQ section, if not, he could still consult with an agency or lawyer suggested by us.
+ For *Thomas*, our website have the section about legal support and common questions for startup businesses. Thomas might be able to find the answer he want in the FAQ section, if not, he could still consult with an agency or lawyer suggested by us.
 
- For *Noha*, Noha need guidance to get a certification of informal education and she also need to apply for government grants. She might not how it works but she could find all these informaiton through our website.
+ For *Noha*, Noha need guidance to get a certification of informal education and she also need to apply for government grants. She might not how it works but she could find all these information through our website.
 
- * Explain the benefits of your product explicitly & clearly. For example:
-    * Save users time (how much?)
-    Instead of searching up on google, and go through all different kinds of unrelated and distribution information, our information are collected and well organized.
+ * Explain the benefits of your product explicitly & clearly.
+    * Save users time:
+    Instead of searching up on google, and go through pages of all different kinds of unrelated and disturbing information, user can follow the bot's questions to locate their questions and find *organized* and *analyzed* information provided by our partner that best fit to their situation and concern. For people in rural area, our app provide accessibility such that they do not need to call or travel to where our partner is located to ask for help.
+    For admin, our partners no more need to make a lot of surveys and can easily get information from our analytics.
 
-    * Allow users to discover new information (which information? And, why couldn't they discover it before?)
-    Information about supporting and tricks in the process, these are trade by experience from previous users and will hardly be found out online.
+    * Allow users to discover new information:
+    Our app is essentially for providing information and answering questions about how to run a startup. This app will put the information that hides in government documents and other people's experience on the table.
+    For admin dashboard, the admin can see detailed information of what topics are more concerned by which group of people. The app being online can be more accessible, so that people who previously did not contact our partner will have a chance to have their questions be seen by our partner.
 
-    * Provide users with more accurate and/or informative data (what kind of data? Why is it useful to them?)
-    Our data are information related to all starting ups and investors, so the user will find out more data about people on the same stage with them, and they could
-    know what are the common problems in the process.
+    * Provide users with more accurate and/or informative data:
+    The app will guide the user to realize their condition and locate their question, such that the provided answers are more related to the user. The answers and questions are provided by our partner, who has strong experience helping startups in the similar conditions.
 
     * Does this application exist in another form? If so, how does your differ and provide value to the users?
-    This application is similar to an application called CSI. Ours will be very similar, but ours are developed in Egypt.
+    A similar app is [Osome Singapore](https://osome.com/sg/pricing/). Our app will focus more on answering users' questions instead of introducing a service. It will be more lightweight and quick for the users.
 
     * How does this align with your partner's organization's values/mission/mandate?
-    The purpose of this website is same as our partner's organization, make life of starting up entrepreneurs easier.
+    Our partner wants to provide helps to startup companies, this app can help them dealing with easy and common questions; at the same time, provide more data about what the startups are concerning so that they can modify their strategies accordingly.
 
 #### Q4: How will you build it?
 
@@ -124,40 +125,50 @@ Possible testing tools include jest, react-testing-library, postman.
  * User stories must contain acceptance criteria. Examples of user stories with different formats can be found here: https://www.justinmind.com/blog/user-story-examples/. **It is important that you provide a link to an artifact containing your user stories**.
  * If you have a partner, these must be reviewed and accepted by them.
 
-1. As a starting up entrepreneur, 
+1. As a startup entrepreneur, 
 I want to find an investor have interests with my business, 
 So that I could get financial supports. 
 Given I do not have enough money to start my business,
-WHEN an investor give me financial supports.
+WHEN an investor give me financial supports,
 THEN I can focus on my project without concerning about living.
 
-2. As a starting up entrepreneur, 
+2. As a startup entrepreneur, 
 I want to find a reliable agency or lawyer, 
 So that I could prepare all legal papers required for my business.
 Given legal documents are sent to my business,
 WHEN a lawyer reviewed and upgrade my papers,
 THEN the government gives me permission/certificate.
 
-3. As a starting up entrepreneur, 
-I want to connect with previous starting up entrepreneurs,
+3. As a startup entrepreneur, 
+I want to connect with previous startup entrepreneurs,
 So that I could learn from their experience. 
 Given I have a question and I do not know where to find the answer,
 WHEN I talk with another entrepreneur,
 THEN he shares his experience with me and help me. 
 
-4. As a starting up entrepreneur, 
+4. As a startup entrepreneur, 
 I want to know what kind of preparations I need to do before I start up my business,
 So that my business will be ready to start,
 Given I do not know what is the local trend, 
 WHEN I meet with the guidance staff from our website,
 THEN I knew that I need to prepare before startups, include funds, certificates etc.
 
-5. As a starting up entrepreneur,
+5. As a startup entrepreneur,
 I want to have a proper business model with identified customer
 So that I can specifically target my users.
 Given I have no previous experience,
 WHEN I asked for professional supports from the organization,
 THEN I have the most fit business model for me.
+
+
+6. As a Nahdet El Mahrousa employee, 
+I want to know what the startup entrepreneurs are currently concerning
+So that I can design services accordingly.
+Given I have no clue how to gather information about these entrepreneurs,
+WHEN I look at the statistics in the admin dashboard,
+THEN I will see which of our customers' problems is the most urgent to be resolved.
+
+6. As a startup entrepreneur in rural area, 
 
 ----
 ## Intellectual Property Confidentiality Agreement 
@@ -269,9 +280,9 @@ Describe meetings (and other events) you are planning to have.
    * Q: What were the outcomes of each meeting?
       *	During the first meeting, our team and the partner learned about each other. Our group learned about the partner’s company, and we learned more about what this project is build for and how it is planning to be used. Our group learned what the partner expects the final product to be, and the partner understands more about what our group can offer him, and we have come to an agreement on to what extent this MVP should be built. 
       We also set to an agreement to have online meeting bi-weekly in the future so the partner can check in our progress, and we can ask him any further question. Regarding the workflow that we asked from the partner, we have received that during the following weekend.
-      * Our group gets our questions solved by asking them to the partner during the meeting, and the partner showed high satisfiaction about our application design, and wanted us to share the design link or screenshot to him so he can showed it to his team to cheer them up (and we have done so). The partner told us more specific demands about data collection, and we came to an agreement on what we can achieve. We discussed the partner's schedule for the next weeks, and leared that he would be in Cairo next week, so we would discuss a better meeting time that works for his timezone during the weekend.
+      * Our group gets our questions solved by asking them to the partner during the meeting, and the partner showed high satisfaction about our application design, and wanted us to share the design link or screenshot to him so he can showed it to his team to cheer them up (and we have done so). The partner told us more specific demands about data collection, and we came to an agreement on what we can achieve. We discussed the partner's schedule for the next weeks, and learned that he would be in Cairo next week, so we would discuss a better meeting time that works for his timezone during the weekend.
    * Q: You must provide meeting minutes.
-      *	https://docs.google.com/document/d/17TN-Xl904Xk7X4vCk93UpWR7_HItsGQvMl-fz0-EmK4/edit?usp=sharing
+      *	<https://docs.google.com/document/d/17TN-Xl904Xk7X4vCk93UpWR7_HItsGQvMl-fz0-EmK4/edit?usp=sharing>
    * Q: You must have a regular meeting schedule established by the second meeting.  
       * The regular meeting schedule is to have a bi-weekly meeting online, the specific time will be determined on the previous weekend through email.
   
@@ -320,24 +331,36 @@ and/or collaborative process.
     * Present the arguments for each alternative.
     * Explain why the option you decided on makes the most sense for your team/product/users.
  * Essentially, we want to understand how (and why) you ended up with your current product and process plan.
- * This section is useful for important information regarding your decision making process that may not necessarily fit in other sections. 
+ * This section is useful for important information regarding your decision making process that may not necessarily fit in other sections.
+
+#### Decision 1
+
+During the meeting, we gained a more clear view of how our partner's organization work to help startup entrepreneurs and their current demand. They need this app to reduce their work pressure.
+
+Initially, we thought they want a real-time chatting app such that they can answer customer's questions. However, during the meeting, we saw that the app should run automatically to answer quick and common questions of the startups, so that people who do not want to spend time to deeply contact or people who are in rural areas that are unaccessible to the organization can have a chance to get helped.
+
+Therefore, the decision is that we will make a chat bot that follows flowcharts of questions to perform like FAQ, so that it is more accessible and does not need to cost human resources in the organization.
+
+#### Decision 2
 
 The two options given by our partner is a web application or a mobile application.
 
 The advantage of web application is easy accessible as it will be the same url link to access from mobile and from computer. On the other hand, the user might not always have their computer beside, but people will always have their phone. Thus, user could use mobile application anywhere with connections of WiFi. Also, the mobile application could have more features than a website.
 
 In the end, we decided to use web application. The most important goal for our partner is to let more people know about their organization, and
-their campaigning event for starting up businesses. In this case, easy accessories is more important than complex feature for this application. 
+their campaigning event for startup businesses. In this case, easy accessories is more important than complex feature for this application. 
 Thus, we chose to build an web application. 
 
-#### Decision 2
+#### Decision 3
+
 During the discussion with our partner, we have made a design decision on the collection of user data.
 
-Our partner will need some user information like the location and answers they gave to the bot. In this case, we choose to embed Google Analytics API into our website and add an admin dashboard for viewing and sorting that information. We might also need to change our choice of database to accommodate Google Analytics.
+Our partner will need user information like the location and answers they gave to the bot. In this case, we choose to embed Google Analytics API into our website and add an admin dashboard for viewing and sorting that information. We might also need to change our choice of database to accommodate Google Analytics.
 
-#### Decision 3
+#### Decision 4
+
 Since our bot on the website is based on a prefixed flowchart, we have the decision on how does out partner change the flowchart after we finish the project.
 
-One thought was to use a JSON file for updating the flowchart. Although JSON file is relatively easy to read for non-technical users, we thought it might be better to design a more straightforward way for that.
+The original thought was to use a JSON file for updating the flowchart. Although JSON file is relatively easy to read for non-technical users, we thought it might be better to design a more straightforward way for that.
 
-In the end, we add a page in the admin dashboard that our partner can modify the flowchart in a more visualized way.
+In the end, we add a page in the admin dashboard that our partner can modify the flowchart in a more visualized way by clicking buttons and writing in forms.
