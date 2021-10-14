@@ -39,7 +39,7 @@ Mockup: <https://www.figma.com/file/TmGYB8Q4o6dPayLtac8czI/D1-Mockup>
  ***Thomas*** is a truck driver and he has been work in the shipping industry for 20 years. Thomas knew how the industry work, so he decided to use his savings to start his own shipping company. However, Thomas only knows about shipping process but have no clue about how to start a business. Thomas found out that he need to submit many legal papers to the government which he never heard before. Thus, Thomas want to find a reliable agency or lawyer for help.
 
  Personas # 3:
- ***Robert*** is an investor, he gives starting up companies financial supports and trade for stocks. If the starting up companies grow up, Robert sells the stocks for profit. Robert recently found out that Egypt has a grown economy and he is planning to invest in Egypt. The problem is, Robert had never been to Egypt and he do not know any starting up companies are there.
+ ***Noha*** is a program mangaer for educational programs and she would like to start up an origanization which provide informal education for children and tennagers(4 - 16 years old), she wants to serve underprivileged young females. However, informal education is still an underdeveloped concept and yet to be accpet by the public . Although she thinks that this type of startups have a great potential, her family disagree and give her a hard time as she decide to quite her current dream for something unrealistic. 
 
 #### Q3: Why would your users choose your product? What are they using today to solve their problem/need?
 
@@ -50,7 +50,7 @@ Mockup: <https://www.figma.com/file/TmGYB8Q4o6dPayLtac8czI/D1-Mockup>
 
  For *Thomas*, our website have the section about legal support and common questions for starting up businesses. Thomas might be able to find the answer he want in the FAQ section, if not, he could still consult with an agency or lawyer suggested by us.
 
- For *Robert*, the seasonal conference will include hundreds of starting up companies, and he could go through a lot of possible investment.
+ For *Noha*, Noha need guidance to get a certification of informal education and she also need to apply for government grants. She might not how it works but she could find all these informaiton through our website.
 
  * Explain the benefits of your product explicitly & clearly. For example:
     * Save users time (how much?)
