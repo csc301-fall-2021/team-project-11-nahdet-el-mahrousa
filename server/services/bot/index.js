@@ -7,6 +7,43 @@ class BotService {
         this.dbHandler = dbHandler
     }
 
+    getMessage(mid){
+        if (!this.dbHandler.hasMessage(mid)){
+            logger.log(`Message [${mid}] doesn't exist`)
+            return 502
+        }
+        return this.dbHandler.retriveMessage(mid)
+    }
+
+    getReply(rid){
+        if (!this.dbHandler.hasReply(rid)){
+            logger.log(`Reply [${rid}] doesn't exist`)
+            return 502
+        }
+        return this.dbHandler.retriveReply(rid)
+    }
+
+    getRepliesByMessage(mid){
+        if (!this.dbHandler.hasMessage(mid)){
+            logger.log(`Message [${mid}] doesn't exist`)
+            return 502
+        }
+        const replieIDs = this.dbHandler.getRepliesIdByMessage(mid)
+        const replies = []
+        for(const rid of replieIDs){
+            replies.push(this.getReply(rid))
+        }
+        return replies
+    }
+
+    getNextMessage(rid){
+        if (!this.dbHandler.hasReply(rid)){
+            logger.log(`Reply [${rid}] doesn't exist`)
+            return 502
+        }
+        return this.dbHandler.getNextMessage(rid)
+    }
+
     async createMessage(user, content, label) {
         // Validate modifier's privilege
         if (!user.privilege.modifyBot){
