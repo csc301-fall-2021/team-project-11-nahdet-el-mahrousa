@@ -4,10 +4,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
-
-// view engine setup
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'jade');
+const createDB = require('./gateways/db');
 
 /**
  * A factory model to build an Express.js app.
@@ -23,6 +20,7 @@ class AppFactory {
     this.registerExtensions(app);
     this.registerRoutes(app);
     this.registerErrorHandler(app);
+    this.registerGateways(app);
 
     return app;
   }
@@ -47,6 +45,17 @@ class AppFactory {
     // Register Routers
     app.use('/', indexRouter);
     app.use('/bot', botRouter);
+  }
+
+  /**
+   * Set up gateway connections.
+   * @param {*} app 
+   */
+  async registerGateways(app) {
+    // const dbHandler = new DBHandler()
+    // await dbHandler.init(process.env.DATABASE_URI)
+    const db = createDB(process.env.DATABASE_URI)
+    await db.connect()
   }
 
   /**

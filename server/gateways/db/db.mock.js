@@ -1,5 +1,9 @@
 
 class MockDBHandler {
+    async connect(){
+        console.log("Connected to mock data")
+    }
+    
     async retrieve(model, query){
         console.log("RETRIEVE", model, query)
         return {}

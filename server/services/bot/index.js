@@ -3,8 +3,9 @@
 const logger = {log: console.log}
 
 class BotService {
-    constructor(dbHandler) {
-        this.dbHandler = dbHandler
+    constructor(messageDao, replyDao) {
+        this.messageDao = messageDao
+        this.replyDao = replyDao
     }
 
     async createMessage(user, content, label) {
@@ -13,7 +14,7 @@ class BotService {
             return 401
         }
 
-        const newMessage = await this.dbHandler.create('Message', { content, label })
+        const newMessage = await this.messageDao.create({ content, label })
 
         if (newMessage !== null) {
             logger.log(`[${user.username}] CREATED Message \'${label}\'`)
@@ -30,7 +31,7 @@ class BotService {
             return 401
         }
 
-        const newReply = await this.dbHandler.create('Reply', { content, label, fromMessage, nextMessage })
+        const newReply = await this.replyDao.create({ content, label, fromMessage, nextMessage })
 
         if (newReply !== null) {
             logger.log(`[${user.username}] CREATED Reply \'${rid}\'`)
