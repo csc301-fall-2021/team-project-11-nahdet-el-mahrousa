@@ -29,8 +29,8 @@ class AppFactory {
    * Configure app from ./config with dotenv.
    * @param {*} app Express app
    */
-   configApp(app) {
-    dotenv.config({ path: `./config/.env.${process.env.NODE_ENV}` }) 
+  configApp(app) {
+    dotenv.config({ path: `./config/.env.${process.env.NODE_ENV}` })
   }
 
   /**
@@ -54,7 +54,7 @@ class AppFactory {
   async registerGateways(app) {
     // const dbHandler = new DBHandler()
     // await dbHandler.init(process.env.DATABASE_URI)
-    const db = createDB(process.env.DATABASE_URI)
+    const db = createDB(process.env.DATABASE_URI, process.env.MOCK)
     await db.connect()
   }
 
@@ -76,12 +76,12 @@ class AppFactory {
    */
   registerErrorHandler(app) {
     // catch 404 and forward to error handler
-    app.use(function(req, res, next) {
+    app.use(function (req, res, next) {
       next(createError(404));
     });
 
     // error handler
-    app.use(function(err, req, res) {
+    app.use(function (err, req, res) {
       // set locals, only providing error in development
       res.locals.message = err.message;
       res.locals.error = req.app.get('env') === 'development' ? err : {};

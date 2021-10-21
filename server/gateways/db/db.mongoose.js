@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 const { User, Message, Reply } = require('../../models/models.mongoose')(mongoose)
 
-const logger = {log: console.log}
+const logger = { log: console.log }
 
 /**
  * A database handler for MongoDB with mongoose.
@@ -13,15 +13,15 @@ class MongoDBHandler {
         this.uri = uri
         this.models = this._registerModels()
     }
-    
+
     /**
      * Set up connection to database.
      */
     async connect() {
-        try{
+        try {
             await this.mongoose.connect(this.uri)
             logger.log(`Set up Mongoose connection to ${this.uri}`)
-        } catch (err){
+        } catch (err) {
             console.log("Cannot connect to the database!", err);
             process.exit();
         }

@@ -1,6 +1,6 @@
 // var logger = require('logger').createLogger()
 
-const logger = {log: console.log}
+const logger = { log: console.log }
 
 class BotService {
     constructor(messageDao, replyDao) {
@@ -8,9 +8,46 @@ class BotService {
         this.replyDao = replyDao
     }
 
+    getMessage(mid) {
+        const msg = this.messageDao.get(mid)
+        if (!msg) {
+            logger.log(`Message [${mid}] doesn't exist`)
+            return msg
+        }
+        return msg
+    }
+
+    getReply(rid) {
+        const rpl = this.replyDao.get(rid)
+        if (!rpl) {
+            logger.log(`Reply [${rid}] doesn't exist`)
+            return rpl
+        }
+        return rpl
+    }
+
+    getRepliesByMessage(mid) {
+        const msg = this.getMessage(mid)
+        if (!msg) {
+            return undefined
+        }
+        const replies = this.replyDao.search({ fromMessage: mid })
+        return replies
+    }
+
+    getNextMessage(rid) {
+        const rpl = this.replyDao.get(rid)
+        if (!rpl) {
+            return undefined
+        }
+
+        const newMessage = this.getMessage(rpl.toMessage)
+        return newMessage
+    }
+
     async createMessage(user, content, label) {
         // Validate modifier's privilege
-        if (!user.privilege.modifyBot){
+        if (!user.privilege.modifyBot) {
             return 401
         }
 
@@ -18,16 +55,16 @@ class BotService {
 
         if (newMessage !== null) {
             logger.log(`[${user.username}] CREATED Message \'${label}\'`)
-            return 200
+            return newMessage
         } else {
             logger.log(`[${user.username}] FAILED CREATE Message \'${label}\'`)
-            return 200
+            return newMessage
         }
     }
 
     async createReply(user, content, label, fromMessage, nextMessage) {
         // Validate modifier's privilege
-        if (!user.privilege.modifyBot){
+        if (!user.privilege.modifyBot) {
             return 401
         }
 
@@ -35,10 +72,10 @@ class BotService {
 
         if (newReply !== null) {
             logger.log(`[${user.username}] CREATED Reply \'${rid}\'`)
-            return 200
+            return newReply
         } else {
             logger.log(`[${user.username}] FAILED CREATE Reply \'${rid}\'`)
-            return 200
+            return newReply
         }
     }
 }
