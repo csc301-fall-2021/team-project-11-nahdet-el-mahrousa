@@ -1,5 +1,6 @@
 // var logger = require('logger').createLogger()
-
+const { ReasonPhrases, StatusCodes } = require('http-status-codes')
+const {respond} = require('../../utils/response')
 const logger = { log: console.log }
 
 class BotService {
@@ -45,10 +46,18 @@ class BotService {
         return newMessage
     }
 
+    /* Admin services */
+    /**
+     * Create a message. If the user does not have privilege, then the action is forbidden.
+     * @param {User} user User that makes this operation.
+     * @param {String} content Content of the message for client to read.
+     * @param {String} label Label of the message for admin to read.
+     * @returns New Message. If user does not have privilege, return FORBIDDEN.
+     */
     async createMessage(user, content, label) {
         // Validate modifier's privilege
         if (!user.privilege.modifyBot) {
-            return 401
+            return respond({})
         }
 
         const newMessage = await this.messageDao.create({ content, label })

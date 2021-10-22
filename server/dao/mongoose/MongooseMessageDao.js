@@ -13,18 +13,33 @@ class MongooseMessageDao {
                 logger.log(err)
                 return null
             } else {
+                logger.log(`MONGOOSE CREATED Message ${newMessage._id}`)
                 return newMessage
             }
         })
     }
 
-    // getAll(page=-1, filter=null) {
-    //     if (page !== -1){
-    //         return this.mongoose.retrieve('Reply', page=page, filter=filter)
-    //     } else {
-    //         return this.mongoose.retrieve('Reply', query=null)
-    //     }
-    // }
+    async get(mid) {
+        const message = await this.models.Message.findById(mid).exec()
+        logger.log(`MONGOOSE GET Message ${message}`)
+        return message
+    }
+
+    async getAll() {
+        return null
+    }
+
+    async search(filter = null) {
+        return null
+    }
+
+    async delete(mid) {
+        return null
+    }
+
+    async update(mid, data) {
+        return null
+    }
 
 }
 
