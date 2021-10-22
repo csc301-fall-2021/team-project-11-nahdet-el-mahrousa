@@ -1,3 +1,8 @@
+
+
+// Note: This version of mock database handler is disused, please see ./mock folder for current version
+
+
 // class MockbotDBHandler {
 //     constructor(){
 //         this.mockMessages = [{lable: 0, content: "Example message", replies: [0, 1]},

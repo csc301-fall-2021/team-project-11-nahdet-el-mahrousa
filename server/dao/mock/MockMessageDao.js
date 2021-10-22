@@ -22,7 +22,7 @@ class MockMessageDao {
      * @param {Integer} mid id of Message.
      * @returns Message; undefined if not found.
      */
-    async get(mid) {
+    get(mid) {
         return this.db.messages.find(msg => msg._id == mid)
     }
 
@@ -30,7 +30,7 @@ class MockMessageDao {
      * Get all messages.
      * @returns Array of Messages
      */
-    async getAll() {
+    getAll() {
         return this.db.messages
     }
 
@@ -39,7 +39,7 @@ class MockMessageDao {
      * @param {Object} filter 
      * @returns Array of Messages.
      */
-    async search(filter = null) {
+    search(filter = null) {
         if (filter === null) {
             return this.db.messages
         } else {

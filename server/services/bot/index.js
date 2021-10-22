@@ -36,13 +36,13 @@ class BotService {
     }
 
     getNextMessage(rid) {
-        const rpl = this.replyDao.get(rid)
+        const rpl = this.getReply(rid)
         if (!rpl) {
             return undefined
         }
 
-        const newMessage = this.getMessage(rpl.toMessage)
-        return newMessage
+        const nextMessage = this.getMessage(rpl.toMessage)
+        return nextMessage
     }
 
     async createMessage(user, content, label) {

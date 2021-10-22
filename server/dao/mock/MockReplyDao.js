@@ -5,6 +5,11 @@ class MockReplyDao {
         this.db = db
     }
 
+    /**
+     * Create a reply.
+     * @param {*} {content, label, fromMessage, toMessage} 
+     * @returns New reply created.
+     */
     async create({ content, label, fromMessage, toMessage }) {
         const newReply = { _id: this.db.lastRid++, content, label, fromMessage, toMessage }
         this.db.replies.push(newReply)
@@ -12,15 +17,29 @@ class MockReplyDao {
         return newReply
     }
 
-    async get(rid) {
+    /**
+     * Get a reply by id.
+     * @param {Integer} rid id of Message.
+     * @returns Reply; undefined if not found.
+     */
+    get(rid) {
         return this.db.replies.find(rpl => rpl._id == rid)
     }
 
-    async getAll() {
+    /**
+     * Get all reply.
+     * @returns Array of Replies
+     */
+    getAll() {
         return this.db.replies
     }
 
-    async search(filter = null) {
+    /**
+     * Search for replies that satisfy the filter
+     * @param {Object} filter 
+     * @returns Array of replies.
+     */
+    search(filter = null) {
         if (filter === null) {
             return this.db.replies
         } else {
@@ -32,12 +51,23 @@ class MockReplyDao {
         }
     }
 
+    /**
+     * Delete a reply.
+     * @param {Integer} mid id of reply.
+     * @returns true
+     */
     async delete(rid) {
-        this.db.replies = this.db.replies.filter(rpl => !(key in rpl) || rpl._id != rid)
+        this.db.replies = this.db.replies.filter(rpl => rpl._id != rid)
         logger.log(`DELETED Reply ${rid}`)
         return true
     }
 
+    /**
+     * Update a reply.
+     * @param {Integer} mid id of reply.
+     * @param {*} data Data to be updated.
+     * @returns Updated reply.
+     */
     async update(rid, data) {
         const rplIdx = this.db.replies.findIndex(rpl => rpl._id == rid)
         for (let key in data) {
