@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const createDB = require('../gateways/db')
+const createDB = require('../../gateways/db')
 
 describe("Mongoose Unit Tests", () => {
     const db = createDB("mongodb://localhost:27017/local-dev")

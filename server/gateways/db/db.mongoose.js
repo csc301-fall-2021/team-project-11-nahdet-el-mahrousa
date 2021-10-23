@@ -21,9 +21,21 @@ class MongoDBHandler {
         try {
             await this.mongoose.connect(this.uri)
             logger.log(`Set up Mongoose connection to ${this.uri}`)
+            return true
         } catch (err) {
-            console.log("Cannot connect to the database!", err);
+            logger.log("Cannot connect to the database!", err);
             process.exit();
+        }
+    }
+
+    async disconnect() {
+        try {
+            await this.mongoose.disconnect()
+            logger.log(`Disconnected Mongoose connection from ${this.uri}`)
+            return true
+        } catch (err) {
+            logger.log(`Disconnect error ${err}`)
+            return false
         }
     }
 

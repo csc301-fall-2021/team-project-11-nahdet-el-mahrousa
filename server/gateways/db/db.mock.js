@@ -43,6 +43,10 @@ class MockDBHandler {
     async connect() {
         console.log("Mock DB connected")
     }
+
+    async disconnect() {
+        console.log("Mock DB disconnected")
+    }
 }
 
 module.exports = MockDBHandler

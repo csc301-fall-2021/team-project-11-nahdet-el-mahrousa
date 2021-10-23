@@ -65,7 +65,7 @@ class MockMessageDao {
     /**
      * Update a message.
      * @param {Integer} mid id of message.
-     * @param {*} data Data to be updated.
+     * @param {Object} data Data to be updated.
      * @returns Updated message.
      */
     async update(mid, data) {
