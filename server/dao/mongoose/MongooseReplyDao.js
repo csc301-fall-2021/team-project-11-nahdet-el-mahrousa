@@ -11,8 +11,8 @@ class MongooseReplyDao {
      * Create a reply.
      * @param {String} content Content of reply to show the user.
      * @param {String} label Label of reply to show the admin.
-     * @param {mongoose.Schema.Types.ObjectId} fromMessage The message that this replies/option belongs to.
-     * @param {mongoose.Schema.Types.ObjectId} toMessage The message that this replies redirects to.
+     * @param {ObjectId} fromMessage The message id that this replies/option belongs to.
+     * @param {ObjectId} toMessage The message id that this replies redirects to.
      * @returns Created Reply.
      */
     async create({ content, label, fromMessage, toMessage }) {
@@ -30,7 +30,7 @@ class MongooseReplyDao {
     /**
      * Get a reply by id.
      * @param {Integer} rid id of Reply.
-     * @returns Reply; undefined if not found.
+     * @returns Reply; If reply not found, return null.
      */
     async get(rid) {
         const reply = await this.Reply.findById(rid).exec()
@@ -65,7 +65,7 @@ class MongooseReplyDao {
     /**
      * Delete a reply.
      * @param {Integer} rid id of reply.
-     * @returns Deleted Reply.
+     * @returns Deleted Reply. If reply not found, return null.
      */
     async delete(rid) {
         const deletedReply = await this.Reply.findByIdAndRemove(rid)
@@ -77,7 +77,7 @@ class MongooseReplyDao {
      * Update a reply.
      * @param {Integer} rid id of reply.
      * @param {Object} data Data to be updated.
-     * @returns Updated reply.
+     * @returns Updated reply. If reply not found, return null.
      */
     async update(rid, data) {
         const updatedReply = await this.Reply.findByIdAndUpdate(rid, data, { new: true })

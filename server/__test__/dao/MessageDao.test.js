@@ -2,10 +2,8 @@ const mongoose = require('mongoose')
 const createDB = require('../../gateways/db')
 const MessageDao = require('../../dao/mongoose/MongooseMessageDao')
 
-const testMessages = [
-    { content: "Mongoose MessageDao Unit Tests: Test message 1", label: "test message 1" },
-    { content: "Mongoose MessageDao Unit Tests: Test message 2", label: "test message 2" }
-]
+// Mock Data
+const testMessages = require('../../assets/bot-message.mock').mongoUnitMessages1
 
 // > node_modules/.bin/jest --detectOpenHandles -i "MessageDao.test.js"
 
