@@ -3,7 +3,7 @@ const createDB = require('../../gateways/db')
 
 describe("Mongoose Unit Tests", () => {
     const db = createDB("mongodb://localhost:27017/local-dev")
-    var {User, Message, Reply} = db.models
+    var {User, Message, Reply} = require('../../models/models.mongoose')
 
     beforeAll(async () => {
         await db.connect()

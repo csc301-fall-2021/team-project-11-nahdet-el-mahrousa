@@ -3,8 +3,12 @@ const createDB = require('../../gateways/db')
 const { MessageDao, ReplyDao } = require('../../dao/mongoose')
 const BotService = require('../../services/bot')
 
+const { ReasonPhrases, StatusCodes } = require('http-status-codes')
+const { respond, response } = require('../../utils/response')
+
 // Mock Data
 const { admin1 } = require('../../assets/user.mock')
+const testMessages = require('../../assets/bot-message.mock').mongoUnitMessages1
 
 describe("BotService.Mongoose Integrated Test", () => {
     const db = createDB("mongodb://localhost:27017/local-dev")
@@ -12,7 +16,7 @@ describe("BotService.Mongoose Integrated Test", () => {
     const replyDao = new ReplyDao(db)
     const botService = new BotService(messageDao, replyDao)
 
-    var { User } = db.models
+    var { User } = require('../../models/models.mongoose')
     const createdMessages = []
     const createdReplies = []
     let admin = null
@@ -31,7 +35,8 @@ describe("BotService.Mongoose Integrated Test", () => {
             createdMessages.shift()
         }
 
-        // TODO: Remove admin
+        // Remove admin
+        await User.findByIdAndDelete(admin._id)
     }
 
     beforeAll(async () => {
@@ -46,11 +51,59 @@ describe("BotService.Mongoose Integrated Test", () => {
         await db.disconnect()
     })
 
-
     describe("Create Message", () => {
         test("create: msg[0]", async () => {
+            const baseMessage = testMessages[0]
 
+            const newMessage = await botService.createMessage(admin, baseMessage.content, baseMessage.label)
+            expect(newMessage.content).toEqual(baseMessage.content)
+            expect(newMessage.label).toEqual(baseMessage.label)
+            createdMessages.push(newMessage)
+        });
+    });
+
+    describe("Update Message", () => {
+        test("update: msg[0] to msg[1]", async () => {
+            const baseMessage = testMessages[1]
+            const targetMessage = createdMessages[0]
+
+            const newMessage = await botService.updateMessage(admin, targetMessage._id, { content: baseMessage.content, label: baseMessage.label })
+            expect(newMessage.content).toEqual(baseMessage.content)
+            expect(newMessage.label).toEqual(baseMessage.label)
+            // Update createdMessage
+            createdMessages.shift()
+            createdMessages.push(newMessage)
+        });
+    });
+
+
+    describe("Create Message 2", () => {
+        test("create: msg[1]", async () => {
+            const baseMessage = testMessages[1]
+
+            const newMessage = await botService.createMessage(admin, baseMessage.content, baseMessage.label)
+            expect(newMessage.content).toEqual(baseMessage.content)
+            expect(newMessage.label).toEqual(baseMessage.label)
+            createdMessages.push(newMessage)
+        });
+    });
+
+    // TODO: Test Get methods
+
+    // TODO: Test reply
+
+    describe("Delete Message", () => {
+        test("delete: msg[0]", async () => {
+            const baseMessage = createdMessages[0]
+
+            const newMessage = await botService.deleteMessage(admin, baseMessage._id)
+            expect(newMessage.content).toEqual(baseMessage.content)
+            expect(newMessage.label).toEqual(baseMessage.label)
+            createdMessages.shift()
+
+            // Ensure the message is not here.
+            const queryMessage = await botService.getMessage(baseMessage._id)
+            expect(queryMessage).toEqual(null)
         });
     });
 });
-

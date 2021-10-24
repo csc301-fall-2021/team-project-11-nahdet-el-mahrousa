@@ -1,5 +1,6 @@
 /**
  * Get required user inputs from request.
+ * @param {Object} req Request. 
  * @param {Array} mandatory Mandatory fields. 
  * @param {Array} optional Optional fields. 
  * @param {Object} optDefaults The default values for optional fields.
@@ -8,7 +9,7 @@
  * @param {Boolean} fromQueryGet data from request queries. 
  * @returns Object of user inputs. If mandatory fields are not satisfied, return undefined.
  */
-function getInput(
+function getInput(req,
     {
         mandatory = [],
         optional = [],

@@ -18,9 +18,9 @@ class AppFactory {
     const app = express();
     this.configApp(app)
     this.registerExtensions(app);
-    this.registerRoutes(app);
     this.registerErrorHandler(app);
-    this.registerGateways(app);
+    this.registerGateways(app)
+    this.registerRoutes(app);
 
     return app;
   }
@@ -41,10 +41,12 @@ class AppFactory {
     // Get Routers
     const indexRouter = require('./api/index');
     const botRouter = require('./api/client/bot');
+    const adminBotRouter = require('./api/admin/bot');
 
     // Register Routers
     app.use('/', indexRouter);
     app.use('/bot', botRouter);
+    app.use('/admin', adminBotRouter)
   }
 
   /**
@@ -56,6 +58,7 @@ class AppFactory {
     // await dbHandler.init(process.env.DATABASE_URI)
     const db = createDB(process.env.DATABASE_URI, process.env.MOCK)
     await db.connect()
+    this.db = db
   }
 
   /**
@@ -76,20 +79,20 @@ class AppFactory {
    */
   registerErrorHandler(app) {
     // catch 404 and forward to error handler
-    app.use(function (req, res, next) {
-      next(createError(404));
-    });
+    // app.use(function (req, res, next) {
+    //   next(createError(404));
+    // });
 
-    // error handler
-    app.use(function (err, req, res) {
-      // set locals, only providing error in development
-      res.locals.message = err.message;
-      res.locals.error = req.app.get('env') === 'development' ? err : {};
+    // // error handler
+    // app.use(function (err, req, res) {
+    //   // set locals, only providing error in development
+    //   res.locals.message = err.message;
+    //   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-      // render the error page
-      res.status(err.status || 500);
-      res.send(err);
-    });
+    //   // render the error page
+    //   res.status(err.status || 500);
+    //   res.send(err);
+    // });
   }
 }
 
@@ -97,4 +100,4 @@ const appFactory = new AppFactory();
 
 const app = appFactory.registerApp();
 
-module.exports = app;
+module.exports = app

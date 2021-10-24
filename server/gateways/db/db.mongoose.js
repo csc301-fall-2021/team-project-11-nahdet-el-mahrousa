@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
-const { User, Message, Reply } = require('../../models/models.mongoose')(mongoose)
+const { User, Message, Reply } = require('../../models/models.mongoose')
 
 const logger = { log: console.log }
 
