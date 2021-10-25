@@ -10,9 +10,8 @@ const testMessages = require('../../assets/bot-message.mock').mongoUnitMessages1
 describe("Mongoose MessageDao Unit Tests", () => {
     const db = createDB("mongodb://localhost:27017/local-dev")
     const messageDao = new MessageDao(db)
-    var { User, Message, Reply } = db.models
+    // var { User, Message, Reply } = require('../../models/models.mongoose')
     const createdMessages = []
-    let invalidMid = null
 
     async function clearTestData() {
         const msgIds = createdMessages.map(({ _id }) => _id)

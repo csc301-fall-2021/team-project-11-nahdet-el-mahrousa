@@ -1,10 +1,10 @@
-const mongoose = require('mongoose')
+const logger = { log: console.log }
+const { Reply } = require('../../models/models.mongoose')
 
 class MongooseReplyDao {
-    constructor(db) {
+    constructor(db = null) {
         this.db = db;
-        this.mongoose = db.mongoose;
-        this.Reply = db.models.Reply
+        // this.Reply = db.models.Reply
     }
 
     /**
@@ -13,17 +13,17 @@ class MongooseReplyDao {
      * @param {String} label Label of reply to show the admin.
      * @param {ObjectId} fromMessage The message id that this replies/option belongs to.
      * @param {ObjectId} toMessage The message id that this replies redirects to.
-     * @returns Created Reply.
+     * @returns Created Reply. If not created, return null.
      */
     async create({ content, label, fromMessage, toMessage }) {
         try {
-            const newReply = new this.Reply({ content, label, fromMessage, toMessage })
+            const newReply = new Reply({ content, label, fromMessage, toMessage })
             const createdReply = await newReply.save()
             logger.log(`MONGOOSE CREATED Reply ${createdReply._id}`)
             return newReply
         } catch (err) {
             logger.log(err)
-            return undefined
+            return null
         }
     }
 
@@ -33,7 +33,7 @@ class MongooseReplyDao {
      * @returns Reply; If reply not found, return null.
      */
     async get(rid) {
-        const reply = await this.Reply.findById(rid).exec()
+        const reply = await Reply.findById(rid).exec()
         logger.log(`MONGOOSE GET Reply ${reply}`)
         return reply
     }
@@ -43,7 +43,7 @@ class MongooseReplyDao {
      * @returns Array of Replies
      */
     async getAll() {
-        return await this.Reply.find().exec()
+        return await Reply.find().exec()
     }
 
     /**
@@ -54,10 +54,10 @@ class MongooseReplyDao {
     async search(filter = null) {
         if (filter) {
             // TODO: apply filter check.
-            const replies = await this.Reply.find(filter).exec()
+            const replies = await Reply.find(filter).exec()
             return replies
         } else {
-            const replies = await this.Reply.find().exec()
+            const replies = await Reply.find().exec()
             return replies
         }
     }
@@ -68,8 +68,12 @@ class MongooseReplyDao {
      * @returns Deleted Reply. If reply not found, return null.
      */
     async delete(rid) {
-        const deletedReply = await this.Reply.findByIdAndRemove(rid)
-        logger.log(`MONGOOSE DELETE Reply ${deletedReply._id}`)
+        const deletedReply = await Reply.findByIdAndRemove(rid)
+        if (deletedReply !== null) {
+            logger.log(`MONGOOSE DELETED Reply ${deletedReply._id}`)
+        } else {
+            logger.log(`MONGOOSE FAILED DELETE Reply ${rid}`)
+        }
         return deletedReply
     }
 
@@ -80,8 +84,12 @@ class MongooseReplyDao {
      * @returns Updated reply. If reply not found, return null.
      */
     async update(rid, data) {
-        const updatedReply = await this.Reply.findByIdAndUpdate(rid, data, { new: true })
-        logger.log(`MONGOOSE UPDATED Reply to ${updatedReply}`)
+        const updatedReply = await Reply.findByIdAndUpdate(rid, data, { new: true })
+        if (updatedReply !== null) {
+            logger.log(`MONGOOSE UPDATED Reply ${updatedReply._id}`)
+        } else {
+            logger.log(`MONGOOSE FAILED UPDATE Reply ${rid}`)
+        }
         return updatedReply
     }
 
