@@ -1,3 +1,5 @@
+// TODO: not sure whether we want to combine two factories into one
+
 const { MessageDao, ReplyDao } = require('../../dao/mongoose')
 const BotService = require('../../services/bot')
 const AdminBotController = require('./bot')

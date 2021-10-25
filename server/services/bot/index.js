@@ -22,6 +22,11 @@ class BotService {
         this.replyDao = replyDao
     }
 
+    /**
+     * Get message based on given mid.
+     * @param {int} mid the wanted message id.
+     * @returns A message object.
+     */
     getMessage(mid) {
         const msg = this.messageDao.get(mid)
         if (!msg) {
@@ -31,6 +36,11 @@ class BotService {
         return msg
     }
 
+    /**
+     * Get reply based on given rid.
+     * @param {int} rid the wanted reply id.
+     * @returns A reply object.
+     */
     getReply(rid) {
         const rpl = this.replyDao.get(rid)
         if (!rpl) {
@@ -40,6 +50,11 @@ class BotService {
         return rpl
     }
 
+    /**
+     * Get replies based on given mid.
+     * @param {int} mid the wanted message id.
+     * @returns A list of reply object.
+     */
     getRepliesByMessage(mid) {
         const msg = this.getMessage(mid)
         if (!msg) {
@@ -49,6 +64,11 @@ class BotService {
         return replies
     }
 
+    /**
+     * Get next message based on given rid.
+     * @param {int} rid the wanted reply id.
+     * @returns A message object.
+     */
     getNextMessage(rid) {
         const rpl = this.getReply(rid)
         if (!rpl) {
@@ -57,6 +77,20 @@ class BotService {
 
         const nextMessage = this.getMessage(rpl.toMessage)
         return nextMessage
+    }
+
+    /**
+     * Get next message id based on given rid.
+     * @param {int} rid the wanted reply id.
+     * @returns An integer repersent the next message's id.
+     */
+    getNextMessageId(rid) {
+        const rpl = this.getReply(rid)
+        if (!rpl) {
+            return undefined
+        }
+
+        return rpl.toMessage
     }
 
     /**************************************** Admin services ****************************************/
