@@ -31,9 +31,7 @@ const mockReplies = [
 ]
 
 class MockDBHandler {
-    // TODO: What is uri?
-    //constructor(uri) {
-    constructor() {
+    constructor(uri = null) {
         this.lastMid = 3
         this.lastRid = 2
         this.messages = mockMessages

@@ -2,8 +2,7 @@ const express = require('express');
 const router = express.Router();
 const logger = {log: console.log}
 
-const createClientBotController = require('../../controllers/BotController.factory')
-const clientBotController = createClientBotController()
+const clientBotController = require('../../controllers/client/BotController.factory')
 
 router.get('/', (req, res) => {
     res.send({

@@ -6,7 +6,7 @@
  * @param {Object} optDefaults The default values for optional fields.
  * @param {Boolean} fromBody Get data from request body and form. 
  * @param {Boolean} fromParams Get data from request params. 
- * @param {Boolean} fromQueryGet data from request queries. 
+ * @param {Boolean} fromQuery Get data from request queries. 
  * @returns Object of user inputs. If mandatory fields are not satisfied, return undefined.
  */
 function getInput(req,
