@@ -107,7 +107,7 @@ class BotService {
      */
     async getMessages(user, query) {
         if (!user.privilege.accessBot) {
-            return response.FORBIDDEN
+            return null
         }
 
         const messages = await this.messageDao.search(query)
@@ -122,7 +122,7 @@ class BotService {
      */
     async getReplies(user, query) {
         if (!user.privilege.accessBot) {
-            return response.FORBIDDEN
+            return null
         }
 
         const replies = await this.replyDao.search(query)
@@ -134,12 +134,12 @@ class BotService {
      * @param {User} user User that makes this operation.
      * @param {String} content Content of the message for client to read.
      * @param {String} label Label of the message for admin to read.
-     * @returns Response of New Message. If user does not have privilege, return FORBIDDEN.
+     * @returns New Message. If user does not have privilege, return null.
      */
     async createMessage(user, content, label) {
         // Validate modifier's privilege
         if (!user.privilege.modifyBot) {
-            return response.FORBIDDEN
+            return null
         }
 
         const newMessage = await this.messageDao.create({ content, label })
@@ -160,12 +160,12 @@ class BotService {
      * @param {String} label Label of the reply for admin to read.
      * @param {ObjectId} fromMessage The message id that this replies/option belongs to.
      * @param {ObjectId} toMessage The message id that this replies redirects to.
-     * @returns Response of New Reply. If user does not have privilege, return FORBIDDEN.
+     * @returns New Reply. If user does not have privilege, return null.
      */
     async createReply(user, content, label, fromMessage, nextMessage) {
         // Validate modifier's privilege
         if (!user.privilege.modifyBot) {
-            return response.FORBIDDEN
+            return null
         }
 
         const newReply = await this.replyDao.create({ content, label, fromMessage, nextMessage })
@@ -183,12 +183,12 @@ class BotService {
      * Delete a message. If the user does not have privilege, then the action is forbidden.
      * @param {User} user User that makes this operation.
      * @param {ObjectId} mid id of the message to delete.
-     * @returns Response of The Message deleted. If user does not have privilege, return FORBIDDEN.
+     * @returns The Message deleted. If user does not have privilege, return null.
      */
     async deleteMessage(user, mid) {
         // Validate modifier's privilege
         if (!user.privilege.modifyBot) {
-            return response.FORBIDDEN
+            return null
         }
 
         const delMessage = await this.messageDao.delete(mid)
@@ -206,12 +206,12 @@ class BotService {
      * Delete a reply. If the user does not have privilege, then the action is forbidden.
      * @param {User} user User that makes this operation.
      * @param {ObjectId} rid id of the reply to delete.
-     * @returns Response of The Reply deleted. If user does not have privilege, return FORBIDDEN.
+     * @returns The Reply deleted. If user does not have privilege, return null.
      */
     async deleteReply(user, rid) {
         // Validate modifier's privilege
         if (!user.privilege.modifyBot) {
-            return response.FORBIDDEN
+            return null
         }
 
         const delReply = await this.replyDao.delete(rid)
@@ -230,12 +230,12 @@ class BotService {
      * @param {User} user User that makes this operation.
      * @param {ObjectId} mid id of the message to update.
      * @param {Object} data Data to be updated.
-     * @returns Response of Updated Message. If user does not have privilege, return FORBIDDEN.
+     * @returns Updated Message. If user does not have privilege, return null.
      */
     async updateMessage(user, mid, data) {
         // Validate modifier's privilege
         if (!user.privilege.modifyBot) {
-            return response.FORBIDDEN
+            return null
         }
 
         const newMessage = await this.messageDao.update(mid, data)
@@ -254,12 +254,12 @@ class BotService {
      * @param {User} user User that makes this operation.
      * @param {ObjectId} rid id of the reply to update.
      * @param {Object} data Data to be updated.
-     * @returns Updated Reply. If user does not have privilege, return FORBIDDEN.
+     * @returns Updated Reply. If user does not have privilege, return null.
      */
     async updateReply(user, rid, data) {
         // Validate modifier's privilege
         if (!user.privilege.modifyBot) {
-            return response.FORBIDDEN
+            return null
         }
 
         const newReply = await this.replyDao.update(rid, data)
@@ -275,20 +275,40 @@ class BotService {
 
 
     /**
-     * Create a well formatted bot.
-     * @param {User} user User that makes this operation.
-     * @param {*} query Query constraints.
-     * @returns A well formatted object containing all the messages and replies.
+     * Construct a formatted array of objects containing messages and corresponding replies.
+     * @param {Array} message Messages in database.
+     * @param {Array} replies Replies in database. 
+     * @returns [ { message, replies } ]
      */
-    async getBot(user, query) {
-        // TODO: Implement this
-        if (!user.privilege.accessBot) {
-            return response.FORBIDDEN
+    _buildBotList({ messages, replies }) {
+        // TODO: Improve this
+        const bot = []
+
+        for (let msg of messages) {
+            const repliesOfMessage = replies.filter(r => r.fromMessage.toString() === msg._id.toString())
+            bot.push({
+                message: msg,
+                replies: repliesOfMessage
+            })
         }
 
-        const messages = await this.messageDao.search()
+        return bot
+    }
+
+    /**
+     * Create a well formatted bot.
+     * @param {User} user User that makes this operation.
+     * @param {*} query Query constraints on Messages.
+     * @returns A well formatted object containing all the messages and replies: [ { message, replies } ]
+     */
+    async getBot(user, query) {
+        if (!user.privilege.accessBot) {
+            return null
+        }
+
+        const messages = await this.messageDao.search(query)
         const replies = await this.replyDao.search()
-        const bot = { messages, replies }
+        const bot = this._buildBotList({ messages, replies })
         return bot
     }
 

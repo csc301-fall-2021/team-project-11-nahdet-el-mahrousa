@@ -28,7 +28,11 @@ class AdminBotController {
         // TODO: How to do query.
         const query = req.query
         const result = await this.botService.getBot(user, query)
-        return result
+        if (result === null) {
+            return response.FORBIDDEN
+        } else {
+            return respond({ entity: result })
+        }
     }
 
     /**
@@ -43,7 +47,11 @@ class AdminBotController {
         const query = req.query
 
         const result = await this.botService.getMessages(user, query)
-        return result
+        if (result === null) {
+            return response.FORBIDDEN
+        } else {
+            return respond({ entity: result })
+        }
     }
 
     /**
@@ -67,7 +75,11 @@ class AdminBotController {
         } else {
             // Create the message
             const result = await this.botService.createMessage(user, uin.content, uin.label)
-            return result
+            if (result === null) {
+                return response.FORBIDDEN
+            } else {
+                return respond({ entity: result })
+            }
         }
     }
 
@@ -93,7 +105,11 @@ class AdminBotController {
         } else {
             // Create the reply
             const result = await this.botService.createReply(user, uin.content, uin.label, uin.fromMessage, uin.toMessage)
-            return result
+            if (result === null) {
+                return response.FORBIDDEN
+            } else {
+                return respond({ entity: result })
+            }
         }
     }
 
@@ -106,19 +122,22 @@ class AdminBotController {
     async deleteMessage(req, user) {
         // Get user input
         const uin = getInput(req, {
-            mandatory: ['content'],
-            optional: ['label'],
-            optDefaults: { 'label': "" },
-            fromBody: true
+            mandatory: ['mid'],
+            fromBody: true,
+            fromQuery: true
         })
 
         // If not all required fields are satisfied, then return.
         if (uin === undefined) {
             return response.NOT_SATISFIED
         } else {
-            // Create the message
-            const result = await this.botService.createMessage(user, uin.content, uin.label)
-            return result
+            // Delete the message
+            const result = await this.botService.deleteMessage(user, uin.mid)
+            if (result === null) {
+                return response.FORBIDDEN
+            } else {
+                return respond({ entity: result })
+            }
         }
     }
 
@@ -142,8 +161,12 @@ class AdminBotController {
             return response.NOT_SATISFIED
         } else {
             // Create the reply
-            const result = await this.botService.createReply(user, uin.content, uin.label, uin.fromMessage, uin.toMessage)
-            return result
+            const result = await this.botService.deleteReply(user, uin.rid)
+            if (result === null) {
+                return response.FORBIDDEN
+            } else {
+                return respond({ entity: result })
+            }
         }
     }
 }
