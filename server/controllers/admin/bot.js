@@ -92,7 +92,7 @@ class AdminBotController {
     async deleteMessage(req, user) {
         // Get user input
         const uin = getInput(req, {
-            mandatory: ['mid'],
+            mandatory: ['_id'],
             fromBody: true,
             fromQuery: true
         })
@@ -102,10 +102,10 @@ class AdminBotController {
             return response.NOT_SATISFIED
         } else {
             // Delete the message
-            const result = await this.botService.deleteMessage(user, uin.mid)
+            const result = await this.botService.deleteMessage(user, uin._id)
             if (result === null) {
                 return response.FORBIDDEN
-            } else if (result === undefined){
+            } else if (result === undefined) {
                 return response.NOT_FOUND
             } else {
                 return respond({ entity: result })
@@ -122,7 +122,7 @@ class AdminBotController {
     async updateMessage(req, user) {
         // Get user input
         const uin = getInput(req, {
-            mandatory: ['mid'],
+            mandatory: ['_id'],
             optional: ['label', 'content'],
             fromBody: true
         })
@@ -132,11 +132,11 @@ class AdminBotController {
             return response.NOT_SATISFIED
         } else {
             // Update the message
-            const { mid, ...updateBody } = uin  // This filters out id from uin.
-            const result = await this.botService.updateMessage(user, mid, updateBody)
+            const { _id, ...updateBody } = uin  // This filters out id from uin.
+            const result = await this.botService.updateMessage(user, _id, updateBody)
             if (result === null) {
                 return response.FORBIDDEN
-            } else if (result === undefined){
+            } else if (result === undefined) {
                 return response.NOT_FOUND
             } else {
                 return respond({ entity: result })
@@ -182,7 +182,7 @@ class AdminBotController {
     async deleteReply(req, user) {
         // Get user input
         const uin = getInput(req, {
-            mandatory: ['rid'],
+            mandatory: ['_id'],
             fromBody: true,
             fromQuery: true
         })
@@ -192,10 +192,10 @@ class AdminBotController {
             return response.NOT_SATISFIED
         } else {
             // Delete the reply
-            const result = await this.botService.deleteReply(user, uin.rid)
+            const result = await this.botService.deleteReply(user, uin._id)
             if (result === null) {
                 return response.FORBIDDEN
-            } else if (result === undefined){
+            } else if (result === undefined) {
                 return response.NOT_FOUND
             } else {
                 return respond({ entity: result })
@@ -212,7 +212,7 @@ class AdminBotController {
     async updateReply(req, user) {
         // Get user input
         const uin = getInput(req, {
-            mandatory: ['rid'],
+            mandatory: ['_id'],
             optional: ['label', 'content', 'fromMessage', 'toMessage'],
             fromBody: true
         })
@@ -222,11 +222,11 @@ class AdminBotController {
             return response.NOT_SATISFIED
         } else {
             // Update the reply
-            const { rid, ...updateBody } = uin  // This filters out id from uin.
-            const result = await this.botService.updateReply(user, rid, updateBody)
+            const { _id, ...updateBody } = uin  // This filters out id from uin.
+            const result = await this.botService.updateReply(user, _id, updateBody)
             if (result === null) {
                 return response.FORBIDDEN
-            } else if (result === undefined){
+            } else if (result === undefined) {
                 return response.NOT_FOUND
             } else {
                 return respond({ entity: result })
