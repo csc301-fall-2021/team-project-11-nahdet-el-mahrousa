@@ -1,18 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
-import { Button } from 'antd';
+import React from "react";
+import { BrowserRouter } from 'react-router-dom';
+import RenderRoutes from "./router";
+import "./App.scss";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          <Button type="primary">Button</Button>
-        </p>
-      </header>
-    </div>
-  );
+
+class App extends React.Component {
+  render() {
+    return (
+      <BrowserRouter>
+        <RenderRoutes />
+      </BrowserRouter>
+    );
+  }
 }
 
 export default App;

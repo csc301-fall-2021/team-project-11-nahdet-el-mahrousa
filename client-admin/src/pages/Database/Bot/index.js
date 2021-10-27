@@ -6,8 +6,6 @@ import BotTable from './../../../components/Bot/BotTable'
 class BotPage extends React.Component{
 
     returnData() {
-        
-  
         const data = [];
         for (let i = 0; i < 3; ++i) {
             const replies = [];
