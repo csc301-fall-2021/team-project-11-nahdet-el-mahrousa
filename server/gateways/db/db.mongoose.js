@@ -20,7 +20,7 @@ class MongoDBHandler {
     async connect() {
         try {
             await this.mongoose.connect(this.uri)
-            logger.log(`Set up Mongoose connection to ${this.uri}`)
+            logger.log(`Set up Mongoose connection`)
             return true
         } catch (err) {
             logger.log("Cannot connect to the database!", err);
@@ -31,7 +31,7 @@ class MongoDBHandler {
     async disconnect() {
         try {
             await this.mongoose.disconnect()
-            logger.log(`Disconnected Mongoose connection from ${this.uri}`)
+            logger.log(`Disconnected Mongoose`)
             return true
         } catch (err) {
             logger.log(`Disconnect error ${err}`)

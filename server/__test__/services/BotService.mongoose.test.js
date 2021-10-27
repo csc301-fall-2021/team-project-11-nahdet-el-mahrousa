@@ -1,17 +1,13 @@
-const mongoose = require('mongoose')
-const createDB = require('../../gateways/db')
+const MongoDBHandler = require('../../gateways/db/db.mongoose')
 const { MessageDao, ReplyDao } = require('../../dao/mongoose')
 const BotService = require('../../services/bot')
-
-const { ReasonPhrases, StatusCodes } = require('http-status-codes')
-const { respond, response } = require('../../utils/response')
 
 // Mock Data
 const { admin1 } = require('../../assets/user.mock')
 const testMessages = require('../../assets/bot-message.mock').mongoUnitMessages1
 
 describe("BotService.Mongoose Integrated Test", () => {
-    const db = createDB("mongodb://localhost:27017/local-dev")
+    const db = new MongoDBHandler("mongodb://localhost:27017/local-dev")
     const messageDao = new MessageDao(db)
     const replyDao = new ReplyDao(db)
     const botService = new BotService(messageDao, replyDao)
@@ -67,9 +63,9 @@ describe("BotService.Mongoose Integrated Test", () => {
             const baseMessage = testMessages[1]
             const targetMessage = createdMessages[0]
 
-            const newMessage = await botService.updateMessage(admin, targetMessage._id, { content: baseMessage.content, label: baseMessage.label })
+            const newMessage = await botService.updateMessage(admin, targetMessage._id, { content: baseMessage.content })
             expect(newMessage.content).toEqual(baseMessage.content)
-            expect(newMessage.label).toEqual(baseMessage.label)
+            expect(newMessage.label).toEqual(targetMessage.label)
             // Update createdMessage
             createdMessages.shift()
             createdMessages.push(newMessage)

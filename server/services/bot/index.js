@@ -145,7 +145,7 @@ class BotService {
         const newMessage = await this.messageDao.create({ content, label })
 
         if (newMessage !== null) {
-            logger.log(`[${user.username}] CREATED Message \'${label}\'`)
+            logger.log(`[${user.username}] CREATED Message ${newMessage._id} \'${label}\'`)
             return newMessage
         } else {
             logger.log(`[${user.username}] FAILED CREATE Message \'${label}\'`)
@@ -171,11 +171,11 @@ class BotService {
         const newReply = await this.replyDao.create({ content, label, fromMessage, nextMessage })
 
         if (newReply !== null) {
-            logger.log(`[${user.username}] CREATED Reply \'${rid}\'`)
+            logger.log(`[${user.username}] CREATED Reply \'${newReply._id}\'`)
             return newReply
         } else {
-            logger.log(`[${user.username}] FAILED CREATE Reply \'${rid}\'`)
-            return newReply
+            logger.log(`[${user.username}] FAILED CREATE Reply \'${label}\'`)
+            return undefined
         }
     }
 
@@ -194,11 +194,11 @@ class BotService {
         const delMessage = await this.messageDao.delete(mid)
 
         if (delMessage !== null) {
-            logger.log(`[${user.username}] DELETED Message \'${delMessage.label}\'`)
+            logger.log(`[${user.username}] DELETED Message \'${mid}\'`)
             return delMessage
         } else {
-            logger.log(`[${user.username}] FAILED DELETE Message \'${delMessage.label}\'`)
-            return delMessage
+            logger.log(`[${user.username}] FAILED DELETE Message \'${mid}\'`)
+            return undefined
         }
     }
 
@@ -221,7 +221,7 @@ class BotService {
             return delReply
         } else {
             logger.log(`[${user.username}] FAILED DELETE Reply \'${rid}\'`)
-            return delReply
+            return undefined
         }
     }
 
@@ -241,11 +241,11 @@ class BotService {
         const newMessage = await this.messageDao.update(mid, data)
 
         if (newMessage !== null) {
-            logger.log(`[${user.username}] UPDATED Message \'${newMessage.label}\'`)
+            logger.log(`[${user.username}] UPDATED Message \'${mid}\'`)
             return newMessage
         } else {
-            logger.log(`[${user.username}] FAILED UPDATED Message \'${newMessage.label}\'`)
-            return newMessage
+            logger.log(`[${user.username}] FAILED UPDATED Message \'${mid}\'`)
+            return undefined
         }
     }
 
@@ -265,11 +265,11 @@ class BotService {
         const newReply = await this.replyDao.update(rid, data)
 
         if (newReply !== null) {
-            logger.log(`[${user.username}] UPDATED Reply \'${newReply.label}\'`)
+            logger.log(`[${user.username}] UPDATED Reply \'${rid}\'`)
             return newReply
         } else {
-            logger.log(`[${user.username}] FAILED UPDATE Reply \'${newReply.label}\'`)
-            return newReply
+            logger.log(`[${user.username}] FAILED UPDATE Reply \'${rid}\'`)
+            return undefined
         }
     }
 
