@@ -11,8 +11,8 @@ class BotPage extends React.Component{
             const replies = [];
             for (let j = 0; j < 3; ++j) {
                 replies.push({
-                  _id: j,
-                  content: 'sample reply number' + j,
+                  _id: i+':'+j,
+                  content: 'question ' + i + ': sample reply number' + j,
                   toMessage: 300+i,
                   toMessage: 0,
                 });
