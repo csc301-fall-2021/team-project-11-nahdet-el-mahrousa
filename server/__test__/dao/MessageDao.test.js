@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
-const createDB = require('../../gateways/db')
-const MessageDao = require('../../dao/mongoose/MongooseMessageDao')
+const MongoDBHandler = require('../../gateways/db/db.mongoose')
+const { MessageDao } = require('../../dao/mongoose')
 
 // Mock Data
 const testMessages = require('../../assets/bot-message.mock').mongoUnitMessages1
@@ -8,7 +8,7 @@ const testMessages = require('../../assets/bot-message.mock').mongoUnitMessages1
 // > node_modules/.bin/jest --detectOpenHandles -i "MessageDao.test.js"
 
 describe("Mongoose MessageDao Unit Tests", () => {
-    const db = createDB("mongodb://localhost:27017/local-dev")
+    const db = new MongoDBHandler("mongodb://localhost:27017/local-dev")
     const messageDao = new MessageDao(db)
     // var { User, Message, Reply } = require('../../models/models.mongoose')
     const createdMessages = []
@@ -55,16 +55,16 @@ describe("Mongoose MessageDao Unit Tests", () => {
             const originalMessage = createdMessages[0]
             const baseMessage = testMessages[1]
 
-            const updatedMessage = await messageDao.update(originalMessage._id, baseMessage)
+            const updatedMessage = await messageDao.update(originalMessage._id, { content: baseMessage.content })
             expect(updatedMessage !== undefined).toBeTruthy()
             expect(updatedMessage.content).toEqual(baseMessage.content)
+            expect(updatedMessage.label).toEqual(originalMessage.label)
             createdMessages[0] = updatedMessage
 
             const queryMessage = await messageDao.get(updatedMessage._id)
             expect(queryMessage._id).toEqual(updatedMessage._id)
-            for (let field of ['label', 'content']) {
-                expect(queryMessage[field]).toEqual(baseMessage[field])
-            }
+            expect(queryMessage['content']).toEqual(baseMessage['content'])
+            expect(queryMessage['label']).toEqual(originalMessage['label'])
         });
     });
 
@@ -78,10 +78,10 @@ describe("Mongoose MessageDao Unit Tests", () => {
             })
 
             test("negative update", async () => {
-                const updateResult = await messageDao.update(targetId, { content: "negative update invalid id"})
+                const updateResult = await messageDao.update(targetId, { content: "negative update invalid id" })
                 expect(updateResult).toBe(null)
             })
         })
-        
+
     })
 });
