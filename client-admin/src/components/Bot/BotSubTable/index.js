@@ -20,7 +20,7 @@ render() {
         ),
       },
     ];
-    return <Table columns={columns} dataSource={this.props.data.replies} pagination={false} />;
+    return <Table rowKey={(record) => record._id} columns={columns} dataSource={this.props.data.replies} pagination={false} />;
 }
 }
 export default BotSubTable;

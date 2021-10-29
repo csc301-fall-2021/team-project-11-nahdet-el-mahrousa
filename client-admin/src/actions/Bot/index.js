@@ -1,34 +1,14 @@
 
 import store from '../../store/store'
 import { replaceMessages } from '../../store/messages/message-slice'
+import { getSurvey } from '../../api/bot-api'
 
-const returnData = () =>{
-    const data = [];
-    for (let i = 0; i < 3; ++i) {
-        const replies = [];
-        for (let j = 0; j < 3; ++j) {
-            replies.push({
-              _id: i+':'+j,
-              content: 'question ' + i + ': sample reply number' + j,
-              toMessage: 300+i,
-              toMessage: 0,
-            });
-          }
-
-          const message = {
-            message: {
-                _id: i,
-                content: 'Sample Question number ' +i,
-              },
-              replies
-        }
-      data.push(message);
-    }
-    return data;
+    function dispatchMessage(message) {
+        store.dispatch(replaceMessages(message))
     }
 
     export function getMessageFromBackend() {
-        const data = returnData()
+        getSurvey(dispatchMessage)
         // const dispatch = useDispatch()
-        store.dispatch(replaceMessages(data))
+        // store.dispatch(replaceMessages(data))
     }
