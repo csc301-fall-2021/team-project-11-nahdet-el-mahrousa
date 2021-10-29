@@ -5,6 +5,7 @@ import Message from "components/Message";
 import Reply from "components/Reply";
 // import Option from "components/Option";
 import Result from "components/Result";
+import "./index.scss";
 
 import Box from '@mui/material/Box';
 import {createTheme, ThemeProvider } from '@mui/material/styles';
@@ -39,7 +40,6 @@ class HomePage extends React.Component {
                             <Box
                                 component="main"
                                 sx={{
-                                    backgroundColor: '#E5E5E5',
                                     flexGrow: 1,
                                     height: '100vh',
                                     overflow: 'auto',
