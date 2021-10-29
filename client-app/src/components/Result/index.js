@@ -1,28 +1,15 @@
 import React from 'react';
 import Box from '@mui/material/Box';
+import "./index.scss";
 
 class Result extends React.Component {
 
     render() {
         return (
             <div className="result">
-                <Box
-                    sx={{
-                        width: 300,
-                        height: 300,
-                        borderRadius: 5,
-                        backgroundColor: '#FFFFFF',
-                        boxShadow: 2,
-                        m: 1, // margin: theme.spacing(1)
-                        p: {
-                        xs: 3, // [theme.breakpoints.up('xs')]: { padding: theme.spacing(1) }
-                        },
-                        zIndex: 'tooltip', // theme.zIndex.tooltip
-                        color: '#4D4D4D'
-                    }}
-                >
+                <div className="result-container">
                     This is a result.
-                </Box>
+                </div>
             </div>
         )
     }

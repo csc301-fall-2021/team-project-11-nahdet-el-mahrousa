@@ -1,14 +1,29 @@
 import React from 'react';
 
-import Bot from "components/Bot";
 import Message from "components/Message";
 import Reply from "components/Reply";
-// import Option from "components/Option";
 import Result from "components/Result";
 import "./index.scss";
 
 import Box from '@mui/material/Box';
 import {createTheme, ThemeProvider } from '@mui/material/styles';
+
+document.body.style.backgroundColor = "#E5E5E5";
+
+// const mockData = {
+//     message: {
+//         content: "message 1", 
+//         label: "hhh",
+//         fromMessage: "msg 1",
+//         toMessage: "msg 2"
+//     },
+//     options: {
+//         content: "option 1",
+//     },
+//     {
+//         content: "option 2",
+//     }
+// }
 
 const mdTheme = createTheme({
     status: {
@@ -33,27 +48,39 @@ const mdTheme = createTheme({
 class HomePage extends React.Component {
     render() {
         return (
-            <div className="page home-page">
-                <div className="main-view home-main">    
-                    <ThemeProvider theme={mdTheme}>
-                        <Box sx={{ display: 'flex' }}>
-                            <Box
-                                component="main"
-                                sx={{
-                                    flexGrow: 1,
-                                    height: '100vh',
-                                    overflow: 'auto',
-                                }}
-                            >
-                                <Bot />
-                                <Message />
-                                <Reply />
-                                <Result />
-                            </Box>
-                        </Box>
-                    </ThemeProvider>
+            <div class="row">
+                <div class="column side">
+                    <h1> Dashboard </h1>
+                </div>
+                <div class="column middle">
+                    <Message /> 
+                </div>
+                <div class="column side">
+                    <Reply />
+                </div>
+                <div class="bottom">
                 </div>
             </div>
+                
+                
+                // <div className="main-view home-main"> 
+                //     {/* <ThemeProvider theme={mdTheme}>
+                //         <Box sx={{ display: 'flex' }}>
+                //             <Box
+                //                 component="main"
+                //                 sx={{
+                //                     flexGrow: 1,
+                //                     height: '100vh',
+                //                     overflow: 'auto',
+                //                 }}
+                //             >
+                //                 <Bot />
+                //                 <Message />
+                //                 <Reply />
+                //             </Box>
+                //         </Box>
+                //     </ThemeProvider> */}
+                // </div>
         )
     }
 }
