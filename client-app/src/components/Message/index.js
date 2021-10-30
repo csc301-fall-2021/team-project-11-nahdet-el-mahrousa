@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import "./index.scss";
 import Reply from "components/Reply";
 
@@ -13,6 +13,10 @@ const ColoredLine = ({ color }) => (
     />
 );
 
+function makeReply() {
+    return <Reply />
+}
+
 class Message extends React.Component {
 
     render() {
@@ -22,14 +26,9 @@ class Message extends React.Component {
                 <div className="message-container">
                     This is a message.
                     <ColoredLine color = "#E7E7E7" />
-                    <button className="option" onclick="makeReply()">
+                    <button className="option" onclick={makeReply}>
                         Option 1
                     </button>
-                    <script>
-                        function makeReply() {
-                            <Reply />
-                        }
-                    </script>
                 </div>
             </div>
         )

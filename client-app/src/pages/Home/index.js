@@ -2,11 +2,7 @@ import React from 'react';
 
 import Message from "components/Message";
 import Reply from "components/Reply";
-import Result from "components/Result";
 import "./index.scss";
-
-import Box from '@mui/material/Box';
-import {createTheme, ThemeProvider } from '@mui/material/styles';
 
 document.body.style.backgroundColor = "#E5E5E5";
 
@@ -25,32 +21,20 @@ document.body.style.backgroundColor = "#E5E5E5";
 //     }
 // }
 
-const mdTheme = createTheme({
-    status: {
-        danger: '#e53e3e',
-    },
-    palette: {
-        primary: {
-            main: '#0971f1',
-            darker: '#053e85',
-        },
-        neutral: {
-            main: '#64748B',
-            contrastText: '#fff',
-        },
-        green: {
-            main: '#439D7D',
-            contrastText: '#fff',
-        }
-    },
-});
-
 class HomePage extends React.Component {
     render() {
         return (
             <div class="row">
                 <div class="column side">
-                    <h1> Dashboard </h1>
+                    <div className="helper-body">
+                        <div className="helper-top"></div>
+                        <div className="helper-name">Nahdet El Mahrousa Enterpreneur Helper</div>
+                        <div className="FAQ"></div>
+                        <div className="search"></div>
+                        <div className="search-icon1"></div>
+                        <div className="search-icon2"></div>
+                    </div>
+                    
                 </div>
                 <div class="column middle">
                     <Message /> 
