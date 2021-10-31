@@ -14,7 +14,7 @@ export function getBot(dispatchMessage) {
       }) .catch((error) => {console.log(error)});
 }
 
-// export function createMessage() {
+// export function createMessage(content, label, dispatchReplaceMessages) {
 //    axios({
 //       method: 'post',
 //       url: "https://nm-bot-server.herokuapp.com/admin/bot/message",
@@ -49,15 +49,11 @@ export function getBot(dispatchMessage) {
 //    });
 // }
 // export function createReply() {
-//    axios({
+//    return axios({
 //       method: 'post',
 //       url: "https://nm-bot-server.herokuapp.com/admin/bot/reply",
 //       data: []
 //    })
-//    .then((response) => {
-//    }, (error) => {
-//       console.log(error);
-//    });
 // }
 
 // export function editReply() {

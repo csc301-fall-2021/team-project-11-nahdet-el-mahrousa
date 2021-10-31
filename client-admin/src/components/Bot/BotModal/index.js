@@ -3,13 +3,16 @@ import { Table, Badge, Menu, Dropdown, Space } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { Modal, Button } from "antd";
 import { Input } from 'antd';
+import { sendReplyToBackend } from '../../../actions/Bot/index'
+import BotWarning from '../BotWarning'
 
 export function MessageOptionMenu(props) {
   console.log(props)
   const [visible, setVisible] = React.useState(false);
   const [confirmLoading, setConfirmLoading] = React.useState(false);
-  const [modalText, setModalText] = React.useState(props.msgId);
-
+  const [modalTextContent, setModalTextContent] = React.useState(props.msgId);
+  const [modalTextLabel, setModalTextLabel] = React.useState(props.msgId);
+  const [displayWarning, setdisplayWarning] = React.useState(false);
   const data = useSelector(state => {
     console.log({state})
     return state.surveyData.messages
@@ -19,14 +22,30 @@ export function MessageOptionMenu(props) {
     setVisible(true);
   };
 
+
   const handleOk = () => {
     // setModalText("The modal will be closed after two seconds");
-    console.log(modalText);
-    setConfirmLoading(true);
-    setTimeout(() => {
-      setVisible(false);
-      setConfirmLoading(false);
-    }, 2000);
+    console.log(modalTextContent);
+    console.log(modalTextLabel);
+    if (modalTextContent === "") {
+      setdisplayWarning(true);
+    } else {
+      setdisplayWarning(false);
+      console.log(displayWarning)
+      setConfirmLoading(true);
+      setTimeout(() => {
+        setVisible(false);
+        setConfirmLoading(false);
+      }, 2000);
+      // sendReplyToBackend(modalTextContent, modalTextLabel, props.msgId)
+      // .then((response) => {
+      //   setVisible(false);
+      //   setConfirmLoading(false);
+      // }, (error) => {
+      //     console.log(error);
+      //     //display different error message
+      // });
+    }
   };
 
   const handleCancel = () => {
@@ -34,9 +53,13 @@ export function MessageOptionMenu(props) {
     setVisible(false);
   };
 
-  const handleNewOptionText = (event) => {
+  const handleNewOptionTextContent = (event) => {
     console.log(event.target.value);
-    setModalText(event.target.value);
+    setModalTextContent(event.target.value);
+  }
+  const handleNewOptionTextLabel = (event) => {
+    console.log(event.target.value);
+    setModalTextLabel(event.target.value);
   }
 
   return (
@@ -53,7 +76,9 @@ export function MessageOptionMenu(props) {
         confirmLoading={confirmLoading}
         onCancel={handleCancel}
       >
-        <Input placeholder="Enter new options" onChange={handleNewOptionText}/>
+        <Input placeholder="Content" onChange={handleNewOptionTextContent}/>
+        <Input placeholder="Label" onChange={handleNewOptionTextLabel}/>
+        <BotWarning displayWarning={displayWarning}></BotWarning>
       </Modal>
     </div>
   );

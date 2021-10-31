@@ -1,7 +1,7 @@
 
 import store from '../../store/store'
 import { replaceMessages } from '../../store/messages/message-slice'
-import { getBot } from '../../api/bot-api'
+import { getBot, createReply } from '../../api/bot-api'
 
     function dispatchMessage(message) {
         store.dispatch(replaceMessages(message))
@@ -12,3 +12,8 @@ import { getBot } from '../../api/bot-api'
         // const dispatch = useDispatch()
         // store.dispatch(replaceMessages(data))
     }
+
+    // export function sendReplyToBackend(content, label, from_id) {
+    //     return createReply(content, label, from_id)
+    // }
+
