@@ -27,7 +27,7 @@ export function MessageOptionMenu(props) {
     // setModalText("The modal will be closed after two seconds");
     console.log(modalTextContent);
     console.log(modalTextLabel);
-    if (modalTextContent === "") {
+    if (modalTextContent === "" | modalTextContent === props.msgId) {
       setdisplayWarning(true);
     } else {
       setdisplayWarning(false);
@@ -77,8 +77,8 @@ export function MessageOptionMenu(props) {
         onCancel={handleCancel}
       >
         <Input placeholder="Content" onChange={handleNewOptionTextContent}/>
-        <Input placeholder="Label" onChange={handleNewOptionTextLabel}/>
         <BotWarning displayWarning={displayWarning}></BotWarning>
+        <Input placeholder="Label (Optional)" onChange={handleNewOptionTextLabel}/>
       </Modal>
     </div>
   );
