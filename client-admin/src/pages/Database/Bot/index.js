@@ -1,5 +1,5 @@
 import React from 'react';
-import {Messages} from '../../../store/messages/messages'
+import {Messages} from '../../../components/Bot/BotMessages/messages'
 import { getMessageFromBackend } from '../../../actions/Bot/index'
 
 

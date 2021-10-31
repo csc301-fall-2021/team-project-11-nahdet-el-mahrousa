@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import BotTable from '../../components/Bot/BotTable'
+import BotTable from '../BotTable'
 
 export function Messages(){
     const data = useSelector(state => {
