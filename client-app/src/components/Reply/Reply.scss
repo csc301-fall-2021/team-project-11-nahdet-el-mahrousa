@@ -1,0 +1,23 @@
+@import "../../styles/ChatBubble.scss";
+
+.reply-container {
+    width: 100%;
+    margin-bottom: 2rem;
+    margin-left: auto;
+    
+    
+    .reply-bubble {
+        margin-left: auto;
+        width: 40%;
+        background-color: #439d7d;
+        @include chat-bubble;
+
+        .reply-content {
+            color: white;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            font-size: large;
+            text-align: right;
+        }
+    }
+}

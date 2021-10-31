@@ -1,34 +1,35 @@
 import React, { useState } from 'react';
-import "./index.scss";
-import Reply from "components/Reply";
-
-const ColoredLine = ({ color }) => (
-    <hr
-        style={{
-            color: color,
-            backgroundColor: color,
-            height: 1,
-            border: 0
-        }}
-    />
-);
-
-function makeReply() {
-    return <Reply />
-}
+import "./Message.scss";
 
 class Message extends React.Component {
 
     render() {
+        const { message, replies, makeReply } = this.props
         return (
-            <div>
-                <avatar class="avatar"></avatar>
-                <div className="message-container">
-                    This is a message.
-                    <ColoredLine color = "#E7E7E7" />
-                    <button className="option" onclick={makeReply}>
-                        Option 1
-                    </button>
+            <div className="message-container">
+                <div class="avatar"></div>
+                <div className="message-bubble">
+                    <div className="message-content">
+                        {message.content}
+                    </div>
+
+                    <div className="replies-container">
+                        {
+                            replies.map((reply) => {
+                                return (
+                                    <div className="reply-option">
+                                        <button
+                                            className="reply-option-btn"
+                                            onClick={() => makeReply(reply)}
+                                        >
+                                            {reply.content}
+                                        </button>
+                                    </div>
+
+                                )
+                            })
+                        }
+                    </div>
                 </div>
             </div>
         )
