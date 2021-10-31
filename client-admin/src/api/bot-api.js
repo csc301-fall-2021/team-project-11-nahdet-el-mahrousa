@@ -1,6 +1,6 @@
 import {getItems, postItems, putItems, deleteItems} from "../util/http"
 
-export function getSurvey(dispatchMessage) {
+export function getBot(dispatchMessage) {
       let msg = [];
       getItems("/admin/bot")
       .then((response) => {
