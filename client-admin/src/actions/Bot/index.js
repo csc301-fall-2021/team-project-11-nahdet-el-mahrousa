@@ -13,7 +13,7 @@ import { getBot, createReply } from '../../api/bot-api'
         // store.dispatch(replaceMessages(data))
     }
 
-    // export function sendReplyToBackend(content, label, from_id) {
-    //     return createReply(content, label, from_id)
-    // }
+    export function sendReplyToBackend(content, label, from_id) {
+        return createReply({content, label, fromMessage: from_id, toMessage: null}, dispatchMessage)
+    }
 

@@ -10,8 +10,8 @@ export function MessageOptionMenu(props) {
   console.log(props)
   const [visible, setVisible] = React.useState(false);
   const [confirmLoading, setConfirmLoading] = React.useState(false);
-  const [modalTextContent, setModalTextContent] = React.useState(props.msgId);
-  const [modalTextLabel, setModalTextLabel] = React.useState(props.msgId);
+  const [modalTextContent, setModalTextContent] = React.useState('');
+  const [modalTextLabel, setModalTextLabel] = React.useState('');
   const [displayWarning, setdisplayWarning] = React.useState(false);
   const data = useSelector(state => {
     console.log({state})
@@ -27,24 +27,16 @@ export function MessageOptionMenu(props) {
     // setModalText("The modal will be closed after two seconds");
     console.log(modalTextContent);
     console.log(modalTextLabel);
-    if (modalTextContent === "" | modalTextContent === props.msgId) {
+    if (modalTextContent === "") {
       setdisplayWarning(true);
     } else {
       setdisplayWarning(false);
       console.log(displayWarning)
       setConfirmLoading(true);
-      setTimeout(() => {
-        setVisible(false);
-        setConfirmLoading(false);
-      }, 2000);
-      // sendReplyToBackend(modalTextContent, modalTextLabel, props.msgId)
-      // .then((response) => {
-      //   setVisible(false);
-      //   setConfirmLoading(false);
-      // }, (error) => {
-      //     console.log(error);
-      //     //display different error message
-      // });
+      sendReplyToBackend(modalTextContent, modalTextLabel, props.msgId)
+
+      setVisible(false);
+      setConfirmLoading(false);
     }
   };
 

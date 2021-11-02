@@ -48,13 +48,20 @@ export function getBot(dispatchMessage) {
 //       console.log(error);
 //    });
 // }
-// export function createReply() {
-//    return axios({
-//       method: 'post',
-//       url: "https://nm-bot-server.herokuapp.com/admin/bot/reply",
-//       data: []
-//    })
-// }
+export function createReply(data, dispatchMessage) {
+   let msg = [];
+   console.log(data)
+   postItems("/admin/bot/reply", data)
+   .then((response) => {
+      if(response.statusCode === 200){
+
+         console.log(response.msg);
+         getBot(dispatchMessage)
+      } else {
+         console.log(response.msg);
+      }
+   }) .catch((error) => {console.log(error)});
+}
 
 // export function editReply() {
 //    axios({
