@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import "./Message.scss";
 
 class Message extends React.Component {
@@ -25,7 +25,6 @@ class Message extends React.Component {
                                             {reply.content}
                                         </button>
                                     </div>
-
                                 )
                             })
                         }

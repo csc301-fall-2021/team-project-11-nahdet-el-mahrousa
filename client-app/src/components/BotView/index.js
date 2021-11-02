@@ -2,7 +2,10 @@ import React from 'react';
 import Message from 'components/Message';
 import Reply from 'components/Reply';
 
+import { initChat, makeReply } from "actions/Bot";
+
 import "./BotView.scss"
+import StartButton from 'components/StartButton';
 
 const mockChat = [
     {
@@ -25,18 +28,18 @@ class BotView extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            chat: mockChat
+            chat: []
         }
     }
-
-    makeReply(reply) {
-        console.log(reply.toMessage)
-    }
+    // makeReply(reply) {
+    //     console.log(reply.toMessage)
+    // }
 
     render() {
         return (
             <div className="bot-view">
                 <div className="bot-chat-container">
+                    <StartButton initChat={() => initChat(this)} />
                     {
                         this.state.chat.map((chatItem) => {
                             if ("message" in chatItem) {
@@ -44,7 +47,7 @@ class BotView extends React.Component {
                                     <Message
                                         message={chatItem.message}
                                         replies={chatItem.replies}
-                                        makeReply={this.makeReply}
+                                        makeReply={(reply) => makeReply(this, reply)}
                                     />
                                 )
                             } else if ("reply" in chatItem) {
