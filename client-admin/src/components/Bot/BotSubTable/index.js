@@ -1,21 +1,22 @@
 import React from 'react';
 import { Table,Space } from 'antd';
-
+import { deleteReplyToBackend } from '../../../actions/Bot/index'
 
 
 class BotSubTable extends React.Component{
+
 render() {
+
     const columns = [
       { title: 'Response', dataIndex: 'content', key: 'content' },
       { title: 'To Msg', dataIndex: 'toMessage', key: 'toMessage' },
       {
         title: 'Action',
-        dataIndex: 'operation',
-        key: 'operation',
-        render: () => (
+        key: '_id',
+        render: (data) => (
           <Space size="middle">
             <a>EDIT</a>
-            <a>DELETE</a>
+            <a onClick={() => deleteReplyToBackend(data._id)}>DELETE</a>
           </Space>
         ),
       },

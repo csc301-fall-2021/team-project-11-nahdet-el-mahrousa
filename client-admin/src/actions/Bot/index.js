@@ -1,7 +1,7 @@
 
 import store from '../../store/store'
 import { replaceMessages } from '../../store/messages/message-slice'
-import { getBot, createReply } from '../../api/bot-api'
+import { getBot, createReply, deleteReply, editReply } from '../../api/bot-api'
 
     function dispatchMessage(message) {
         store.dispatch(replaceMessages(message))
@@ -13,7 +13,19 @@ import { getBot, createReply } from '../../api/bot-api'
         // store.dispatch(replaceMessages(data))
     }
 
-    export function sendReplyToBackend(content, label, from_id) {
-        return createReply({content, label, fromMessage: from_id, toMessage: null}, dispatchMessage)
+    export function sendReplyToBackend(_id, content, label, fromMessage, toMessage) {
+        label = label ? label : ''
+        toMessage = toMessage ? toMessage : ''
+        fromMessage = fromMessage ? fromMessage : ''
+        if (!_id){
+            return createReply({content, label, fromMessage, toMessage}, dispatchMessage)
+        } else {
+            return editReply({_id, content, label, fromMessage, toMessage}, dispatchMessage)
+        }
     }
+
+    export function deleteReplyToBackend(_id) {
+        return deleteReply({ _id }, dispatchMessage)
+    }
+
 

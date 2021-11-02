@@ -1,4 +1,4 @@
-import {getItems, postItems, putItems, deleteItems} from "../util/http"
+import {getItems, postItems, deleteItems, putItems} from "../util/http"
 
 export function getBot(dispatchMessage) {
       let msg = [];
@@ -37,17 +37,21 @@ export function getBot(dispatchMessage) {
 //       console.log(error);
 //    });
 // }
-// export function deleteMessage() {
-//    axios({
-//       method: 'delete',
-//       url: "https://nm-bot-server.herokuapp.com/admin/bot/message",
-//       data: []
-//    })
-//    .then((response) => {
-//    }, (error) => {
-//       console.log(error);
-//    });
-// }
+export function deleteReply(data, dispatchMessage) {
+   let msg = [];
+   console.log(data)
+   deleteItems("/admin/bot/reply", data)
+   .then((response) => {
+      if(response.statusCode === 200){
+
+         console.log(response.msg);
+         getBot(dispatchMessage)
+      } else {
+         console.log(response.msg);
+      }
+   }) .catch((error) => {console.log(error)});
+}
+
 export function createReply(data, dispatchMessage) {
    let msg = [];
    console.log(data)
@@ -63,17 +67,21 @@ export function createReply(data, dispatchMessage) {
    }) .catch((error) => {console.log(error)});
 }
 
-// export function editReply() {
-//    axios({
-//       method: 'put',
-//       url: "https://nm-bot-server.herokuapp.com/admin/bot/reply",
-//       data: []
-//    })
-//    .then((response) => {
-//    }, (error) => {
-//       console.log(error);
-//    });
-// }
+export function editReply(data, dispatchMessage) {
+   let msg = [];
+   console.log(data)
+   putItems("/admin/bot/reply", data)
+   .then((response) => {
+      if(response.statusCode === 200){
+
+         console.log(response.msg);
+         getBot(dispatchMessage)
+      } else {
+         console.log(response.msg);
+      }
+   }) .catch((error) => {console.log(error)});
+}
+
 // export function deleteReply() {
 //    axios({
 //       method: 'delete',

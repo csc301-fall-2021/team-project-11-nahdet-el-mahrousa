@@ -10,8 +10,8 @@ export function MessageOptionMenu(props) {
   console.log(props)
   const [visible, setVisible] = React.useState(false);
   const [confirmLoading, setConfirmLoading] = React.useState(false);
-  const [modalTextContent, setModalTextContent] = React.useState('');
-  const [modalTextLabel, setModalTextLabel] = React.useState('');
+  const [modalTextContent, setModalTextContent] = React.useState(props.content);
+  const [modalTextLabel, setModalTextLabel] = React.useState(props.label);
   const [displayWarning, setdisplayWarning] = React.useState(false);
   const data = useSelector(state => {
     console.log({state})
@@ -33,7 +33,7 @@ export function MessageOptionMenu(props) {
       setdisplayWarning(false);
       console.log(displayWarning)
       setConfirmLoading(true);
-      sendReplyToBackend(modalTextContent, modalTextLabel, props.msgId)
+      sendReplyToBackend(props._id, modalTextContent, modalTextLabel, props.msgId, props.toMsgId)
 
       setVisible(false);
       setConfirmLoading(false);
