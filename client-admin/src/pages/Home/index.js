@@ -7,7 +7,6 @@ class HomePage extends React.Component {
         return (
             <div className="page home-page">
                 <div className="main-view home-main">
-                    <h1>HOME PAGE</h1>
 
                     <Menu />
                 </div>
