@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Login from "components/Login"
 import Menu from "components/Menu";
 
 class HomePage extends React.Component {
@@ -7,8 +7,7 @@ class HomePage extends React.Component {
         return (
             <div className="page home-page">
                 <div className="main-view home-main">
-
-                    <Menu />
+                    <Login />
                 </div>
                 <div className="map-view home-map">
 
