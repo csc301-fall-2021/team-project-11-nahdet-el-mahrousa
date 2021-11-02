@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { state, useState } from 'react';
+import { Link } from 'react-router-dom'
 import { Form, Input, Button, Checkbox, Avatar } from 'antd';
 import {
     UserOutlined,
 } from "@ant-design/icons";
 import "./index.css";
 
-const LogIn = () => {
+
+const LoginPage = () => {
+  
   const onFinish = (values) => {
     console.log('Success:', values);
   };
@@ -31,7 +34,8 @@ const LogIn = () => {
       autoComplete="off"
       className="userLogIn"
     >
-      <Avatar size={100} icon={<UserOutlined />} style={{ marginLeft: 800, marginBottom:30, marginTop:30}} className="userAvatar"/>
+      
+      <Avatar size={100} icon={<UserOutlined />} style={{marginLeft: 800, marginTop: 30, marginBottom: 30}}/>
       <Form.Item
         label="Username"
         name="username"
@@ -75,13 +79,15 @@ const LogIn = () => {
           span: 16,
         }}
       >
-        <Button type="primary" htmlType="submit">
-          Submit
-        </Button>
+        <Link to="/HOME">
+          <Button type="primary" htmlType="submit" onClick={() => console.log('')}>
+            Submit 
+          </Button>
+        </Link>
       </Form.Item>
     </Form>
   );
 };
 
-export default LogIn;
+export default LoginPage;
 
