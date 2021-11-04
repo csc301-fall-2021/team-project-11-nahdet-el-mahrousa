@@ -9,19 +9,25 @@ export const initChat = (msgQueue) => {
     const newQueue = [...msgQueue.state.chat];
 
     // get first msg from API
-    const response = {
-        msg: "OK", statusCode: 200,
-        entity: {
-            message: { content: "Hello, welcome!" },
-            replies: [{ content: "let's go!", toMessage: "tm3" }, { content: "I'll leave", toMessage: "tm2" }]
-        }
-    }
+    // const response = {
+    //     msg: "OK", statusCode: 200,
+    //     entity: {
+    //         message: { content: "Hello, welcome!" },
+    //         replies: [{ content: "let's go!", toMessage: "tm3" }, { content: "I'll leave", toMessage: "tm2" }]
+    //     }
+    // }
 
-    const firstMessage = getFirstMessage();
-    newQueue.push(firstMessage);
-    msgQueue.setState({
-        chat: newQueue
+    getFirstMessage()
+    .then((entity) => {
+        console.log(entity);
+        newQueue.push(entity);
+        msgQueue.setState({
+            chat: newQueue
+        });
+    }).catch((error) => {
+        console.log(error)
     });
+    
 }
 
 // Function to add a reply, needs to be exported
@@ -53,8 +59,9 @@ export const makeReply = (msgQueue, reply) => {
     }
 
     // With the response, add a new Message to msgQueue
-    const newMessage = getNextMessage(newQueue);
-    newQueue.push(newMessage)
+    // const newMessage = getNextMessage(newQueue);
+    const newMessage = response.entity;
+    newQueue.push(newMessage);
     msgQueue.setState({
         chat: newQueue
     });
