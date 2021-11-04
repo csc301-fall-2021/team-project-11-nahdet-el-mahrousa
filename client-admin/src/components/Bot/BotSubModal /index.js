@@ -2,29 +2,24 @@ import React, { useState } from "react";
 import { Table, Badge, Menu, Dropdown, Space } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { Modal, Button, Input } from "antd";
-import { sendReplyToBackend, sendMessageToBackend, deleteMessageToBackend} from '../../../actions/Bot/index'
+import { sendReplyToBackend, deleteReplyToBackend} from '../../../actions/Bot/index'
 import BotWarning from '../BotWarning'
 
-export function MessageOptionMenu(props) {
-  console.log(props)
+export function ReplyOptionMenu(props) {
+  console.log(props.data.content)
   const [visible, setVisible] = useState(false);
-  const [visibleEdit, setVisibleEdit] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
-  const [modalTextContent, setModalTextContent] = useState(props.msg.content);
-  const [modalTextLabel, setModalTextLabel] = useState(props.msg.label);
+  const [modalTextContent, setModalTextContent] = useState(props.data.content);
+  const [modalTextLabel, setModalTextLabel] = useState(props.data.label);
   const [displayWarning, setDisplayWarning] = useState(false);
 
-  console.log(modalTextContent, props.msg.content)
   const data = useSelector(state => {
     console.log({ state })
     return state.surveyData.messages
   });
 
-  const showReplyModal = () => {
+  const showModal = () => {
     setVisible(true);
-  }; 
-  const showEditModal = () => {
-    setVisibleEdit(true);
   };
 
 
@@ -38,24 +33,9 @@ export function MessageOptionMenu(props) {
       setDisplayWarning(false);
       console.log(displayWarning)
       setConfirmLoading(true);
-      sendReplyToBackend('', modalTextContent, modalTextLabel, props.msg._id, '')
+      sendReplyToBackend(props.data._id, modalTextContent, modalTextLabel, props.data.fromMessage, props.data.toMessage)
 
       setVisible(false);
-      setConfirmLoading(false);
-    }
-  };
-  const handleEditOk = () => {
-    // setModalText("The modal will be closed after two seconds");
-    console.log(modalTextContent);
-    console.log(modalTextLabel);
-    if (modalTextContent === "") {
-      setDisplayWarning(true);
-    } else {
-      setDisplayWarning(false);
-      console.log(displayWarning)
-      setConfirmLoading(true);
-      sendMessageToBackend(props.msg._id, modalTextContent, modalTextLabel)
-      setVisibleEdit(false);
       setConfirmLoading(false);
     }
   };
@@ -63,7 +43,6 @@ export function MessageOptionMenu(props) {
   const handleCancel = () => {
     console.log("Clicked cancel button");
     setVisible(false);
-    setVisibleEdit(false);
   };
 
   const handleNewOptionTextContent = (event) => {
@@ -78,25 +57,13 @@ export function MessageOptionMenu(props) {
   return (
     <div>
       <Space size="middle">
-        <a onClick={showEditModal}>EDIT</a>
-        <a onClick={() => deleteMessageToBackend(props.msg._id)}>DELETE</a>
-        <a onClick={showReplyModal}>NEW OPTION</a>
+        <a onClick={showModal}>EDIT</a>
+        <a onClick={() => deleteReplyToBackend(props.data._id)}>DELETE</a>
       </Space>
       <Modal
-        title="Add New Reply"
+        title="Title"
         visible={visible}
         onOk={handleOk}
-        confirmLoading={confirmLoading}
-        onCancel={handleCancel}
-      >
-        <Input placeholder="Content" onChange={handleNewOptionTextContent} />
-        <BotWarning displayWarning={displayWarning}></BotWarning>
-        <Input placeholder="Label (Optional)" onChange={handleNewOptionTextLabel} />
-      </Modal>
-      <Modal
-        title="Edit Message"
-        visible={visibleEdit}
-        onOk={handleEditOk}
         confirmLoading={confirmLoading}
         onCancel={handleCancel}
       >

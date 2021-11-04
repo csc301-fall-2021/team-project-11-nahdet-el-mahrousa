@@ -14,29 +14,50 @@ export function getBot(dispatchMessage) {
       }) .catch((error) => {console.log(error)});
 }
 
-// export function createMessage(content, label, dispatchReplaceMessages) {
-//    axios({
-//       method: 'post',
-//       url: "https://nm-bot-server.herokuapp.com/admin/bot/message",
-//       data: []
-//    })
-//    .then((response) => {
-//    }, (error) => {
-//       console.log(error);
-//    });
-// }
+export function createMessage(data, dispatchMessage) {
+   let msg = [];
+   console.log(data)
+   postItems("/admin/bot/message", data)
+   .then((response) => {
+      if(response.statusCode === 200){
 
-// export function editMessage() {
-//    axios({
-//       method: 'put',
-//       url: "https://nm-bot-server.herokuapp.com/admin/bot/message",
-//       data: []
-//    })
-//    .then((response) => {
-//    }, (error) => {
-//       console.log(error);
-//    });
-// }
+         console.log(response.msg);
+         getBot(dispatchMessage)
+      } else {
+         console.log(response.msg);
+      }
+   }) .catch((error) => {console.log(error)});
+}
+
+export function deleteMessage(data, dispatchMessage) {
+   let msg = [];
+   console.log(data)
+   deleteItems("/admin/bot/message", data)
+   .then((response) => {
+      if(response.statusCode === 200){
+
+         console.log(response.msg);
+         getBot(dispatchMessage)
+      } else {
+         console.log(response.msg);
+      }
+   }) .catch((error) => {console.log(error)});
+}
+
+export function editMessage(data, dispatchMessage) {
+   let msg = [];
+   console.log(data)
+   putItems("/admin/bot/message", data)
+   .then((response) => {
+      if(response.statusCode === 200){
+
+         console.log(response.msg);
+         getBot(dispatchMessage)
+      } else {
+         console.log(response.msg);
+      }
+   }) .catch((error) => {console.log(error)});
+}
 export function deleteReply(data, dispatchMessage) {
    let msg = [];
    console.log(data)

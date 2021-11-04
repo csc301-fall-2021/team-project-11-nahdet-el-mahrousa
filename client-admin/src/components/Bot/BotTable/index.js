@@ -20,7 +20,7 @@ NestedTable() {
       { title: 'ID',  render: (data) => <span>{data.message._id}</span> },
       { title: 'Question', render: (data) => <span>{data.message.content}</span>},
       { title: 'Action', key: 'operation', render: (data) => (
-        <MessageOptionMenu msgId={data.message._id}></MessageOptionMenu>
+        <MessageOptionMenu msg={data.message}></MessageOptionMenu>
       ), },
     ];
     return (

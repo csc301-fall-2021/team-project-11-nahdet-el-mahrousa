@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table,Space } from 'antd';
-import { deleteReplyToBackend } from '../../../actions/Bot/index'
+import { ReplyOptionMenu } from '../BotSubModal ';
 
 
 class BotSubTable extends React.Component{
@@ -14,10 +14,7 @@ render() {
         title: 'Action',
         key: '_id',
         render: (data) => (
-          <Space size="middle">
-            <a>EDIT</a>
-            <a onClick={() => deleteReplyToBackend(data._id)}>DELETE</a>
-          </Space>
+          <ReplyOptionMenu data={data}></ReplyOptionMenu>
         ),
       },
     ];
