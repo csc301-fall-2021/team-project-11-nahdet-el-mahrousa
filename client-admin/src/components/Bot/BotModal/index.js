@@ -1,17 +1,19 @@
 import React, { useState } from "react";
-import { Table, Badge, Menu, Dropdown, Space } from "antd";
+import { Table, Badge, Menu, Dropdown, Space,  } from "antd";
 import { useSelector, useDispatch } from "react-redux";
-import { Modal, Button, Input } from "antd";
+import { Modal, Button, Input, Select} from "antd";
 import { sendReplyToBackend, sendMessageToBackend, deleteMessageToBackend} from '../../../actions/Bot/index'
 import BotWarning from '../BotWarning'
 
 export function MessageOptionMenu(props) {
+  const { Option } = Select;
   console.log(props)
   const [visible, setVisible] = useState(false);
   const [visibleEdit, setVisibleEdit] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalTextContent, setModalTextContent] = useState(props.msg.content);
   const [modalTextLabel, setModalTextLabel] = useState(props.msg.label);
+  const [modelToMessageId, setModelToMessageId] = useState('');
   const [displayWarning, setDisplayWarning] = useState(false);
 
   console.log(modalTextContent, props.msg.content)
@@ -38,7 +40,7 @@ export function MessageOptionMenu(props) {
       setDisplayWarning(false);
       console.log(displayWarning)
       setConfirmLoading(true);
-      sendReplyToBackend('', modalTextContent, modalTextLabel, props.msg._id, '')
+      sendReplyToBackend('', modalTextContent, modalTextLabel, props.msg._id, modelToMessageId)
 
       setVisible(false);
       setConfirmLoading(false);
@@ -74,7 +76,11 @@ export function MessageOptionMenu(props) {
     console.log(event.target.value);
     setModalTextLabel(event.target.value);
   }
-
+  const onMessageChange = (event) => {
+    console.log(event);
+    setModelToMessageId(event)
+    // setModalTextLabel(event.target.value);s
+  }
   return (
     <div>
       <Space size="middle">
@@ -92,6 +98,12 @@ export function MessageOptionMenu(props) {
         <Input placeholder="Content" onChange={handleNewOptionTextContent} />
         <BotWarning displayWarning={displayWarning}></BotWarning>
         <Input placeholder="Label (Optional)" onChange={handleNewOptionTextLabel} />
+        <Select style={{ width: 120 }} onChange={onMessageChange}>
+          {props.msgList.map(msg => {
+              if(msg._id !== props.msg._id)
+                return <Option key={msg._id}>{msg.content}</Option>
+            })}
+        </Select>
       </Modal>
       <Modal
         title="Edit Message"

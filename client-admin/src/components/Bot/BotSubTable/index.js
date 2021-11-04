@@ -14,7 +14,7 @@ render() {
         title: 'Action',
         key: '_id',
         render: (data) => (
-          <ReplyOptionMenu data={data}></ReplyOptionMenu>
+          <ReplyOptionMenu data={data} msgList={this.props.msgList}></ReplyOptionMenu>
         ),
       },
     ];

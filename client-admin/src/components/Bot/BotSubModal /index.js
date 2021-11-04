@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 import { Table, Badge, Menu, Dropdown, Space } from "antd";
 import { useSelector, useDispatch } from "react-redux";
-import { Modal, Button, Input } from "antd";
+import { Modal, Button, Input, Select } from "antd";
 import { sendReplyToBackend, deleteReplyToBackend} from '../../../actions/Bot/index'
 import BotWarning from '../BotWarning'
 
 export function ReplyOptionMenu(props) {
-  console.log(props.data.content)
+  const { Option } = Select;
+  console.log('bot sub modal', props.msgList)
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalTextContent, setModalTextContent] = useState(props.data.content);
   const [modalTextLabel, setModalTextLabel] = useState(props.data.label);
   const [displayWarning, setDisplayWarning] = useState(false);
+  const [modelToMessageId, setModelToMessageId] = useState(props.data.toMessage);
 
   const data = useSelector(state => {
     console.log({ state })
@@ -33,7 +35,7 @@ export function ReplyOptionMenu(props) {
       setDisplayWarning(false);
       console.log(displayWarning)
       setConfirmLoading(true);
-      sendReplyToBackend(props.data._id, modalTextContent, modalTextLabel, props.data.fromMessage, props.data.toMessage)
+      sendReplyToBackend(props.data._id, modalTextContent, modalTextLabel, props.data.fromMessage, modelToMessageId)
 
       setVisible(false);
       setConfirmLoading(false);
@@ -53,6 +55,11 @@ export function ReplyOptionMenu(props) {
     console.log(event.target.value);
     setModalTextLabel(event.target.value);
   }
+  const onMessageChange = (event) => {
+    console.log(event);
+    setModelToMessageId(event)
+    // setModalTextLabel(event.target.value);s
+  }
 
   return (
     <div>
@@ -70,6 +77,12 @@ export function ReplyOptionMenu(props) {
         <Input placeholder="Content" onChange={handleNewOptionTextContent} value={modalTextContent}/>
         <BotWarning displayWarning={displayWarning}></BotWarning>
         <Input placeholder="Label (Optional)" onChange={handleNewOptionTextLabel} value={modalTextLabel}/>
+        <Select style={{ width: 120 }} onChange={onMessageChange}>
+          {props.msgList.map(msg => {
+              if(msg._id !== props.data.fromMessage)
+                return <Option key={msg._id}>{msg.content}</Option>
+            })}
+        </Select>
       </Modal>
     </div>
   );
