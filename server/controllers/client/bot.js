@@ -14,7 +14,7 @@ class ClientBotService{
      * @param {Object} req Request.
      * @returns A message object with given mid.
      */
-    getMessage(req){
+    async getMessage(req){
         let mid = -1
         try {
             mid = req.body.mid
@@ -22,7 +22,7 @@ class ClientBotService{
             logger.log("Key mid is not found in the request's body")
             return null
         }
-        return this.botService.getMessage(mid)
+        return await this.botService.getMessage(mid)
     }
 
     /**
@@ -30,7 +30,7 @@ class ClientBotService{
      * @param {Object} req Request.
      * @returns A list of reply object that are replies of the given message.
      */
-     getRepliesByMessage(req){
+    async getRepliesByMessage(req){
         let mid = -1
         try {
             mid = req.body.mid
@@ -38,22 +38,22 @@ class ClientBotService{
             logger.log("Key mid is not found in the request's body")
             return null
         }
-        return this.botService.getRepliesByMessage(mid)
+        return await this.botService.getRepliesByMessage(mid)
     }
 
     /**
-     * Get message and its replies based on the message id.
+     * Helper function: get message and its replies based on the message id.
      * @param {Object} req Request.
      * @returns An object conatin a message and its replies.
      */
-    getFullMessage(req){
+    async getFullMessage(req){
         try {
             let mid = req.body.mid
         } catch (error) {
             logger.log("Key mid is not found in the request's body")
             return null
         }
-        return {message: this.getMessage(req), replies: this.getRepliesByMessage(req)}
+        return {message: await this.getMessage(req), replies: await this.getRepliesByMessage(req)}
     }
 
     /**
@@ -61,7 +61,7 @@ class ClientBotService{
      * @param {Object} req Request.
      * @returns A message object that is the next message of given rid.
      */
-    getNextMessage(req){
+    async getNextMessage(req){
         let rid = -1
         try {
             rid = req.body.rid
@@ -69,7 +69,7 @@ class ClientBotService{
             logger.log("Key rid is not found in the request's body")
             return null
         }
-        return this.botService.getNextMessage(rid)
+        return await this.botService.getNextMessage(rid)
     }
 
     /**
@@ -77,7 +77,7 @@ class ClientBotService{
      * @param {Object} req Request.
      * @returns An object conatin a message and its replies.
      */
-    getFullNextMessage(req){
+    async getFullNextMessage(req){
         let rid = -1
         try {
             rid = req.body.rid
@@ -85,7 +85,7 @@ class ClientBotService{
             logger.log("Key rid is not found in the request's body")
             return null
         }
-        return this.getFullMessage({body: {mid: this.botService.getNextMessageId(rid)}})
+        return await this.getFullMessage({body: {mid: await this.botService.getNextMessageId(rid)}})
     }
 }
 

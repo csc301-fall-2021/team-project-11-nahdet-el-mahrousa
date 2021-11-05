@@ -10,14 +10,14 @@ router.get('/', (req, res) => {
     })
 })
 
-router.post('/message', (req, res) => {
-    logger.log('Client get message by message id')
-    res.send(clientBotController.getFullMessage(req))
+router.get('/init', (req, res) => {
+    logger.log('Client get message init message')
+    res.send(await clientBotController.getFullMessage({body:{mid: 0}}))
 })
 
-router.post('/reply', (req, res) => {
+router.post('/message', (req, res) => {
     logger.log('Client get message by reply id')
-    res.send(clientBotController.getFullNextMessage(req))
+    res.send(await clientBotController.getFullNextMessage(req))
 })
 
 module.exports = router;
