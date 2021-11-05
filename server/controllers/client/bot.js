@@ -17,7 +17,7 @@ class ClientBotService{
     async getMessage(req){
         let mid = -1
         try {
-            mid = req.body.mid
+            mid = req.body._id
         } catch (error) {
             logger.log("Key mid is not found in the request's body")
             return null
@@ -33,7 +33,7 @@ class ClientBotService{
     async getRepliesByMessage(req){
         let mid = -1
         try {
-            mid = req.body.mid
+            mid = req.body._id
         } catch (error) {
             logger.log("Key mid is not found in the request's body")
             return null
@@ -48,7 +48,7 @@ class ClientBotService{
      */
     async getFullMessage(req){
         try {
-            let mid = req.body.mid
+            let mid = req.body._id
         } catch (error) {
             logger.log("Key mid is not found in the request's body")
             return null
@@ -64,7 +64,7 @@ class ClientBotService{
     async getNextMessage(req){
         let rid = -1
         try {
-            rid = req.body.rid
+            rid = req.body._id
         } catch (error) {
             logger.log("Key rid is not found in the request's body")
             return null
@@ -80,7 +80,7 @@ class ClientBotService{
     async getFullNextMessage(req){
         let rid = -1
         try {
-            rid = req.body.rid
+            rid = req.body._id
         } catch (error) {
             logger.log("Key rid is not found in the request's body")
             return null
