@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const logger = {log: console.log}
+const logger = { log: console.log }
 
 const clientBotController = require('../../controllers/client/BotController.factory')
 
@@ -10,14 +10,16 @@ router.get('/', (req, res) => {
     })
 })
 
-router.get('/bot/message', (req, res) => {
+router.get('/message', async (req, res) => {
     logger.log('Client get message init message')
-    res.send(await clientBotController.getFullMessage({body:{_id: -1}}))
+    const response = await clientBotController.getInitMessage()
+    res.send(response)
 })
 
-router.post('/bot/message', (req, res) => {
+router.post('/message', async (req, res) => {
     logger.log('Client get message by reply id')
-    res.send(await clientBotController.getFullNextMessage(req))
+    const response = await clientBotController.getFullNextMessage(req)
+    res.send(response)
 })
 
 module.exports = router;

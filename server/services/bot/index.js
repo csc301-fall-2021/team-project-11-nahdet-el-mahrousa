@@ -56,11 +56,8 @@ class BotService {
      * @returns A list of reply object.
      */
     async getRepliesByMessage(mid) {
-        const msg = await this.getMessage(mid)
-        if (!msg) {
-            return undefined
-        }
-        const replies = await this.replyDao.search({ fromMessage: mid })
+        logger.log(`Get replies by message ${mid}`)
+        const replies = await this.replyDao.search({ fromMessage: String(mid) })
         return replies
     }
 
@@ -70,9 +67,13 @@ class BotService {
      * @returns A message object.
      */
     async getNextMessage(rid) {
+        logger.log(`Get next message by reply ${rid}`)
         const rpl = await this.getReply(rid)
         if (!rpl) {
             return undefined
+        }
+        if (!("toMessage" in rpl) || !rpl.toMessage){
+            return null
         }
 
         const nextMessage = await this.getMessage(rpl.toMessage)
@@ -93,9 +94,9 @@ class BotService {
         return rpl.toMessage
     }
 
-    async getInitMessage(){
-        const rpl = await this.messageDao.search({label: "__init__"})
-        if (rpl.length === 0){
+    async getInitMessage() {
+        const rpl = await this.messageDao.search({ label: "__init__" })
+        if (!rpl) {
             logger.log("Error: can't find initial message")
             return null
         }
