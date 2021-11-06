@@ -1,8 +1,14 @@
 const logger = { log: console.log }
 
+const MockDBHandler = require('../../gateways/db/db.mock')
+
 class MockReplyDao {
     constructor(db) {
-        this.db = db
+        if (db === undefined) {
+            this.db = new MockDBHandler()
+        } else {
+            this.db = db
+        }
     }
 
     /**

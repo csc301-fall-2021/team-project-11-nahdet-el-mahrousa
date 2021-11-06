@@ -164,7 +164,7 @@ class AdminBotController {
             return response.NOT_SATISFIED
         } else {
             // Create the reply
-            const result = await this.botService.createReply(user, uin.content, uin.label, uin.fromMessage, uin.toMessage)
+            const result = await this.botService.createReply(user, uin.content, uin.label, uin.fromMessage, uin.toMessage || null)
             if (result === null) {
                 return response.FORBIDDEN
             } else {
@@ -223,6 +223,13 @@ class AdminBotController {
         } else {
             // Update the reply
             const { _id, ...updateBody } = uin  // This filters out id from uin.
+            // Filter invalid input
+            for (let key of ["toMessage", "fromMessage"]){
+                if (key in updateBody && updateBody[key] === ""){
+                    updateBody[key] = null
+                }
+            }
+            
             const result = await this.botService.updateReply(user, _id, updateBody)
             if (result === null) {
                 return response.FORBIDDEN
