@@ -27,8 +27,8 @@ class BotService {
      * @param {int} mid the wanted message id.
      * @returns A message object.
      */
-    getMessage(mid) {
-        const msg = this.messageDao.get(mid)
+    async getMessage(mid) {
+        const msg = await this.messageDao.get(mid)
         if (!msg) {
             logger.log(`Message [${mid}] doesn't exist`)
             return msg
@@ -41,8 +41,8 @@ class BotService {
      * @param {int} rid the wanted reply id.
      * @returns A reply object.
      */
-    getReply(rid) {
-        const rpl = this.replyDao.get(rid)
+    async getReply(rid) {
+        const rpl = await this.replyDao.get(rid)
         if (!rpl) {
             logger.log(`Reply [${rid}] doesn't exist`)
             return rpl
@@ -55,12 +55,9 @@ class BotService {
      * @param {int} mid the wanted message id.
      * @returns A list of reply object.
      */
-    getRepliesByMessage(mid) {
-        const msg = this.getMessage(mid)
-        if (!msg) {
-            return undefined
-        }
-        const replies = this.replyDao.search({ fromMessage: mid })
+    async getRepliesByMessage(mid) {
+        logger.log(`Get replies by message ${mid}`)
+        const replies = await this.replyDao.search({ fromMessage: String(mid) })
         return replies
     }
 
@@ -69,13 +66,17 @@ class BotService {
      * @param {int} rid the wanted reply id.
      * @returns A message object.
      */
-    getNextMessage(rid) {
-        const rpl = this.getReply(rid)
+    async getNextMessage(rid) {
+        logger.log(`Get next message by reply ${rid}`)
+        const rpl = await this.getReply(rid)
         if (!rpl) {
             return undefined
         }
+        if (!("toMessage" in rpl) || !rpl.toMessage){
+            return null
+        }
 
-        const nextMessage = this.getMessage(rpl.toMessage)
+        const nextMessage = await this.getMessage(rpl.toMessage)
         return nextMessage
     }
 
@@ -84,13 +85,23 @@ class BotService {
      * @param {int} rid the wanted reply id.
      * @returns An integer repersent the next message's id.
      */
-    getNextMessageId(rid) {
-        const rpl = this.getReply(rid)
+    async getNextMessageId(rid) {
+        const rpl = await this.getReply(rid)
         if (!rpl) {
             return undefined
         }
 
         return rpl.toMessage
+    }
+
+    async getInitMessage() {
+        const rpl = await this.messageDao.search({ label: "__init__" })
+        if (!rpl) {
+            logger.log("Error: can't find initial message")
+            return null
+        }
+
+        return rpl[0]
     }
 
     /**************************************** Admin services ****************************************/
