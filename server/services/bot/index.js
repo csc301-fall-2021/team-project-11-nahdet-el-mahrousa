@@ -93,6 +93,16 @@ class BotService {
         return rpl.toMessage
     }
 
+    async getInitMessage(){
+        const rpl = await this.messageDao.search({label: "__init__"})
+        if (rpl.length === 0){
+            logger.log("Error: can't find initial message")
+            return null
+        }
+
+        return rpl[0]
+    }
+
     /**************************************** Admin services ****************************************/
     /*                                                                                              */
     /*    The following services should only be executed by an admin user with valid privileges.    */

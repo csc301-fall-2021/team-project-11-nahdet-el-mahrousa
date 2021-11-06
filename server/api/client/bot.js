@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
 
 router.get('/bot/message', (req, res) => {
     logger.log('Client get message init message')
-    res.send(await clientBotController.getFullMessage({body:{_id: 0}}))
+    res.send(await clientBotController.getFullMessage({body:{_id: -1}}))
 })
 
 router.post('/bot/message', (req, res) => {

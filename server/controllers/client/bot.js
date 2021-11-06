@@ -22,6 +22,9 @@ class ClientBotService{
             logger.log("Key mid is not found in the request's body")
             return null
         }
+        if (mid == -1){
+            return await this.botService.getInitMessage()
+        }
         return await this.botService.getMessage(mid)
     }
 
