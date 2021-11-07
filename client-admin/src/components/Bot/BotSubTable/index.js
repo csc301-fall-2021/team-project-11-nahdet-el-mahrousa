@@ -8,10 +8,11 @@ class BotSubTable extends React.Component{
 render() {
 
     const columns = [
-      { title: 'Response', dataIndex: 'content', key: 'content' },
-      { title: 'To Msg', dataIndex: 'toMessage', key: 'toMessage' },
+      { title: 'Reply', dataIndex: 'content', key: 'content' },
+      { title: 'To Message', dataIndex: 'toMessage', key: 'toMessage' },
+      { title: 'Label', dataIndex: 'label', key: 'label' },
       {
-        title: 'Action',
+        title: 'Actions',
         key: '_id',
         render: (data) => (
           <ReplyOptionMenu data={data} msgList={this.props.msgList}></ReplyOptionMenu>

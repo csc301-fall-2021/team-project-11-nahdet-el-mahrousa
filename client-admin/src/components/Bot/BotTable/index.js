@@ -23,6 +23,7 @@ NestedTable() {
     const columns = [
       { title: 'ID',  render: (data) => <span>{data.message._id}</span> },
       { title: 'Question', render: (data) => <span>{data.message.content}</span>},
+      { title: 'Label', render: (data) => <span>{data.message.label}</span>},
       { title: 'Action', key: 'operation', render: (data) => (
         <MessageOptionMenu msg={data.message} msgList={msgList}></MessageOptionMenu>
       ), },

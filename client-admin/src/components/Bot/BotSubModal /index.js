@@ -7,7 +7,6 @@ import BotWarning from '../BotWarning'
 
 export function ReplyOptionMenu(props) {
   const { Option } = Select;
-  console.log('bot sub modal', props.msgList)
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalTextContent, setModalTextContent] = useState(props.data.content);
@@ -16,7 +15,6 @@ export function ReplyOptionMenu(props) {
   const [modelToMessageId, setModelToMessageId] = useState(props.data.toMessage);
 
   const data = useSelector(state => {
-    console.log({ state })
     return state.surveyData.messages
   });
 
@@ -27,13 +25,10 @@ export function ReplyOptionMenu(props) {
 
   const handleOk = () => {
     // setModalText("The modal will be closed after two seconds");
-    console.log(modalTextContent);
-    console.log(modalTextLabel);
     if (modalTextContent === "") {
       setDisplayWarning(true);
     } else {
       setDisplayWarning(false);
-      console.log(displayWarning)
       setConfirmLoading(true);
       sendReplyToBackend(props.data._id, modalTextContent, modalTextLabel, props.data.fromMessage, modelToMessageId)
 
@@ -48,15 +43,12 @@ export function ReplyOptionMenu(props) {
   };
 
   const handleNewOptionTextContent = (event) => {
-    console.log(event.target.value);
     setModalTextContent(event.target.value);
   }
   const handleNewOptionTextLabel = (event) => {
-    console.log(event.target.value);
     setModalTextLabel(event.target.value);
   }
   const onMessageChange = (event) => {
-    console.log(event);
     setModelToMessageId(event)
     // setModalTextLabel(event.target.value);s
   }

@@ -11,7 +11,6 @@ class BotMessages extends React.Component{
 
 export default () => {
     const data = useSelector(state => {
-        console.log({state})
         return state.surveyData.messages
     })
     return (

@@ -14,7 +14,6 @@ export function AddNewMessageButton(props) {
   const [displayWarning, setDisplayWarning] = useState(false);
 
   const data = useSelector(state => {
-    console.log({ state })
     return state.surveyData.messages
   });
 
@@ -25,13 +24,10 @@ export function AddNewMessageButton(props) {
 
   const handleOk = () => {
     // setModalText("The modal will be closed after two seconds");
-    console.log(modalTextContent);
-    console.log(modalTextLabel);
     if (modalTextContent === "") {
       setDisplayWarning(true);
     } else {
       setDisplayWarning(false);
-      console.log(displayWarning)
       setConfirmLoading(true);
       sendMessageToBackend(null, modalTextContent, modalTextLabel)
 
@@ -41,16 +37,13 @@ export function AddNewMessageButton(props) {
   };
 
   const handleCancel = () => {
-    console.log("Clicked cancel button");
     setVisible(false);
   };
 
   const handleNewOptionTextContent = (event) => {
-    console.log(event.target.value);
     setModalTextContent(event.target.value);
   }
   const handleNewOptionTextLabel = (event) => {
-    console.log(event.target.value);
     setModalTextLabel(event.target.value);
   }
 

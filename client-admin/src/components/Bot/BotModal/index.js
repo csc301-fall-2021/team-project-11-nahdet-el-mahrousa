@@ -18,7 +18,6 @@ export function MessageOptionMenu(props) {
 
   console.log(modalTextContent, props.msg.content)
   const data = useSelector(state => {
-    console.log({ state })
     return state.surveyData.messages
   });
 
@@ -32,13 +31,10 @@ export function MessageOptionMenu(props) {
 
   const handleOk = () => {
     // setModalText("The modal will be closed after two seconds");
-    console.log(modalTextContent);
-    console.log(modalTextLabel);
     if (modalTextContent === "") {
       setDisplayWarning(true);
     } else {
       setDisplayWarning(false);
-      console.log(displayWarning)
       setConfirmLoading(true);
       sendReplyToBackend('', modalTextContent, modalTextLabel, props.msg._id, modelToMessageId)
 
@@ -48,8 +44,6 @@ export function MessageOptionMenu(props) {
   };
   const handleEditOk = () => {
     // setModalText("The modal will be closed after two seconds");
-    console.log(modalTextContent);
-    console.log(modalTextLabel);
     if (modalTextContent === "") {
       setDisplayWarning(true);
     } else {
@@ -63,23 +57,19 @@ export function MessageOptionMenu(props) {
   };
 
   const handleCancel = () => {
-    console.log("Clicked cancel button");
     setVisible(false);
     setVisibleEdit(false);
   };
 
   const handleNewOptionTextContent = (event) => {
-    console.log(event.target.value);
     setModalTextContent(event.target.value);
   }
   const handleNewOptionTextLabel = (event) => {
-    console.log(event.target.value);
     setModalTextLabel(event.target.value);
   }
   const onMessageChange = (event) => {
-    console.log(event);
     setModelToMessageId(event)
-    // setModalTextLabel(event.target.value);s
+    // setModalTextLabel(event.target.value);
   }
   return (
     <div>
