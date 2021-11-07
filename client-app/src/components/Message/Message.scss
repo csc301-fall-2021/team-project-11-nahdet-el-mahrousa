@@ -25,24 +25,23 @@
 
         
         width: 60%;
-        // padding: 1rem;
-        // border-radius: 15px;
         @include chat-bubble();
         
         .message-content {
             padding-left: 1rem;
             padding-right: 1rem;
-            margin-bottom: 1rem;
+            // margin-bottom: 1rem;
 
             font-size: large;
             color: black;
-            text-align: center;
+            text-align: right;
         }
 
         .replies-container {
             width: 90%;
             margin-left: auto;
             margin-right: auto;
+            margin-top: 1rem;
             padding: .5rem;
 
             display: flex;

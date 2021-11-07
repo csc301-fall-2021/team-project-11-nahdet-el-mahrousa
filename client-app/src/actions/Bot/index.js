@@ -4,34 +4,26 @@ import { getFirstMessage, getNextMessage } from 'api/client-api';
 
 const log = console.log;
 
-export const initChat = (msgQueue) => {
+export async function initChat(msgQueue) {
     log(msgQueue);
     const newQueue = [...msgQueue.state.chat];
 
     // get first msg from API
-    // const response = {
-    //     msg: "OK", statusCode: 200,
-    //     entity: {
-    //         message: { content: "Hello, welcome!" },
-    //         replies: [{ content: "let's go!", toMessage: "tm3" }, { content: "I'll leave", toMessage: "tm2" }]
-    //     }
-    // }
-
-    getFirstMessage()
-    .then((entity) => {
+    try {
+        const entity = await getFirstMessage();
         console.log(entity);
         newQueue.push(entity);
         msgQueue.setState({
             chat: newQueue
         });
-    }).catch((error) => {
-        console.log(error)
-    });
-    
+    }
+    catch(error) {
+        console.log(error);
+    }
 }
 
 // Function to add a reply, needs to be exported
-export const makeReply = (msgQueue, reply) => {
+export async function makeReply(msgQueue, reply) {
     log(msgQueue.state.chat, reply);
 
     const newQueue = [...msgQueue.state.chat];
@@ -43,26 +35,16 @@ export const makeReply = (msgQueue, reply) => {
     });
 
     // Send a request to server
-    const response = {
-        msg: "OK", statusCode: 200,
-        entity: {
-            message: {
-                content: "Test Message"
-            },
-            replies: [
-                {
-                    toMessage: "12312",
-                    content: "Next"
-                }
-            ]
-        }
-    }
-
     // With the response, add a new Message to msgQueue
-    // const newMessage = getNextMessage(newQueue);
-    const newMessage = response.entity;
-    newQueue.push(newMessage);
-    msgQueue.setState({
-        chat: newQueue
-    });
-};
+    try {
+        const entity = await getNextMessage(reply);
+        console.log(entity);
+        newQueue.push(entity);
+        msgQueue.setState({
+            chat: newQueue
+        });
+    }
+    catch(error) {
+        console.log(error);
+    }
+}
