@@ -5,8 +5,8 @@ const mongoose = require('mongoose')
 const ReplySchema = {
     label: String,
     content: String,
-    fromMessage: mongoose.Types.ObjectId,
-    toMessage: mongoose.Types.ObjectId,
+    fromMessage: String,
+    toMessage: String,
 }
 
 module.exports = ReplySchema;

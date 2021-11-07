@@ -1,11 +1,12 @@
-const logger = {log: console.log}
+const logger = { log: console.log }
+const { respond, response } = require('../../utils/response')
 
-class ClientBotService{
-    constructor(botService = null){
+class ClientBotService {
+    constructor(botService = null) {
         this.botService = botService
     }
 
-    setBotService(botService){
+    setBotService(botService) {
         this.botService = botService
     }
 
@@ -14,15 +15,36 @@ class ClientBotService{
      * @param {Object} req Request.
      * @returns A message object with given mid.
      */
-    getMessage(req){
+    async getMessage(req) {
         let mid = -1
+        logger.log(req)
         try {
-            mid = req.body.mid
+            mid = req.body._id
         } catch (error) {
             logger.log("Key mid is not found in the request's body")
-            return null
+            return response.NOT_SATISFIED
         }
-        return this.botService.getMessage(mid)
+        if (mid === -1) {
+            return await this.botService.getInitMessage()
+        }
+        return await this.botService.getMessage(mid)
+    }
+
+    /**
+     * Get first message __init__.
+     * @returns A message object.
+     */
+    async getInitMessage() {
+        try {
+            const message = await this.botService.getInitMessage()
+            if (message === null) {
+                return respond({ msg: "Cannot find message with __init__ label. There must be a message with __init__ label to be the first message!" })
+            }
+            const replies = await this.botService.getRepliesByMessage(message._id)
+            return respond({ entity: { message, replies } })
+        } catch {
+            return response.SERVICE_UNAVAILABLE
+        }
     }
 
     /**
@@ -30,30 +52,31 @@ class ClientBotService{
      * @param {Object} req Request.
      * @returns A list of reply object that are replies of the given message.
      */
-     getRepliesByMessage(req){
+    async getRepliesByMessage(req) {
         let mid = -1
         try {
-            mid = req.body.mid
+            mid = req.body._id
         } catch (error) {
             logger.log("Key mid is not found in the request's body")
-            return null
+            return response.NOT_SATISFIED
         }
-        return this.botService.getRepliesByMessage(mid)
+        return await this.botService.getRepliesByMessage(mid)
     }
 
     /**
-     * Get message and its replies based on the message id.
+     * Helper function: get message and its replies based on the message id.
      * @param {Object} req Request.
-     * @returns An object conatin a message and its replies.
+     * @returns An object contains a message and its replies.
      */
-    getFullMessage(req){
+    async getFullMessage(req) {
         try {
-            let mid = req.body.mid
+            const message = await this.getMessage(req)
+            const replies = await this.getRepliesByMessage(req)
+            return respond({ entity: { message, replies } })
         } catch (error) {
             logger.log("Key mid is not found in the request's body")
-            return null
+            return response.NOT_SATISFIED
         }
-        return {message: this.getMessage(req), replies: this.getRepliesByMessage(req)}
     }
 
     /**
@@ -61,15 +84,15 @@ class ClientBotService{
      * @param {Object} req Request.
      * @returns A message object that is the next message of given rid.
      */
-    getNextMessage(req){
+    async getNextMessage(req) {
         let rid = -1
         try {
-            rid = req.body.rid
+            rid = req.body._id
         } catch (error) {
             logger.log("Key rid is not found in the request's body")
-            return null
+            return response.NOT_SATISFIED
         }
-        return this.botService.getNextMessage(rid)
+        return await this.botService.getNextMessage(rid)
     }
 
     /**
@@ -77,15 +100,25 @@ class ClientBotService{
      * @param {Object} req Request.
      * @returns An object conatin a message and its replies.
      */
-    getFullNextMessage(req){
-        let rid = -1
+    async getFullNextMessage(req) {
         try {
-            rid = req.body.rid
+            const rid = req.body._id
+            const nextMessage = await this.botService.getNextMessage(rid)
+            if (nextMessage === undefined) {
+                return response.NOT_FOUND
+            } else if (nextMessage === null) {
+                return respond({})
+            }
+
+            const replies = await this.botService.getRepliesByMessage(nextMessage._id)
+
+            return respond({ entity: { message: nextMessage, replies } })
         } catch (error) {
+            logger.log(error)
             logger.log("Key rid is not found in the request's body")
-            return null
+            return response.NOT_SATISFIED
         }
-        return this.getFullMessage({body: {mid: this.botService.getNextMessageId(rid)}})
+
     }
 }
 

@@ -7,7 +7,11 @@ on:
   push:
     branches: [ staging ]
     paths:
-      - "server/**"
+      - "server/*/**"
+      - "server/app.js"
+      - "server/package*"
+      # ignore README
+
     
 jobs:
   build:
