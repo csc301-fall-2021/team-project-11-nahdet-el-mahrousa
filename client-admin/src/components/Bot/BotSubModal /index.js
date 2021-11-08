@@ -25,6 +25,7 @@ export function ReplyOptionMenu(props) {
 
   const handleOk = () => {
     // setModalText("The modal will be closed after two seconds");
+    console.log(props.data.content)
     if (modalTextContent === "") {
       setDisplayWarning(true);
     } else {
@@ -34,6 +35,10 @@ export function ReplyOptionMenu(props) {
 
       setVisible(false);
       setConfirmLoading(false);
+
+      setModalTextContent("");
+      setModalTextLabel("");
+      setModelToMessageId("");
     }
   };
 

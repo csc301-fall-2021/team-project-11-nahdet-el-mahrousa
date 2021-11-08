@@ -29,7 +29,6 @@ export function sendReplyToBackend(
 ) {
   label = label ? label : "";
   toMessage = toMessage ? toMessage : null;
-  fromMessage = fromMessage ? fromMessage : "";
   console.log(_id);
   if (!_id) {
     return createReply(
