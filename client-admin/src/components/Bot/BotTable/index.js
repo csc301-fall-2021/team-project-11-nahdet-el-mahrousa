@@ -1,11 +1,7 @@
 import React from "react";
 import BotSubTable from "../BotSubTable";
 import { MessageOptionMenu } from "../BotModal";
-import { Table, Badge, Menu, Dropdown, Space } from "antd";
-
-import { DownOutlined } from "@ant-design/icons";
-import { Modal, Button } from "antd";
-import { createEntityAdapter } from "@reduxjs/toolkit";
+import { Table } from "antd";
 
 class BotTable extends React.Component {
   NestedTable() {

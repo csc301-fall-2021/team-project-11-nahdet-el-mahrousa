@@ -1,11 +1,9 @@
 import React from 'react';
 import Sider from "components/Menu";
-import { Layout, Card, Avatar } from "antd";
-import { UserOutlined } from "@ant-design/icons";
-
-const { Meta } = Card;
-
-const { Content } = Layout;
+import { Layout } from "antd";
+// import { UserOutlined } from "@ant-design/icons";
+// const { Meta } = Card;
+// const { Content } = Layout;
 
 class HomePage extends React.Component {
     render() {

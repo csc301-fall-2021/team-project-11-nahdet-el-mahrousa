@@ -1,7 +1,7 @@
 // import MultiLevelRouter from "./MultiLevelRouter";
 import HomePage from "pages/Home";
 import BotPage from "pages/Database/Bot";
-import LoginPage from "pages/Login";
+// import LoginPage from "pages/Login";
 
 
 const ROUTES = [

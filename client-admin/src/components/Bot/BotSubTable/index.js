@@ -1,6 +1,6 @@
 import React from "react";
-import { Table, Space } from "antd";
-import { ReplyOptionMenu } from "../BotSubModal ";
+import { Table } from "antd";
+import { ReplyOptionMenu } from "../BotSubModal";
 
 class BotSubTable extends React.Component {
   render() {

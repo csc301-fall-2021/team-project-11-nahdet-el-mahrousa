@@ -18,7 +18,6 @@ export function getBot(dispatchMessage) {
 }
 
 export function createMessage(data, dispatchMessage) {
-  let msg = [];
   console.log(data);
   postItems("/admin/bot/message", data)
     .then((response) => {
@@ -35,7 +34,6 @@ export function createMessage(data, dispatchMessage) {
 }
 
 export function deleteMessage(data, dispatchMessage) {
-  let msg = [];
   console.log(data);
   deleteItems("/admin/bot/message", data)
     .then((response) => {
@@ -52,7 +50,6 @@ export function deleteMessage(data, dispatchMessage) {
 }
 
 export function editMessage(data, dispatchMessage) {
-  let msg = [];
   console.log(data);
   putItems("/admin/bot/message", data)
     .then((response) => {

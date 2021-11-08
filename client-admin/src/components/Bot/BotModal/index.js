@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Table, Badge, Menu, Dropdown, Space } from "antd";
-import { useSelector, useDispatch } from "react-redux";
-import { Modal, Button, Input, Select } from "antd";
+import { Space } from "antd";
+import { useSelector } from "react-redux";
+import { Modal, Input, Select } from "antd";
 import {
   sendReplyToBackend,
   sendMessageToBackend,
@@ -30,7 +30,7 @@ export function MessageOptionMenu(props) {
     setDisplayReplyWarning(false)
   }
 
-  const data = useSelector((state) => {
+  const _ = useSelector((state) => {
     return state.surveyData.messages;
   });
 
