@@ -1,5 +1,6 @@
 import React from 'react';
 import { Menu } from 'antd';
+import { Link } from 'react-router-dom';
 import {
     UserOutlined,
     TeamOutlined,
@@ -39,13 +40,17 @@ const Sider = () => {
           <Menu.Item key="7">Option 7</Menu.Item>
         </SubMenu>
       </SubMenu>
-      <SubMenu key="sub4" icon={<PieChartOutlined />} title="Summary">
+      <SubMenu key="sub3" icon={<PieChartOutlined />} title="Summary">
         <Menu.Item key="8">Option 8</Menu.Item>
         <Menu.Item key="9">Option 9</Menu.Item>
         <Menu.Item key="10">Option 10</Menu.Item>
       </SubMenu>
       <SubMenu key="sub4" icon={<QuestionCircleOutlined />} title="Bot">
-        <Menu.Item key="11">Option 11</Menu.Item>
+        <Menu.Item key="11">
+            <Link className="nav-item" to={`/database/bot`}>
+                    Bot Page
+            </Link>
+        </Menu.Item>
         <Menu.Item key="12">Option 12</Menu.Item>
         <Menu.Item key="13">Option 13</Menu.Item>
       </SubMenu>

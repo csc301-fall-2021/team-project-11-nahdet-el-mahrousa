@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter } from 'react-router-dom';
 import RenderRoutes from "./router";
-import "./App.css";
 import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
 
 
