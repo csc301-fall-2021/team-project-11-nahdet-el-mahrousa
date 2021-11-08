@@ -27,6 +27,8 @@ export default function App() {
     }
 
     const Logout = () => {
+        console.log("Logout");
+
         setUser({
             name: "",
             email:"",
@@ -35,15 +37,14 @@ export default function App() {
 
     return (
         <div className="App">
-            {(user.email !== "") ? (
-                    <div className="Welcome">
-                        <h2>Welcome</h2>
-                        <button onClick={Logout}>Logout</button>
-                    </div>
-                ):(
-                    <LoginForm Login={Login} error={error} />
-                )
-            }
+            {(user.email != "") ? (
+                <div className="welcome">
+                    <h2>Welcome</h2>
+                    <button>Logout</button>
+                </div>
+            ) : (
+                <LoginForm Login={Login} error={error}/>
+            )}
         </div>
     )
 }
