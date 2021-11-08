@@ -41,13 +41,13 @@ jobs:
     - name: BUILD ENV VARIABLES TO ./.env
       run: echo $'${{ secrets.CLIENT_ENV_STAGING}}' > ./.env
       
-    - name: SETUP ENV VARS
-      run: NODE_ENV='development'
+    # - name: SETUP ENV VARS
+    #   run: NODE_ENV='development'
       
     - name: RUN BUILD
       run: npm run build --if-present
-      env:
-        NODE_ENV: staging
+    #   env:
+    #     NODE_ENV: staging
 
   deploy: 
     needs: build
