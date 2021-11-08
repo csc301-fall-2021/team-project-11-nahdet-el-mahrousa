@@ -4,15 +4,19 @@
 
 ## Description
 
-* Provide a high-level description of your application and it's value from an end-user's perspective
-* What is the problem you're trying to solve?
-* Is there any context required to understand **why** the application solves this problem?
+The Entrepreneur Helper Bot of Nahdet El Mahrousa (NM Bot) is a web app that provides support to Egyptian startup entrepreneurs, whether their ideas are still in the proposals or they are facing hard decisions while running their startups. Concerning the problem that startup runners usually have great ideas but less experience, funds, resources, and networks, the NM Bot aims to be an app that is easily accessible despite location and time.
+
+The NM Bot will ask the user to answer a series of questions to identify their most urgent needs or challenges and provide advice on how to make decisions and find resources. For the end-users, they can conveniently get professional advice from one of the most experienced incubators from Egypt. Being an unsupervised web app, users can actively find support from the app even if they live in rural areas or do not have networks. For the NM staff, the bot formalizes the procedures, reduces the cost of human resources of answering frequently asked questions. Beyond that, NM staff can gain statistics of how people use the bot to identify the most popular questions at the time of different people, and therefore can timely adjust their work and marketing strategy.
 
 ## Key Features
 
 * Described the key features in the application that the user can access
 * Provide a breakdown or detail for each feature that is most appropriate for your application
 * This section will be used to assess the value of the features built
+
+### Bot
+
+### Admin Dashboard
 
 ## Instructions
 
@@ -23,8 +27,74 @@
 
 ## Development requirements
 
-* If a developer were to set this up on their machine or a remote server, what are the technical requirements (e.g. OS, libraries, etc.)?
-* Briefly describe instructions for setting up and running the application (think a true README).
+The app is developed with Node.js + Express.js + React + MongoDB with node@v14.16.1 and npm@v7.24.1. The app has three components: server, client-app, admin-dashboard; each runs and builds individually.
+
+### Requirements
+
+* [Node.js](https://nodejs.org/en/)
+* [MongoDB](https://www.mongodb.com/)
+
+### Set-up instructions
+
+Each component is stand-alone in its own directory.
+
+```sh
+# Access app-server
+cd server
+```
+
+```sh
+# Access client-app (the user interface of NM Bot)
+cd client-app
+```
+
+```sh
+# Access admin-dashboard client interface
+cd client-admin
+```
+
+In each of the component, `node_modules` needed to be setup.
+
+```sh
+# In server/ or client-app/ or client-admin/
+npm install
+```
+
+The server requires to setup a [MongoDB database](https://cloud.mongodb.com/).
+
+### Development instructions
+
+Environment variables need to be setup for each component. The required fields include:
+
+```shell
+# For server, see /server/README.md for details
+NODE_ENV="dev"
+# in server/config/.env.dev
+DATABASE_URI="<database_uri>"
+
+# For client-app and client-admin,
+# in client-app/.env and client-admin/.env
+REACT_APP_ORIGIN="<server_url>"
+```
+
+or email yuxuanleon.liu@mail.utoronto.ca to get env files.
+
+To run the app, use npm command.
+
+```sh
+# In server/ or client-app/ or client-admin/
+npm start
+
+# Alternatively, run server in development mode with nodemon.
+npm run dev
+```
+
+Server has implemented unit tests and integration tests.
+
+```sh
+# In server/
+npm run test
+```
 
 ## Deployment and Github Workflow
 
