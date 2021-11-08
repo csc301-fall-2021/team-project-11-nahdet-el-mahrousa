@@ -7,10 +7,11 @@ export async function getFirstMessage() {
          console.log(response);
          return response.entity;
       } else {
-         throw new Error (response.msg);
+         throw new Error(response.msg);
       }
-   } catch(error) {
-      console.log(error);
+   } catch (error) {
+      console.log("API", error);
+      throw new Error(error);
    }
 }
 
@@ -21,9 +22,10 @@ export async function getNextMessage(data) {
          console.log(response);
          return response.entity;
       } else {
-         throw new Error (response.msg);
+         throw new Error(response.msg);
       }
-   } catch(error) {
-      console.log(error);
+   } catch (error) {
+      console.log("API", error);
+      throw new Error(error);
    }
 }
