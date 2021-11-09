@@ -1,7 +1,7 @@
 name: Admin CI >> STAGING
 
 on:
-  push:
+  pull_request:
     branches: [ staging ]
     paths:
       - "client-admin/*/**"
@@ -35,7 +35,7 @@ jobs:
     - name: INSTALL PROJECT DEPENDENCIES (NPM CI)
       run: npm ci
 
-    - name: BUILD ENV VARIABLES TO ./.env
+    - name: BUILD ENV VARIABLES TO .env
       run: echo $'${{ secrets.ADMIN_ENV_STAGING}}' > .env
 
     - name: CHECK ENV VARIABLES IN .env
