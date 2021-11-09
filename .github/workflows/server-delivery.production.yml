@@ -1,15 +1,15 @@
 # This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Admin CD >> STAGING
+name: Server CD >> PRODUCTION
 
 on:
   push:
-    branches: [ staging ]
+    branches: [ main ]
     paths:
-      - "client-admin/*/**"
-      - "client-admin/package*"
-      - ".github/workflows/admin-delivery.staging.yml"
+      - "server/*/**"
+      - "server/app.js"
+      - "server/package*"
       # ignore README
 
     
@@ -18,9 +18,9 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
         run:
-          working-directory: ./client-admin
-
-    timeout-minutes: 3
+          working-directory: ./server
+    
+    timeout-minutes: 1
     
     strategy:
       matrix:
@@ -39,16 +39,16 @@ jobs:
     - name: INSTALL PROJECT DEPENDENCIES (NPM CI)
       run: npm ci
 
-    - name: BUILD ENV VARIABLES TO ./.env
-      run: echo $'${{ secrets.ADMIN_ENV_STAGING}}' > ./.env
+    # - name: UNIT TEST (JEST)
+    #   run: npm run test
       
-    # - name: SETUP ENV VARS
-    #   run: NODE_ENV='development'
+    - name: SETUP ENV VARS
+      run: NODE_ENV='prod'
       
     - name: RUN BUILD
       run: npm run build --if-present
       env:
-        CI: false
+        NODE_ENV: prod
 
   deploy: 
     needs: build
@@ -56,25 +56,30 @@ jobs:
 
     defaults:
         run:
-          working-directory: ./client-admin
-    
-    timeout-minutes: 3
+          working-directory: ./server
+
+    timeout-minutes: 1
 
     steps:
       - name: CHECK-OUT GIT REPOSITORY
         uses: actions/checkout@v2
+        
+      - name: SETUP ENV VARIABLES
+        run: NODE_ENV='prod'
 
-      - name: BUILD ENV VARIABLES TO .env
-        run: echo $'${{ secrets.ADMIN_ENV_STAGING}}' > .env
+      - name: BUILD ENV VARIABLES TO config/.env.prod
+        run: echo $'${{ secrets.SERVER_ENV_PROD}}' > ./config/.env.prod
 
-      - name: CHECK ENV VARIABLES IN .env
-        run: cat .env
+      - name: CHECK ENV VARIABLES IN config/.env.prod
+        run: cat ./config/.env.prod
 
       - name: HEROKU DEPLOY
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
-          heroku_api_key: ${{secrets.HEROKU_STAGING_SERVER_API_KEY}}
-          heroku_app_name: ${{secrets.HEROKU_STAGING_ADMIN_APP_NAME}}
-          heroku_email: ${{secrets.HEROKU_STAGING_SERVER_EMAIL}}
-          appdir: "./client-admin"
-          env_file: ".env"
+          heroku_api_key: ${{secrets.HEROKU_PROD_SERVER_API_KEY}}
+          heroku_app_name: ${{secrets.HEROKU_PROD_SERVER_APP_NAME}}
+          heroku_email: ${{secrets.HEROKU_PROD_SERVER_EMAIL}}
+          appdir: "./server"
+          env_file: "./config/.env.prod"
+
+
