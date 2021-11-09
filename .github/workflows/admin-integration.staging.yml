@@ -6,6 +6,7 @@ on:
     paths:
       - "client-admin/*/**"
       - "client-admin/package*"
+      - ".github/workflows/admin-integration.staging.yml"
       # ignore README
 
     
@@ -43,3 +44,5 @@ jobs:
       
     - name: RUN BUILD
       run: npm run build --if-present
+      env:
+        CI: false

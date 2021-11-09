@@ -9,6 +9,7 @@ on:
     paths:
       - "client-admin/*/**"
       - "client-admin/package*"
+      - ".github/workflows/admin-delivery.staging.yml"
       # ignore README
 
     
@@ -46,8 +47,8 @@ jobs:
       
     - name: RUN BUILD
       run: npm run build --if-present
-      # env:
-      #   NODE_ENV: staging
+      env:
+        CI: false
 
   deploy: 
     needs: build
