@@ -9,6 +9,7 @@ on:
     paths:
       - "client-admin/*/**"
       - "client-admin/package*"
+      - ".github/workflows/admin-delivery.staging.yml"
       # ignore README
 
     
@@ -18,8 +19,8 @@ jobs:
     defaults:
         run:
           working-directory: ./client-admin
-    
-    timeout-minutes: 2
+
+    timeout-minutes: 3
     
     strategy:
       matrix:
@@ -46,8 +47,8 @@ jobs:
       
     - name: RUN BUILD
       run: npm run build --if-present
-      # env:
-      #   NODE_ENV: staging
+      env:
+        CI: false
 
   deploy: 
     needs: build
@@ -56,8 +57,8 @@ jobs:
     defaults:
         run:
           working-directory: ./client-admin
-
-    timeout-minutes: 2
+    
+    timeout-minutes: 3
 
     steps:
       - name: CHECK-OUT GIT REPOSITORY
@@ -75,5 +76,5 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_STAGING_SERVER_API_KEY}}
           heroku_app_name: ${{secrets.HEROKU_STAGING_ADMIN_APP_NAME}}
           heroku_email: ${{secrets.HEROKU_STAGING_SERVER_EMAIL}}
-          appdir: "./client-app"
+          appdir: "./client-admin"
           env_file: ".env"
