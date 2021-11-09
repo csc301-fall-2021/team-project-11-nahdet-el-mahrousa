@@ -32,6 +32,10 @@ There will be a data analysis page that show the data collected from the user us
 
 ## Instructions
 
+
+**Since the app is deployed on Heroku, you may need to wait for a few seconds to awake the server, especially after clicking GET START button in bot.**
+
+
 ### Bot
 
 The BotView page contains the function that gives response automatically depend on user's choice.
@@ -58,7 +62,7 @@ To edit a question, users can click on the "EDIT" button beside the question the
 
 To delete a message, users simply need to click on the "DELETE" button beside the question they want to delete under "Actions" and the request will be made immediately.
 
-To add a new reply under a message, users need to click on the "NEW OPTION" button beside the question they want to add the reply to under "Actions". Again, a modal will pop up once the button is clicked. User needs to enter the content of the reply, toMessage and label are optional. Users can select a message from the dropdown under label to add "toMessage" (doesn’t work yet when adding a new reply, but works when editing a reply). Users can cancel or submit the reply they want to add by clicking on the "Cancel" and "OK" button on the bottom right corner of the modal. If the user did not enter a content, it will show a warning and the edit message request will not be made.
+To add a new reply under a message, users need to click on the "NEW OPTION" button beside the question they want to add the reply to under "Actions". Again, a modal will pop up once the button is clicked. User needs to enter the content of the reply, toMessage and label are optional. Users can select a message from the dropdown under label to add "toMessage" **(doesn’t work yet when adding a new reply, but works when editing a reply, and this will be fixed in future deliverable)**. Users can cancel or submit the reply they want to add by clicking on the "Cancel" and "OK" button on the bottom right corner of the modal. If the user did not enter a content, it will show a warning and the edit message request will not be made.
 
 To see all the replies added to a question, users can click on the "+" button beside the id of the question. Once the "+" button is clicked, users are able to see all replies that belong to the question and users are able to make actions to the replies.
 
