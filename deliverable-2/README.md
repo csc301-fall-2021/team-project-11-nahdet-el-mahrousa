@@ -34,8 +34,9 @@ The BotView page contains the function that gives response automatically depend 
 - Get the response message from the bot
 - Repeat the above two steps until you get the final result
 
-Additional Concern: 
-- If you want to change any answer in the previews question, just scroll up the page to that question/message and choose the option you want again. The new response that corresponds to this option will appear at the bottom of the chat.
+Additional Concerns: 
+- If you want to change any answer in the previews question, just scroll up the page to that message and choose the option you want again. The new response that corresponds to this option will appear at the very bottom of the chat.
+- Same instruction as starting the chat again. Click the GET START button at the top will re-initialize the first message at the very bottom of the chat.
 
 ## Development requirements
 
