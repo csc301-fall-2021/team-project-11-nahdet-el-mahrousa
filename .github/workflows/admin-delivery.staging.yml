@@ -20,7 +20,7 @@ jobs:
         run:
           working-directory: ./client-admin
     
-    timeout-minutes: 2
+    timeout-minutes: 3
     
     strategy:
       matrix:
@@ -58,7 +58,7 @@ jobs:
         run:
           working-directory: ./client-admin
 
-    timeout-minutes: 2
+    timeout-minutes: 3
 
     steps:
       - name: CHECK-OUT GIT REPOSITORY
