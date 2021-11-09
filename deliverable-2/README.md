@@ -48,6 +48,23 @@ Additional Concerns:
 - If you want to change any answer in the previews question, just scroll up the page to that message and choose the option you want again. The new response that corresponds to this option will appear at the very bottom of the chat.
 - Same instruction as starting the chat again. Click the GET START button at the top will re-initialize the first message at the very bottom of the chat.
 
+### Admin-Bot
+Our admin bot page is able to add, edit, delete messages and replies. 
+
+To add a message, users need to click on the “NEW Message” button on the top left corner of the Bot page beside the sider. A modal will pop up once the button is clicked. User needs to enter the content of the message, label is optional. Users can cancel or submit the question they want to add by clicking on the “Cancel” and “OK” button on the bottom right corner of the modal. If the user did not enter a content, it will show a warning and the add new message request will not be made. 
+
+To edit a question, users can click on the “EDIT” button beside the question they want to edit under “Actions”. Again, a modal will pop up once the button is clicked. User needs to enter the content of the message, label is optional. Users can cancel or submit the question they want to edit by clicking on the “Cancel” and “OK” button on the bottom right corner of the modal. If the user did not enter a content, it will show a warning and the edit message request will not be made. 
+
+To delete a message, users simply need to click on the “DELETE” button beside the question they want to delete under “Actions” and the request will be made immediately. 
+
+To add a new reply under a message, users need to click on the “NEW OPTION” button beside the question they want to add the reply to under “Actions”. Again, a modal will pop up once the button is clicked. User needs to enter the content of the reply, toMessage and label are optional. Users can select a message from the dropdown under label to add “toMessage” (doesn’t work yet when adding a new reply, but works when editing a reply). Users can cancel or submit the reply they want to add by clicking on the “Cancel” and “OK” button on the bottom right corner of the modal. If the user did not enter a content, it will show a warning and the edit message request will not be made. 
+
+To see all the replies added to a question, users can click on the “+” button beside the id of the question. Once the “+” button is clicked, users are able to see all replies that belong to the question and users are able to make actions to the replies.
+
+To edit a reply, users need to click on the “EDIT” button beside the reply they want to edit under “Actions”. The rest works just like creating a new reply, however, users are able to add “toMessage”.
+
+To delete a reply, users simply need to click on the “DELETE” button beside the reply they want to delete under “Actions” and the request will be made immediately. 
+
 ## Development requirements
 
 The app is developed with Node.js + Express.js + React + MongoDB with node@v14.16.1 and npm@v7.24.1. The app has three components: server, client-app, admin-dashboard; each runs and builds independently. The app is hosted by Heroku, database is supported by MongoDB Atlas.
