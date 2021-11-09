@@ -27,7 +27,7 @@ The NM Bot will ask the user to answer a series of questions to identify their m
 
 ## Development requirements
 
-The app is developed with Node.js + Express.js + React + MongoDB with node@v14.16.1 and npm@v7.24.1. The app has three components: server, client-app, admin-dashboard; each runs and builds individually.
+The app is developed with Node.js + Express.js + React + MongoDB with node@v14.16.1 and npm@v7.24.1. The app has three components: server, client-app, admin-dashboard; each runs and builds independently. The app is hosted by Heroku, database is supported by MongoDB Atlas.
 
 ### Requirements
 
@@ -98,18 +98,20 @@ npm run test
 
 ## Deployment and Github Workflow
 
-Describe your Git / GitHub workflow. Essentially, we want to understand how your team members shares a codebase, avoid conflicts and deploys the application.
+Branch `main` is used for the production environment; branch `staging` is used for the staging/testing environment; branch `server`, `client-app`, `client-admin` (*the dev branches*) are used for integration and development environment by each of the three components. Since each component can stand-alone from the other two, and in this phase while the app is a an early stage, data can be mocked, architecture is designed to be able to easily transfer from mock data to real APIs. Separating the project into three components will has less conflicts, especially when all of them requires node modules.
 
-* Be concise, yet precise. For example, "we use pull-requests" is not a precise statement since it leaves too many open questions - Pull-requests from where to where? Who reviews the pull-requests? Who is responsible for merging them? etc.
-* If applicable, specify any naming conventions or standards you decide to adopt.
-* Describe your overall deployment process from writing code to viewing a live application
-* What deployment tool(s) are you using and how
-* Don't forget to **briefly explain why** you chose this workflow or particular aspects of it!
+The team is separated into 3 groups, corresponding to the three components (1 for client-app, 2 for admin-dashboard, 3 for server). After initializing the apps on the three dev branches, each feature is distributed to a member and will be developed in a specific branch. As the feature has significant progress, a pull-request will be made to the corresponding dev branch, inviting a group member to review, and the merged to the dev branch. In this way and with timely communication, frequent/daily code conflicts can be avoid: they only appear when merging, and can be resolved together.
+
+Deployment is automated. Server testings are running locally and manually since some tests require local database, which in the future may be improved.
+
+When each component arrives at a releasable stage, a pull-request will be made from dev branch to `staging` branch. A member needs to approve the merge, and continuous delivery will be triggered by GitHub Actions after merging to deploy a staging version to Heroku.
+
+Similarly, when all three components are ready in the `staging` branch, a pull-request will be made to the `main` branch from `staging`. Continuous delivery will be triggered after merging (approved by another member) to deploy a production version to Heroku.
+
+Setting up protection rules for the branches for delivery guarantees no accident merging, so that the production and testing environment are always stable.
 
 ## Licenses
 
- Keep this section as brief as possible. You may read this [Github article](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/licensing-a-repository) for a start.
+This project is licensed under the terms of the MIT license. Any person can obtain a copy of this software and associated documentation files (the "Software"), to deal with it without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the the copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-* What type of license will you apply to your codebase?
-* What affect does it have on the development and use of your codebase?
-* Why did you or your partner make this choice?
+Nahdet El Mahrousa hopes this app can attract attentions to the issue of startup entrepreneurs and evoke inspirations of similar apps.
