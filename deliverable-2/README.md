@@ -29,12 +29,10 @@ The NM Bot will ask the user to answer a series of questions to identify their m
 
 The BotView page contains the function that gives response automatically depend on user's choice.
 
-```sh
 - Click on GET START button to start the bot chat
 - Choose the option that best describes your answer
 - Get the response message from the bot
 - Repeat the above two steps until you get the final result
-```
 
 ## Development requirements
 
