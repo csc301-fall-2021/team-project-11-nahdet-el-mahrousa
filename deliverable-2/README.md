@@ -25,6 +25,17 @@ The NM Bot will ask the user to answer a series of questions to identify their m
 * Provide clear steps for using each feature described above
 * This section is critical to testing your application and must be done carefully and thoughtfully
 
+### Bot
+
+The BotView page contains the function that gives response automatically depend on user's choice.
+
+```sh
+- Click on GET START button to start the bot chat
+- Choose the option that best describes your answer
+- Get the response message from the bot
+- Repeat the above two steps until you get the final result
+```
+
 ## Development requirements
 
 The app is developed with Node.js + Express.js + React + MongoDB with node@v14.16.1 and npm@v7.24.1. The app has three components: server, client-app, admin-dashboard; each runs and builds independently. The app is hosted by Heroku, database is supported by MongoDB Atlas.
