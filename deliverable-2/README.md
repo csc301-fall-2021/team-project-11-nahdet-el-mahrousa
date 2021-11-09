@@ -16,7 +16,17 @@ The NM Bot will ask the user to answer a series of questions to identify their m
 
 ### Bot
 
+The bot is located at right side of the home page. The two purposes of this bot are helping young entrepreneurs and gathering information on current intrerests of market place
+
+Based on the purposes for this bot, we design the bot which user can "talk" to it using the options given by it. According to the option user choose for a question, the bot will give a the next question based on a pre-fixed flow chart. The flow chart will contain questions that help us figure out information about user's startup such as domain, size or problem it is facing. In the end of the flow chart, there will be some advice for the user on their startup. In this way, we can gather those information for analytics and given advice to our users.
+
 ### Admin Dashboard
+
+The admin dashboard requires a specific route to access. The main usages of the dashboard is to access the user data we collected by the bot and manage the flow chart of the bot;thus, there are two parts of the dashboard, each address one usage of the dashboard. 
+
+There will be a data analysis page that show the data collected from the user using our bot. The admin, our partner, will have the ability to get information summary like the most popular domain for startups or the most concered problem for entrepreneurs in a given location. By doing so, the admin can inprove the flow chart for future users.
+
+There will also be a page for managing the flow chart. The main purpose for this is to allow the admin to modify, create and delete messages of the bot easier furing future usage.
 
 ## Instructions
 
