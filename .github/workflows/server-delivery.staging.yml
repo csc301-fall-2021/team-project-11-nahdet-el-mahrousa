@@ -10,6 +10,7 @@ on:
       - "server/*/**"
       - "server/app.js"
       - "server/package*"
+      
       # ignore README
 
     
@@ -49,6 +50,7 @@ jobs:
       run: npm run build --if-present
       env:
         NODE_ENV: staging
+        CI: false
 
   deploy: 
     needs: build
