@@ -1,7 +1,5 @@
 # NAHDET EL MAHROUSA
 
-> _Note:_ This document is intended to be relatively short. Be concise and precise. Assume the reader has no prior knowledge of your application and is non-technical.
-
 The client app can be accessed through <https://nm-bot-prod.herokuapp.com/>. The admin dashboard can be accessed through <https://nm-admin-prod.herokuapp.com/>.
 
 ## Description
@@ -50,7 +48,11 @@ Additional Concerns:
 
 The Admin Bot Management Page is used to add, edit, delete messages and replies.
 
-***NOTICE: The message that has label "__init__" is used to start the Bot chat. It must not be deleted and the label must not be changed. It is allowed to change the content of the initial message."***
+***NOTICE: The message that has label `__init__` is used to start the Bot chat. It must not be deleted and the label must not be changed. It is allowed to change the content of the initial message."***
+
+- Click the Menu -> Bot Management to view all messages and replies.
+- Replies are compacted, by clicking the "+" sign at the left to expand the replies.
+- Use the buttons to Add, Edit, and Delete messages or replies.
 
 To add a message, users need to click on the "NEW Message" button on the top left corner of the Bot page beside the menu. A modal will pop up once the button is clicked. User needs to enter the content of the message, label is optional. Users can cancel or submit the question they want to add by clicking on the "Cancel" and "OK" button on the bottom right corner of the modal. If the user did not enter a content, it will show a warning and the add new message request will not be made.
 
@@ -153,6 +155,6 @@ Setting up protection rules for the branches for delivery guarantees no accident
 
 ## Licenses
 
-This project is licensed under the terms of the MIT license. Any person can obtain a copy of this software and associated documentation files (the "Software"), to deal with it without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the the copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+This project is licensed under the terms of the MIT license. Any person can obtain a copy of this software and associated documentation files (the "Software"), to deal with it without restrictions.
 
 Nahdet El Mahrousa hopes this app can attract attentions to the issue of startup entrepreneurs and evoke inspirations of similar apps.
