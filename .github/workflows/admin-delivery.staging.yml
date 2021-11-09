@@ -76,5 +76,5 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_STAGING_SERVER_API_KEY}}
           heroku_app_name: ${{secrets.HEROKU_STAGING_ADMIN_APP_NAME}}
           heroku_email: ${{secrets.HEROKU_STAGING_SERVER_EMAIL}}
-          appdir: "./client-app"
+          appdir: "./client-admin"
           env_file: ".env"
