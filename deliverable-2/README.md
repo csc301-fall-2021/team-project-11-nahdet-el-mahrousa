@@ -1,6 +1,8 @@
 # NAHDET EL MAHROUSA
 
-> _Note:_ This document is intended to be relatively short. Be concise and precise. Assume the reader has no prior knowledge of your application and is non-technical. 
+> _Note:_ This document is intended to be relatively short. Be concise and precise. Assume the reader has no prior knowledge of your application and is non-technical.
+
+The client app can be accessed through <https://nm-bot-prod.herokuapp.com/>. The admin dashboard can be accessed through <https://nm-admin-prod.herokuapp.com/>.
 
 ## Description
 
@@ -10,60 +12,59 @@ The NM Bot will ask the user to answer a series of questions to identify their m
 
 ## Key Features
 
-* Described the key features in the application that the user can access
-* Provide a breakdown or detail for each feature that is most appropriate for your application
-* This section will be used to assess the value of the features built
-
 ### Bot
 
-The bot is located at right side of the home page. The two purposes of this bot are helping young entrepreneurs and gathering information on current intrerests of market place
+The bot is located at right side of the home page. The two purposes of this bot are helping young entrepreneurs and gathering information on current interests of market place
 
 Based on the purposes for this bot, we design the bot which user can "talk" to it using the options given by it. According to the option user choose for a question, the bot will give a the next question based on a pre-fixed flow chart. The flow chart will contain questions that help us figure out information about user's startup such as domain, size or problem it is facing. In the end of the flow chart, there will be some advice for the user on their startup. In this way, we can gather those information for analytics and given advice to our users.
 
 ### Admin Dashboard
 
-The admin dashboard requires a specific route to access. The main usages of the dashboard is to access the user data we collected by the bot and manage the flow chart of the bot;thus, there are two parts of the dashboard, each address one usage of the dashboard. 
+The admin dashboard requires a specific route to access. The main usages of the dashboard is to access the user data we collected by the bot and manage the flow chart of the bot ("the flowchart"); thus, there are two parts of the dashboard.
 
-There will be a data analysis page that show the data collected from the user using our bot. The admin, our partner, will have the ability to get information summary like the most popular domain for startups or the most concered problem for entrepreneurs in a given location. By doing so, the admin can inprove the flow chart for future users.
+The admin dashboard should be protected by authentication. However, it is yet implemented in this phase.
 
-There will also be a page for managing the flow chart. The main purpose for this is to allow the admin to modify, create and delete messages of the bot easier furing future usage.
+There is Bot Management Page for managing the flow chart. The main purpose for this is to allow the admin to view, modify, create and delete messages of the bot.
+
+There will be an Admin Management Page for register, change privilege, and de-active an admin. However, it is yet implemented in this phase.
+
+There will be a data analysis page that show the data collected from the user using our bot. The admin, our partner, will have the ability to get information summary, for example, the most popular domain for startups or the most concerned problems for entrepreneurs in a given location. By doing so, the admin can improve the flow chart for future users. **However, this feature is not implemented in this phase.**
 
 ## Instructions
-
-* Clear instructions for how to use the application from the end-user's perspective
-* How do you access it? Are accounts pre-created or does a user register? Where do you start? etc. 
-* Provide clear steps for using each feature described above
-* This section is critical to testing your application and must be done carefully and thoughtfully
 
 ### Bot
 
 The BotView page contains the function that gives response automatically depend on user's choice.
 
-- Click on GET START button to start the bot chat
-- Choose the option that best describes your answer
-- Get the response message from the bot
-- Repeat the above two steps until you get the final result
+- Click on GET START button to start the bot chat.
+- Choose the option that best describes your situation.
+- Get the response message from the bot.
+- Repeat the above two steps until you get the final advice.
 
-Additional Concerns: 
-- If you want to change any answer in the previews question, just scroll up the page to that message and choose the option you want again. The new response that corresponds to this option will appear at the very bottom of the chat.
+Additional Concerns:
+
+- If you want to change any answer in the previous questions, just scroll up the page to that message and choose the option you want again. The new response that corresponds to this option will appear at the very bottom of the chat.
 - Same instruction as starting the chat again. Click the GET START button at the top will re-initialize the first message at the very bottom of the chat.
 
 ### Admin-Bot
-Our admin bot page is able to add, edit, delete messages and replies. 
 
-To add a message, users need to click on the “NEW Message” button on the top left corner of the Bot page beside the sider. A modal will pop up once the button is clicked. User needs to enter the content of the message, label is optional. Users can cancel or submit the question they want to add by clicking on the “Cancel” and “OK” button on the bottom right corner of the modal. If the user did not enter a content, it will show a warning and the add new message request will not be made. 
+The Admin Bot Management Page is used to add, edit, delete messages and replies.
 
-To edit a question, users can click on the “EDIT” button beside the question they want to edit under “Actions”. Again, a modal will pop up once the button is clicked. User needs to enter the content of the message, label is optional. Users can cancel or submit the question they want to edit by clicking on the “Cancel” and “OK” button on the bottom right corner of the modal. If the user did not enter a content, it will show a warning and the edit message request will not be made. 
+***NOTICE: The message that has label "__init__" is used to start the Bot chat. It must not be deleted and the label must not be changed. It is allowed to change the content of the initial message."***
 
-To delete a message, users simply need to click on the “DELETE” button beside the question they want to delete under “Actions” and the request will be made immediately. 
+To add a message, users need to click on the "NEW Message" button on the top left corner of the Bot page beside the menu. A modal will pop up once the button is clicked. User needs to enter the content of the message, label is optional. Users can cancel or submit the question they want to add by clicking on the "Cancel" and "OK" button on the bottom right corner of the modal. If the user did not enter a content, it will show a warning and the add new message request will not be made.
 
-To add a new reply under a message, users need to click on the “NEW OPTION” button beside the question they want to add the reply to under “Actions”. Again, a modal will pop up once the button is clicked. User needs to enter the content of the reply, toMessage and label are optional. Users can select a message from the dropdown under label to add “toMessage” (doesn’t work yet when adding a new reply, but works when editing a reply). Users can cancel or submit the reply they want to add by clicking on the “Cancel” and “OK” button on the bottom right corner of the modal. If the user did not enter a content, it will show a warning and the edit message request will not be made. 
+To edit a question, users can click on the "EDIT" button beside the question they want to edit under "Actions". Again, a modal will pop up once the button is clicked. User needs to enter the content of the message, label is optional. Users can cancel or submit the question they want to edit by clicking on the "Cancel" and "OK" button on the bottom right corner of the modal. If the user did not enter a content, it will show a warning and the edit message request will not be made.
 
-To see all the replies added to a question, users can click on the “+” button beside the id of the question. Once the “+” button is clicked, users are able to see all replies that belong to the question and users are able to make actions to the replies.
+To delete a message, users simply need to click on the "DELETE" button beside the question they want to delete under "Actions" and the request will be made immediately.
 
-To edit a reply, users need to click on the “EDIT” button beside the reply they want to edit under “Actions”. The rest works just like creating a new reply, however, users are able to add “toMessage”.
+To add a new reply under a message, users need to click on the "NEW OPTION" button beside the question they want to add the reply to under "Actions". Again, a modal will pop up once the button is clicked. User needs to enter the content of the reply, toMessage and label are optional. Users can select a message from the dropdown under label to add "toMessage" (doesn’t work yet when adding a new reply, but works when editing a reply). Users can cancel or submit the reply they want to add by clicking on the "Cancel" and "OK" button on the bottom right corner of the modal. If the user did not enter a content, it will show a warning and the edit message request will not be made.
 
-To delete a reply, users simply need to click on the “DELETE” button beside the reply they want to delete under “Actions” and the request will be made immediately. 
+To see all the replies added to a question, users can click on the "+" button beside the id of the question. Once the "+" button is clicked, users are able to see all replies that belong to the question and users are able to make actions to the replies.
+
+To edit a reply, users need to click on the "EDIT" button beside the reply they want to edit under "Actions". The rest works just like creating a new reply, however, users are able to add "toMessage".
+
+To delete a reply, users simply need to click on the "DELETE" button beside the reply they want to delete under "Actions" and the request will be made immediately.
 
 ## Development requirements
 
