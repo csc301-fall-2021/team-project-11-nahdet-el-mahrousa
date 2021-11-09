@@ -34,6 +34,9 @@ The BotView page contains the function that gives response automatically depend 
 - Get the response message from the bot
 - Repeat the above two steps until you get the final result
 
+Additional Concern: 
+- If you want to change any answer in the previews question, just scroll up the page to that question/message and choose the option you want again. The new response that corresponds to this option will appear at the bottom of the chat.
+
 ## Development requirements
 
 The app is developed with Node.js + Express.js + React + MongoDB with node@v14.16.1 and npm@v7.24.1. The app has three components: server, client-app, admin-dashboard; each runs and builds independently. The app is hosted by Heroku, database is supported by MongoDB Atlas.
