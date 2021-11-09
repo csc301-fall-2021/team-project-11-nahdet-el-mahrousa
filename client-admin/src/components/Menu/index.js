@@ -30,8 +30,8 @@ const Sider = () => {
 
       <SubMenu key="sub1" icon={<TeamOutlined />} title="Manage">
         <Menu.Item key="1">
-          <Link className="nav-item" to={`/database/bot`}>
-            Bot Page
+          <Link className="nav-item" to="/database/bot">
+            Bot Management
           </Link>
         </Menu.Item>
       </SubMenu>
