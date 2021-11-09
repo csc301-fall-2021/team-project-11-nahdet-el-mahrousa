@@ -39,7 +39,7 @@ jobs:
       run: npm ci
 
     - name: BUILD ENV VARIABLES TO ./.env
-      run: echo $'${{ secrets.CLIENT_ENV_PROD}}' > ./.env
+      run: echo $'${{ secrets.ADMIN_ENV_PROD}}' > ./.env
       
     # - name: SETUP ENV VARS
     #   run: NODE_ENV='development'
@@ -64,7 +64,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: BUILD ENV VARIABLES TO .env
-        run: echo $'${{ secrets.CLIENT_ENV_PROD}}' > .env
+        run: echo $'${{ secrets.ADMIN_ENV_PROD}}' > .env
 
       - name: CHECK ENV VARIABLES IN .env
         run: cat .env
