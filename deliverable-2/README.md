@@ -48,7 +48,7 @@ Additional Concerns:
 - If you want to change any answer in the previous questions, just scroll up the page to that message and choose the option you want again. The new response that corresponds to this option will appear at the very bottom of the chat.
 - Same instruction as starting the chat again. Click the GET START button at the top will re-initialize the first message at the very bottom of the chat.
 
-### Admin-Bot
+### Admin-Dashboard
 
 The Admin Bot Management Page is used to add, edit, delete messages and replies.
 
