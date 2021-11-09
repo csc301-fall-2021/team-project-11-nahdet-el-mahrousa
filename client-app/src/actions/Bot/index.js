@@ -5,7 +5,6 @@ import { getFirstMessage, getNextMessage } from 'api/client-api';
 const log = console.log;
 
 export async function initChat(msgQueue) {
-    log(msgQueue);
     const newQueue = [...msgQueue.state.chat];
 
     // get first msg from API
@@ -16,9 +15,18 @@ export async function initChat(msgQueue) {
         msgQueue.setState({
             chat: newQueue
         });
-    }
-    catch(error) {
-        console.log(error);
+    } catch(error) {
+        const err = `Action ${String(error)}. Please contact the staff.`
+        console.log(err);
+        newQueue.push({
+            message: {
+                content: err
+            },
+            replies: []
+        })
+        msgQueue.setState({
+            chat: newQueue
+        });
     }
 }
 
@@ -45,6 +53,16 @@ export async function makeReply(msgQueue, reply) {
         });
     }
     catch(error) {
-        console.log(error);
+        const err = `Action ${String(error)}. Please contact the staff.`
+        console.log(err);
+        newQueue.push({
+            message: {
+                content: err
+            },
+            replies: []
+        })
+        msgQueue.setState({
+            chat: newQueue
+        });
     }
 }
