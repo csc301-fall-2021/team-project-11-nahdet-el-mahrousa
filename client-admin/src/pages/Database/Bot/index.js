@@ -3,24 +3,31 @@ import Messages from "../../../components/Bot/BotMessages/messages";
 import { getMessageFromBackend } from "../../../actions/Bot/index";
 import { AddNewMessageButton } from "../../../components/Bot/NewMessageModal/index";
 import Menu from "components/Menu";
-import { Row, Col } from 'antd';
+import { Layout } from 'antd';
+const { Header, Content } = Layout;
 
 class BotPage extends React.Component {
   render() {
     getMessageFromBackend();
     return (
-      <Row style={{ minHeight: '100vh' }}>
-        <Col>
-          <Menu />
-        </Col>
-        <Col className="site-layout" style={{ marginLeft: 20, width: 1100 }}>
-          <h1>Bot Management</h1>
-          <AddNewMessageButton></AddNewMessageButton>
-          <div className="container">
-            <Messages></Messages>
-          </div>
-        </Col>
-      </Row>
+      <Layout>
+        <Menu />
+
+        <Layout theme="light">
+
+          <Header style={{ "backgroundColor": "white" }}><h1>Bot Flowchart Management</h1></Header>
+
+          <Content style={{ padding: '1rem' }}>
+            <AddNewMessageButton />
+            <div className="container">
+              <Messages />
+            </div>
+          </Content>
+
+        </Layout>
+
+      </Layout>
+
     );
   }
 }

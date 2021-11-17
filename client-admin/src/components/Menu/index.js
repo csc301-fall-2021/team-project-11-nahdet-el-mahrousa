@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu } from 'antd';
+import { Layout, Menu } from 'antd';
 import { Link } from 'react-router-dom';
 import {
   UserOutlined,
@@ -9,13 +9,16 @@ import {
 } from "@ant-design/icons";
 
 const { SubMenu } = Menu;
+const { Sider } = Layout;
+
+// Reference: https://ant.design/components/menu-cn/#components-menu-demo-sider-current
 
 // submenu keys of first level
-const rootSubmenuKeys = ['sub1', 'sub2', 'sub4'];
+const rootSubmenuKeys = ['database-submenu'];
 
-const Sider = () => {
+const MenuComponent = () => {
+  ////////////////////// FROM DEMO, DO NOT CHANGE ///////////////////////
   const [openKeys, setOpenKeys] = React.useState(['sub1']);
-
   const onOpenChange = keys => {
     const latestOpenKey = keys.find(key => openKeys.indexOf(key) === -1);
     if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
@@ -24,19 +27,46 @@ const Sider = () => {
       setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
     }
   };
+  ///////////////////////////////////////////////////////////////////////
 
   return (
-    <Menu className="siteBarLayout" mode="inline" openKeys={openKeys} onOpenChange={onOpenChange} style={{ width: 256, height: 920 }}>
+    <Sider
+      style={{
+        overflow: 'auto',
+        height: '100vh',
+      }}
+      theme="light"
+    >
+      <Menu className="siteBarLayout" mode="inline" openKeys={openKeys} onOpenChange={onOpenChange}>
 
-      <SubMenu key="sub1" icon={<TeamOutlined />} title="Manage">
-        <Menu.Item key="1">
-          <Link className="nav-item" to="/database/bot">
-            Bot Management
+        <Menu.Item key="0" icon={<UserOutlined />}>
+          <Link className="nav-item" to="/">
+            Dashboard
           </Link>
         </Menu.Item>
-      </SubMenu>
-    </Menu>
+
+        <Menu.Item key="1" icon={<PieChartOutlined />}>
+          <Link className="nav-item" to="/statistics">
+            Bot Statistics
+          </Link>
+        </Menu.Item>
+
+        <SubMenu key="database-submenu" icon={<TeamOutlined />} title="Manage">
+          <Menu.Item key="2">
+            <Link className="nav-item" to="/database/bot">
+              Bot Flowchart
+            </Link>
+          </Menu.Item>
+          <Menu.Item key="3">
+            <Link className="nav-item" to="/database/admin">
+              Admin Accounts
+            </Link>
+          </Menu.Item>
+        </SubMenu>
+
+      </Menu>
+    </Sider>
   );
 };
 
-export default Sider;
+export default MenuComponent;
