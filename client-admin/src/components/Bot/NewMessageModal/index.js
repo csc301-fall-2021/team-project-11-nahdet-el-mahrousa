@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Space, Button } from "antd";
 import { useSelector } from "react-redux";
 import { Modal, Input } from "antd";
-import { sendMessageToBackend } from "../../../actions/Bot/index";
+
+import { sendMessageToBackend } from "actions/Bot/index";
 import BotWarning from "../BotWarning";
 
 export function AddNewMessageButton(props) {
@@ -50,10 +51,10 @@ export function AddNewMessageButton(props) {
   };
 
   return (
-    <div>
-      <Space size="middle">
-        <Button onClick={showModal}>NEW Message</Button>
-      </Space>
+    <span>
+      {/* <Space size="middle"> */}
+      <Button onClick={showModal} type="primary">NEW Message</Button>
+      {/* </Space> */}
       <Modal
         title="Add New Message"
         visible={visible}
@@ -68,6 +69,6 @@ export function AddNewMessageButton(props) {
           onChange={handleNewOptionTextLabel}
         />
       </Modal>
-    </div>
+    </span>
   );
 }

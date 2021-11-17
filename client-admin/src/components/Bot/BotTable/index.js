@@ -39,7 +39,7 @@ class BotTable extends React.Component {
           columns={columns}
           expandable={{ expandedRowRender }}
           dataSource={data}
-          pagination={{ position: ["topLeft", "bottomRights"] }}
+          pagination={{ position: ["bottomRights"] }}
         />
       </div>
     );
