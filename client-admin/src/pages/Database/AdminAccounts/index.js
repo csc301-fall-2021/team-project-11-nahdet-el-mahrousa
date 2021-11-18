@@ -2,25 +2,21 @@ import React from "react";
 import { Layout, PageHeader, Button } from 'antd';
 
 import Menu from "components/Menu";
-import UserTable from "components/User/UserTable";
+import AdminAccountsTable from "components/AdminAccounts/AdminAccountsTable";
 
 const { Content } = Layout;
 
 
-const data = [
-    {
-        _id: "asddqwd1d12e1",
-        name: "Tomas",
-        username: "tomas1231"
-    },
-    {
-        _id: "asd121assdqw",
-        name: "John",
-        username: "john1231"
-    },
-]
-
 class UsersPage extends React.Component {
+    state = {
+        tableRefresher: false
+    }
+
+    // Force Re-rendering Reference: https://www.freecodecamp.org/news/force-refreshing-a-react-child-component-the-easy-way-6cdbb9e6d99c/
+    refreshTable = () => {
+        this.setState({ tableRefresher: !this.state.tableRefresher })
+    }
+
     render() {
         return (
             <Layout>
@@ -31,7 +27,7 @@ class UsersPage extends React.Component {
                         // ghost={false}
                         title="Admin Account Management"
                         extra={[
-                            <Button key="3">Refresh</Button>,
+                            <Button key="3" onClick={this.refreshTable} >Refresh</Button>,
                             <Button key="1" type="primary">
                                 Add new admin
                             </Button>,
@@ -39,7 +35,7 @@ class UsersPage extends React.Component {
                     />
 
                     <Content style={{ padding: '1rem' }}>
-                        <UserTable data={data} />
+                        <AdminAccountsTable refresh={this.state.tableRefresher} />
                     </Content>
 
                 </Layout>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Table, Space, Popconfirm, Button, message } from 'antd';
 
+import { requestGetAdminAccounts } from 'actions/AdminAccounts'
 /**
  * A button to delete a user, with confirmation.
  * Button Reference: https://ant.design/components/popconfirm-cn/#components-popconfirm-demo-async
@@ -19,7 +20,7 @@ class DeleteButton extends React.Component {
             this.setState({ visible: false })
             this.setState({ confirmLoading: false })
             message.success("Deleted user")
-        }, 2000);
+        }, 1000);
     };
 
     render() {
@@ -78,15 +79,30 @@ const columns = [
 
 // Layout Reference: https://ant.design/components/table-cn/#components-table-demo-basic
 // Fetch Reference: https://ant.design/components/table-cn/#components-table-demo-ajax
-class UserTable extends React.Component {
+class AdminAccountsTable extends React.Component {
     state = {
-        data: this.props.data,
+        data: [],
         pagination: {
             current: 1,
-            pageSize: 20,
+            pageSize: 1,
         },
         loading: false,
     };
+
+    componentDidMount() {
+        const { pagination } = this.state;
+        this.fetch({ pagination });
+    }
+
+    // Force Re-rendering Reference: 
+    // https://www.freecodecamp.org/news/force-refreshing-a-react-child-component-the-easy-way-6cdbb9e6d99c/
+    componentWillReceiveProps(props) {
+        const { refresh } = this.props;
+        if (props.refresh !== refresh) {
+            message.info("Refreshing data")
+            this.onChange(this.state.pagination)
+        }
+    }
 
     /**
      * Change of pagination or sorter
@@ -95,14 +111,37 @@ class UserTable extends React.Component {
      * @param {*} sorter 
      * @param {*} extra 
      */
-    onChange(pagination, filters, sorter, extra) {
-        console.log('params', pagination, filters, sorter, extra);
+    onChange = (pagination, filters, sorter) => {
+        console.log('params', pagination, filters, sorter);
+        this.fetch({
+            // sortField: sorter.field,
+            // sortOrder: sorter.order,
+            pagination,
+            // ...filters,
+        });
+    }
+
+
+    fetch = (params = {}) => {
+        this.setState({ loading: true })
+        requestGetAdminAccounts(params).then((data) => {
+            this.setState({
+                loading: false,
+                data: data,
+                pagination: {
+                    ...params.pagination,
+                    total: data.length
+                }
+            })
+        })
+
     }
 
     render() {
         return (
             <Table
                 columns={columns}
+                rowKey={record => record._id}
                 dataSource={this.state.data}
                 onChange={this.onChange}
                 loading={this.state.loading}
@@ -112,4 +151,4 @@ class UserTable extends React.Component {
     }
 }
 
-export default UserTable
+export default AdminAccountsTable
