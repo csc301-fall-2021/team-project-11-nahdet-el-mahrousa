@@ -1,14 +1,15 @@
 # This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: App CD >> STAGING
+name: Admin CD >> PRODUCTION
 
 on:
   push:
-    branches: [ staging ]
+    branches: [ main ]
     paths:
-      - "client-app/*/**"
-      - "client-app/package*"
+      - "client-admin/*/**"
+      - "client-admin/package*"
+      - ".github/workflows/admin-delivery.production.yml"
       # ignore README
 
     
@@ -17,9 +18,9 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
         run:
-          working-directory: ./client-app
+          working-directory: ./client-admin
     
-    timeout-minutes: 2
+    timeout-minutes: 3
     
     strategy:
       matrix:
@@ -39,7 +40,7 @@ jobs:
       run: npm ci
 
     - name: BUILD ENV VARIABLES TO ./.env
-      run: echo $'${{ secrets.CLIENT_ENV_STAGING}}' > ./.env
+      run: echo $'${{ secrets.ADMIN_ENV_PROD}}' > ./.env
       
     # - name: SETUP ENV VARS
     #   run: NODE_ENV='development'
@@ -55,16 +56,16 @@ jobs:
 
     defaults:
         run:
-          working-directory: ./client-app
+          working-directory: ./client-admin
 
-    timeout-minutes: 2
+    timeout-minutes: 3
 
     steps:
       - name: CHECK-OUT GIT REPOSITORY
         uses: actions/checkout@v2
 
       - name: BUILD ENV VARIABLES TO .env
-        run: echo $'${{ secrets.CLIENT_ENV_STAGING}}' > .env
+        run: echo $'${{ secrets.ADMIN_ENV_PROD}}' > .env
 
       - name: CHECK ENV VARIABLES IN .env
         run: cat .env
@@ -72,9 +73,8 @@ jobs:
       - name: HEROKU DEPLOY
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
-          heroku_api_key: ${{secrets.HEROKU_STAGING_SERVER_API_KEY}}
-          heroku_app_name: ${{secrets.HEROKU_STAGING_CLIENT_APP_NAME}}
-          heroku_email: ${{secrets.HEROKU_STAGING_SERVER_EMAIL}}
-          appdir: "./client-app"
+          heroku_api_key: ${{secrets.HEROKU_PROD_SERVER_API_KEY}}
+          heroku_app_name: ${{secrets.HEROKU_PROD_ADMIN_APP_NAME}}
+          heroku_email: ${{secrets.HEROKU_PROD_SERVER_EMAIL}}
+          appdir: "./client-admin"
           env_file: ".env"
-
