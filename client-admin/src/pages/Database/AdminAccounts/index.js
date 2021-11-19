@@ -3,6 +3,7 @@ import { Layout, PageHeader, Button } from 'antd';
 
 import Menu from "components/Menu";
 import AdminAccountsTable from "components/AdminAccounts/AdminAccountsTable";
+import CreateAdminDrawer from "components/AdminAccounts/CreateAdminDrawer";
 
 const { Content } = Layout;
 
@@ -28,9 +29,7 @@ class UsersPage extends React.Component {
                         title="Admin Account Management"
                         extra={[
                             <Button key="3" onClick={this.refreshTable} >Refresh</Button>,
-                            <Button key="1" type="primary">
-                                Add new admin
-                            </Button>,
+                            <CreateAdminDrawer />
                         ]}
                     />
 

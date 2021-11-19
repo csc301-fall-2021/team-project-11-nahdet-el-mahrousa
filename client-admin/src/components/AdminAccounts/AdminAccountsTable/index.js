@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table, Space, Popconfirm, Button, message } from 'antd';
 
-import { requestGetAdminAccounts } from 'actions/AdminAccounts'
+import { requestGetAdminAccounts, requestDeleteAdminAccount } from 'actions/AdminAccounts'
 /**
  * A button to delete a user, with confirmation.
  * Button Reference: https://ant.design/components/popconfirm-cn/#components-popconfirm-demo-async
@@ -12,15 +12,21 @@ class DeleteButton extends React.Component {
         confirmLoading: false
     }
 
-    handleOk = () => {
+    handleOk = async () => {
         this.setState({ confirmLoading: true })
-        console.log('deleting ', this.props.target)
+
+        const userToDelete = this.props.target
+        console.log('deleting ', userToDelete)
         // TODO: to async request
-        setTimeout(() => {
+        try {
+            const deletedUser = await requestDeleteAdminAccount(userToDelete)
             this.setState({ visible: false })
             this.setState({ confirmLoading: false })
-            message.success("Deleted user")
-        }, 1000);
+            message.success(`Deleted user ${deletedUser.username}`)
+        } catch (error) {
+            this.setState({ confirmLoading: false })
+            message.error(String(error))
+        }
     };
 
     render() {
@@ -122,9 +128,19 @@ class AdminAccountsTable extends React.Component {
     }
 
 
-    fetch = (params = {}) => {
+    fetch = async (params = {}) => {
         this.setState({ loading: true })
-        requestGetAdminAccounts(params).then((data) => {
+        try {
+            const data = await requestGetAdminAccounts(params)//.then((data) => {
+            // this.setState({
+            //     loading: false,
+            //     data: data,
+            //     pagination: {
+            //         ...params.pagination,
+            //         total: data.length
+            //     }
+            // })
+            //})
             this.setState({
                 loading: false,
                 data: data,
@@ -133,8 +149,12 @@ class AdminAccountsTable extends React.Component {
                     total: data.length
                 }
             })
-        })
-
+        } catch (error) {
+            message.error(String(error))
+            this.setState({
+                loading: false,
+            })
+        }
     }
 
     render() {
