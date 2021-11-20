@@ -1,4 +1,4 @@
-
+import * as http from "utils/http"
 // FIXME: mock timer
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -51,7 +51,7 @@ async function postNewAdmin(body) {
                 username: body.username
             }
         }
-        await sleep(500)
+        await sleep(500) // FIXME: DELETE ME
 
         return response
 
@@ -77,7 +77,7 @@ async function deleteAdmin(body) {
                 username: "deletedAdmin"
             }
         }
-        await sleep(500)
+        await sleep(500) // FIXME: DELETE ME
 
         return response
     } catch (error) {

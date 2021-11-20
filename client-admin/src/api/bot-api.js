@@ -1,8 +1,8 @@
-import { getItems, postItems, deleteItems, putItems } from "../util/http";
+import * as http from "../utils/http";
 
 export function getBot(dispatchMessage) {
   let msg = [];
-  getItems("/admin/bot")
+  http.get("/admin/bot")
     .then((response) => {
       if (response.statusCode === 200) {
         msg = response.entity;
@@ -19,7 +19,7 @@ export function getBot(dispatchMessage) {
 
 export function createMessage(data, dispatchMessage) {
   console.log(data);
-  postItems("/admin/bot/message", data)
+  http.post("/admin/bot/message", data)
     .then((response) => {
       if (response.statusCode === 200) {
         console.log(response.msg);
@@ -35,7 +35,7 @@ export function createMessage(data, dispatchMessage) {
 
 export function deleteMessage(data, dispatchMessage) {
   console.log(data);
-  deleteItems("/admin/bot/message", data)
+  http.del("/admin/bot/message", data)
     .then((response) => {
       if (response.statusCode === 200) {
         console.log(response.msg);
@@ -51,7 +51,7 @@ export function deleteMessage(data, dispatchMessage) {
 
 export function editMessage(data, dispatchMessage) {
   console.log(data);
-  putItems("/admin/bot/message", data)
+  http.put("/admin/bot/message", data)
     .then((response) => {
       if (response.statusCode === 200) {
         console.log(response.msg);
@@ -67,7 +67,7 @@ export function editMessage(data, dispatchMessage) {
 export function deleteReply(data, dispatchMessage) {
   let msg = [];
   console.log(data);
-  deleteItems("/admin/bot/reply", data)
+  http.del("/admin/bot/reply", data)
     .then((response) => {
       if (response.statusCode === 200) {
         console.log(response.msg);
@@ -84,7 +84,7 @@ export function deleteReply(data, dispatchMessage) {
 export function createReply(data, dispatchMessage) {
   let msg = [];
   console.log(data);
-  postItems("/admin/bot/reply", data)
+  http.post("/admin/bot/reply", data)
     .then((response) => {
       if (response.statusCode === 200) {
         console.log(response.msg);
@@ -101,7 +101,7 @@ export function createReply(data, dispatchMessage) {
 export function editReply(data, dispatchMessage) {
   let msg = [];
   console.log(data);
-  putItems("/admin/bot/reply", data)
+  http.put("/admin/bot/reply", data)
     .then((response) => {
       if (response.statusCode === 200) {
         console.log(response.msg);
