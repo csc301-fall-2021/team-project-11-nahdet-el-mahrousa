@@ -1,4 +1,4 @@
-const CryptoJS = require("crypto-js");
+const bcrypt = require("bcrypt");
 const logger = { log: console.log }
 
 class UserService {
@@ -6,12 +6,12 @@ class UserService {
      * Constructor of BotService.
      * @param {UserDao} UserDao 
      */
-    constructor(UserDao=null) {
-        this.UserDao = UserDao
+    constructor(userDao=null) {
+        this.userDao = userDao
     }
 
-    setUserDao(UserDao) {
-        this.UserDao = UserDao
+    setUserDao(userDao) {
+        this.userDao = userDao
     }
 
     /**
@@ -19,8 +19,9 @@ class UserService {
      * @param {string} password 
      * @returns a string of encrypted password
      */
-    encryptPassword(password) {
-        return CryptoJS.AES.encrypt(password, "secret key nm bot").toString()
+    async encryptPassword(password) {
+        let salt = await bcrypt.genSalt(10)
+        return await bcrypt.hash(password, salt)
     }
 
     /**
@@ -29,7 +30,7 @@ class UserService {
      * @returns A user object.
      */
     async getUser(username) {
-        const user = await this.UserDao.search({ username: username })
+        const user = await this.userDao.search({ username: username })
         if (!user) {
             logger.log(`User [${username}] doesn't exist`)
             return user
@@ -44,8 +45,8 @@ class UserService {
      * @returns New User. If fail to create, return null.
      */
     async createUser(username, password) {
-        let encryptedPassword = this.encryptPassword(password)
-        const newUser = await this.UserDao.create({ username, password: encryptedPassword })
+        let encryptedPassword = await this.encryptPassword(password)
+        const newUser = await this.userDao.create({ username, password: encryptedPassword })
 
         if (newUser !== null) {
             logger.log(`CREATED User ${newUser.username} `)
@@ -63,12 +64,31 @@ class UserService {
      * @returns True if match, flase otherwise
      */
     async login(username, password) {
-        let encryptedPassword = this.encryptPassword(password)
-        const users = await this.UserDao.search({ username: username, password: encryptedPassword })
-        if (users.length == 0){
-            return false
+        const users = await this.userDao.search({ username: username })
+        for(let user of users){
+            if(bcrypt.compareSync(password, user.password)){
+                return user
+            }
         }
-        return true
+        return null
+    }
+
+    /**
+     * Delete a user.
+     * @param {string} username of the user to delete.
+     * @returns The User deleted.
+     */
+     async deleteUser(username) {
+        const delUser = await this.getUser(username)
+        this.userDao.delete(delUser._id)
+
+        if (delUser !== null) {
+            logger.log(`[DELETED User \'${username}\'`)
+            return delUser
+        } else {
+            logger.log(`[FAILED DELETE Message \'${username}\'`)
+            return undefined
+        }
     }
 }
 

@@ -58,6 +58,21 @@ class UserDao {
         }
     }
 
+    /**
+     * Delete a user.
+     * @param {Integer} uid id of user.
+     * @returns Deleted user. If user not found, return null.
+     */
+     async delete(uid) {
+        const deletedUser = await User.findByIdAndRemove(uid)
+        if (deletedUser !== null) {
+            logger.log(`MONGOOSE DELETED Reply ${deletedUser._id}`)
+        } else {
+            logger.log(`MONGOOSE FAILED DELETE Reply ${uid}`)
+        }
+        return deletedUser
+    }
+
 }
 
 module.exports = UserDao;

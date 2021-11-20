@@ -40,6 +40,15 @@ class UserDao {
         return null
     }
 
+    /**
+     * Delete a user.
+     * @param {Integer} uid id of user.
+     * @returns Deleted user. If user not found, return null.
+     */
+     async delete(uid) {
+        return null
+    }
+
 }
 
 module.exports = UserDao;

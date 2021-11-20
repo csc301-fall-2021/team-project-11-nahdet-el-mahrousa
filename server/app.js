@@ -6,6 +6,8 @@ const morgan = require('morgan');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const createDB = require('./gateways/db');
+const jwt = require('jsonwebtoken');
+const { JsonWebTokenError } = require('jsonwebtoken');
 
 /**
  * A factory model to build an Express.js app.
@@ -43,11 +45,15 @@ class AppFactory {
     const indexRouter = require('./api/index');
     const botRouter = require('./api/client/bot');
     const adminBotRouter = require('./api/admin/bot');
+    const userRouter = require('./api/auth/user')
+    const authRouter = require('./api/auth/auth')
 
     // Register Routers
     app.use('/', indexRouter);
     app.use('/bot', botRouter);
-    app.use('/admin', adminBotRouter)
+    app.use('/admin', adminBotRouter);
+    app.use('/user', userRouter)
+    app.use('/auth', authRouter)
   }
 
   /**

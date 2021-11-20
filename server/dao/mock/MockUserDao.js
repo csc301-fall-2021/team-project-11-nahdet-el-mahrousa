@@ -58,6 +58,17 @@ class MockUserDao {
         }
     }
 
+    /**
+     * Delete a user.
+     * @param {Integer} uid id of user.
+     * @returns Deleted user. If user not found, return null.
+     */
+     async delete(uid) {
+        this.db.replies = this.db.replies.filter(rpl => rpl._id != rid)
+        logger.log(`DELETED Reply ${rid}`)
+        return true
+    }
+
 }
 
 module.exports = MockUserDao;
