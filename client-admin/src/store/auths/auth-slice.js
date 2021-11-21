@@ -4,12 +4,12 @@ import { createSlice } from '@reduxjs/toolkit'
 export const authSlice = createSlice({
   name: 'userData',
   initialState: {
-      data: []
+      userData: []
   },
   reducers: {
     updateAuth: (state, action) => {
       console.log(state, action.payload)
-      state.messages = action.payload
+      state.userData = action.payload
     }
   }
 })
