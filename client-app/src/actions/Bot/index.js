@@ -14,7 +14,7 @@ export async function initChat(msgQueue) {
         newQueue.push(entity);
         msgQueue.setState({
             chat: newQueue
-        });
+        }, () => msgQueue.scrollToMyRef());
     } catch(error) {
         const err = `Action ${String(error)}. Please contact the staff.`
         console.log(err);
@@ -26,7 +26,7 @@ export async function initChat(msgQueue) {
         })
         msgQueue.setState({
             chat: newQueue
-        });
+        }, () => msgQueue.scrollToMyRef());
     }
 }
 
@@ -41,7 +41,7 @@ export async function makeReply(msgQueue, reply) {
     msgQueue.setState({
         chat: newQueue
     });
-
+    
     // Send a request to server
     // With the response, add a new Message to msgQueue
     try {
@@ -50,7 +50,7 @@ export async function makeReply(msgQueue, reply) {
         newQueue.push(entity);
         msgQueue.setState({
             chat: newQueue
-        });
+        }, () => msgQueue.scrollToMyRef());
     }
     catch(error) {
         const err = `Action ${String(error)}. Please contact the staff.`
@@ -63,6 +63,6 @@ export async function makeReply(msgQueue, reply) {
         })
         msgQueue.setState({
             chat: newQueue
-        });
+        }, () => msgQueue.scrollToMyRef());
     }
 }

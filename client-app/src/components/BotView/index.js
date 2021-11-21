@@ -15,9 +15,17 @@ class BotView extends React.Component {
         }
     }
 
+    chatContainer = React.createRef();
+
+    scrollToMyRef = () => {
+        const scroll = this.chatContainer.current.scrollHeight -
+        this.chatContainer.current.clientHeight;
+        this.chatContainer.current.scrollTo(0, scroll);
+    }
+
     render() {
         return (
-            <div className="bot-view">
+            <div ref={this.chatContainer} className="bot-view">
                 <div className="bot-chat-container">
                     <StartButton initChat={() => initChat(this)} />
                     {

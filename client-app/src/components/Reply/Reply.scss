@@ -6,10 +6,11 @@
     
     
     .reply-bubble {
-        max-width: 50%;
+        max-width: 60%;
         margin-left: auto;
         background-color: #439d7d;
         @include chat-bubble;
+        width: fit-content;
 
         .reply-content {
             color: white;
@@ -17,6 +18,7 @@
             padding-right: 1rem;
             font-size: large;
             text-align: right;
+            
         }
     }
 }

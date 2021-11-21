@@ -12,25 +12,24 @@
         height: 50px;
 
         position: absolute;
-        top: -1rem;
         left: -1rem;
 
         background-color: #ad523b;
         border-radius: 50%;
-        
     }
 
     .message-bubble {
-        background-color: white;
+        position: relative;
+        left: 3.5rem;
 
-        
+        background-color: white;
         width: 60%;
         @include chat-bubble();
+        width: fit-content;
         
         .message-content {
             padding-left: 1rem;
             padding-right: 1rem;
-            // margin-bottom: 1rem;
 
             font-size: large;
             color: black;
@@ -39,6 +38,7 @@
 
         .replies-container {
             width: 90%;
+            
             margin-left: auto;
             margin-right: auto;
             margin-top: 1rem;
@@ -51,7 +51,6 @@
 
             .reply-option {
                 width: 90%;
-
                 margin: 5px;
                 margin-left: auto;
                 margin-right: auto;
@@ -60,8 +59,7 @@
                 justify-content: center;
 
                 .reply-option-btn {
-                    min-width: 40%;
-                    
+                    min-width: 90%;
                     padding-top: .5rem;
                     padding-bottom: .5rem;
 
