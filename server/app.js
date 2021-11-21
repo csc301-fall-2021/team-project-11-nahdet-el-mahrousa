@@ -33,7 +33,14 @@ class AppFactory {
    * @param {*} app Express app
    */
   configApp(app) {
-    dotenv.config({ path: `./config/.env.${process.env.NODE_ENV}` })
+    let envFile;
+    if (process.env.NODE_ENV) {
+      envFile = `.env.${process.env.NODE_ENV}`
+    } else {
+      envFile = `.env`
+    }
+    
+    dotenv.config({ path: `./config/${envFile}` })
   }
 
   /**
@@ -63,7 +70,7 @@ class AppFactory {
   async registerGateways(app) {
     // const dbHandler = new DBHandler()
     // await dbHandler.init(process.env.DATABASE_URI)
-    const db = createDB(process.env.DATABASE_URI, process.env.MOCK)
+    const db = createDB(process.env.DATABASE_URI, process.env.MOCK || false)
     await db.connect()
     this.db = db
   }
@@ -77,7 +84,7 @@ class AppFactory {
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
     app.use(cookieParser());
-    app.use(express.static(path.join(__dirname, 'public')));
+    // app.use(express.static(path.join(__dirname, 'public')));
     app.use(cors());
   }
 

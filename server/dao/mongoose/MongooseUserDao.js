@@ -2,8 +2,8 @@ const logger = { log: console.log }
 
 const { User } = require('../../models/models.mongoose')
 
-class UserDao {
-    constructor(db) {
+class MongooseUserDao {
+    constructor(db = null) {
         this.db = db
     }
 
@@ -16,7 +16,7 @@ class UserDao {
         try {
             const newUser = new User({ username, password })
             const createdUser = await newUser.save()
-            logger.log(`MONGOOSE CREATED Reply ${createdUser._id}`)
+            logger.log(`MONGOOSE CREATED User ${createdUser._id}`)
             return newUser
         } catch (err) {
             logger.log(err)
@@ -29,9 +29,9 @@ class UserDao {
      * @param {Integer} uid id of user.
      * @returns Reply; undefined if not found.
      */
-    get(uid) {
+    async get(uid) {
         const user = await User.findById(uid).exec()
-        logger.log(`MONGOOSE GET Reply ${user}`)
+        logger.log(`MONGOOSE GET User ${user}`)
         return user
     }
 
@@ -39,7 +39,7 @@ class UserDao {
      * Get all users.
      * @returns Array of users
      */
-    getAll() {
+    async getAll() {
         return await User.find().exec()
     }
 
@@ -48,7 +48,7 @@ class UserDao {
      * @param {Object} filter 
      * @returns Array of users.
      */
-    search(filter = null) {
+    async search(filter = null) {
         if (filter) {
             const users = await User.find(filter).exec()
             return users
@@ -63,16 +63,16 @@ class UserDao {
      * @param {Integer} uid id of user.
      * @returns Deleted user. If user not found, return null.
      */
-     async delete(uid) {
+    async delete(uid) {
         const deletedUser = await User.findByIdAndRemove(uid)
         if (deletedUser !== null) {
-            logger.log(`MONGOOSE DELETED Reply ${deletedUser._id}`)
+            logger.log(`MONGOOSE DELETED User ${deletedUser._id}`)
         } else {
-            logger.log(`MONGOOSE FAILED DELETE Reply ${uid}`)
+            logger.log(`MONGOOSE FAILED DELETE User ${uid}`)
         }
         return deletedUser
     }
 
 }
 
-module.exports = UserDao;
+module.exports = MongooseUserDao;

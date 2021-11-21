@@ -51,11 +51,11 @@ function authenticationToken(req, res, next) {
     let token = authHeader && authHeader.split(' ')[1]
 
     if (!token) {
-        res.status(400).send('Forbidden')
+        res.status(401).send('Forbidden')
     } else {
-        jwt.verify(token, process.env.LOGIN_KEY, (err, username) => {
+        jwt.verify(token, process.env.SECRET_KEY, (err, username) => {
             if (err) {
-                res.status(400).send(err)
+                res.status(401).send(err)
             } else {
                 next()
             }

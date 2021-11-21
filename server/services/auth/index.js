@@ -6,7 +6,7 @@ class UserService {
      * Constructor of BotService.
      * @param {UserDao} UserDao 
      */
-    constructor(userDao=null) {
+    constructor(userDao = null) {
         this.userDao = userDao
     }
 
@@ -15,12 +15,12 @@ class UserService {
     }
 
     /**
-     * encrypt password
-     * @param {string} password 
-     * @returns a string of encrypted password
+     * Encrypt plain password.
+     * @param {String} password plain password
+     * @returns a string of encrypted password.
      */
-    async encryptPassword(password) {
-        let salt = await bcrypt.genSalt(10)
+    async _encryptPassword(password) {
+        let salt = await bcrypt.genSalt()
         return await bcrypt.hash(password, salt)
     }
 
@@ -31,11 +31,11 @@ class UserService {
      */
     async getUser(username) {
         const user = await this.userDao.search({ username: username })
-        if (!user) {
+        if (user.length === 0) {
             logger.log(`User [${username}] doesn't exist`)
-            return user
+            return null
         }
-        return user
+        return user[0]
     }
 
     /**
@@ -45,15 +45,23 @@ class UserService {
      * @returns New User. If fail to create, return null.
      */
     async createUser(username, password) {
-        let encryptedPassword = await this.encryptPassword(password)
+        // Check unique username
+        const checkUsername = await this.userDao.search({ username })
+        if (checkUsername.length > 0) {
+            logger.log(`FAILED CREATED User ${username}: Username already exists.`)
+            return null
+        }
+
+        const encryptedPassword = await this._encryptPassword(password)
         const newUser = await this.userDao.create({ username, password: encryptedPassword })
 
         if (newUser !== null) {
             logger.log(`CREATED User ${newUser.username} `)
-            return newUser
+            // const { password, ...ret } = newUser
+            return  { _id: newUser._id, username: newUser.username}
         } else {
-            logger.log(`FAILED CREATE User \'${newUser.username}\'`)
-            return newUser
+            logger.log(`FAILED CREATE User \'${username}\'`)
+            return null
         }
     }
 
@@ -61,12 +69,12 @@ class UserService {
      * Check if the username and password match a existing user
      * @param {String} username 
      * @param {String} password 
-     * @returns True if match, flase otherwise
+     * @returns User if match, null otherwise
      */
     async login(username, password) {
         const users = await this.userDao.search({ username: username })
-        for(let user of users){
-            if(bcrypt.compareSync(password, user.password)){
+        for (let user of users) {
+            if (bcrypt.compareSync(password, user.password)) {
                 return user
             }
         }
@@ -78,16 +86,22 @@ class UserService {
      * @param {string} username of the user to delete.
      * @returns The User deleted.
      */
-     async deleteUser(username) {
+    async deleteUser(username) {
         const delUser = await this.getUser(username)
-        this.userDao.delete(delUser._id)
+        if (delUser === null) {
+            return null
+        }
 
-        if (delUser !== null) {
-            logger.log(`[DELETED User \'${username}\'`)
-            return delUser
+        const deletedUser = await this.userDao.delete(delUser._id)
+
+        if (deletedUser !== null) {
+            logger.log(`DELETED User \'${username}\'`)
+            // const { password, ...ret } = deletedUser
+            // console.log(deletedUser)
+            return { _id: deletedUser._id, username: deletedUser.username}
         } else {
-            logger.log(`[FAILED DELETE Message \'${username}\'`)
-            return undefined
+            logger.log(`FAILED DELETE User \'${username}\'`)
+            return null
         }
     }
 }
