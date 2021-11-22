@@ -2,7 +2,7 @@ import store from "../../store/store";
 import { updateAuth } from "../../store/auths/auth-slice";
 import {
   authLogin,
-  authCreate,
+//   authCreate,
   authLogout
 } from "../../api/authApi";
 
@@ -10,9 +10,9 @@ function dispatchAuth(userData) {
     store.dispatch(updateAuth(userData));
 }
 
-function createUser({ username, password }) {
-    return authCreate({ username, password }, dispatchAuth);
-}
+// function createUser({ username, password }) {
+//     return authCreate({ username, password }, dispatchAuth);
+// }
 
 function verifyLogin({ username, password }) {
     // return authLogin({ username, password }, dispatchAuth);
@@ -25,6 +25,6 @@ function verifyLogout({ username, password }) {
 
 export {
     verifyLogin,
-    createUser,
+    // createUser,
     verifyLogout
 }

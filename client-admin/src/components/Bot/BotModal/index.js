@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Space } from "antd";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import { Modal, Input, Select } from "antd";
 import {
   sendReplyToBackend,
@@ -30,9 +30,9 @@ export function MessageOptionMenu(props) {
     setDisplayReplyWarning(false)
   }
 
-  const _ = useSelector((state) => {
-    return state.surveyData.messages;
-  });
+  // const _ = useSelector((state) => {
+  //   return state.surveyData.messages;
+  // });
 
   const showReplyModal = () => {
     updateState()

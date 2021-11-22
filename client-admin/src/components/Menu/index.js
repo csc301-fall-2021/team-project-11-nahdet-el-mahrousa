@@ -54,6 +54,11 @@ const MenuComponent = () => {
         <SubMenu key="database-submenu" icon={<TeamOutlined />} title="Manage">
           <Menu.Item key="2">
             <Link className="nav-item" to="/database/bot">
+              Bot Management
+            </Link>
+          </Menu.Item>
+          <Menu.Item key="4">
+            <Link className="nav-item" to="/database/bot-workflow">
               Bot Workflow
             </Link>
           </Menu.Item>
