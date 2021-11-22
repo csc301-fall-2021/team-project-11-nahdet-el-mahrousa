@@ -1,30 +1,32 @@
 import store from "../../store/store";
-import { updateAuth } from "../../store/auths/auth-slice";
+import { loginAuth, logoutAuth } from "../../store/auths/auth-slice";
 import {
-  authLogin,
-  authCreate,
-  authLogout
+  authLogin
 } from "../../api/authApi";
 
-function dispatchAuth(userData) {
-    store.dispatch(updateAuth(userData));
+function loginAuthUser(userData) {
+    store.dispatch(loginAuth(userData));
 }
 
-function createUser({ username, password }) {
-    return authCreate({ username, password }, dispatchAuth);
+function verifyLogin({ userData }) {
+    // if (userData.get("token")){
+    //     authorization = 'Bearer ${token}';
+    //     return true;
+    // }
+    // authorization = undefined;
+    // return false;
 }
 
-function verifyLogin({ username, password }) {
-    // return authLogin({ username, password }, dispatchAuth);
-    return username === "admin" && password === "admin"
+function loginAdmin({ username, password }) {
+    return authLogin({ username, password }, loginAuthUser);
 }
 
-function verifyLogout({ username, password }) {
-    return authLogout({ username, password }, dispatchAuth);
+function logoutAdmin({ username, password }) {
+    store.dispatch(logoutAuth());
 }
 
 export {
     verifyLogin,
-    createUser,
-    verifyLogout
+    loginAdmin,
+    logoutAdmin
 }

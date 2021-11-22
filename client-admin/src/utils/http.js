@@ -1,6 +1,14 @@
 const origin = process.env.REACT_APP_ORIGIN
 
 
+function getAuthorization() {
+  let authorization = undefined;
+  if (localStorage.getItem('TOKEN') && localStorage.getItem('TOKEN') !== ''){
+    authorization = 'Bearer ${token}' + localStorage.getItem('TOKEN');
+  }
+  return authorization;
+}
+
 async function get(route, params = {}) {
   const url = new URL(origin + route)
 
@@ -11,6 +19,7 @@ async function get(route, params = {}) {
     method: 'GET',
     mode: 'cors',
     headers: {
+      'Authorization': getAuthorization(),
       'Content-Type': 'application/json'
     },
   })
@@ -25,6 +34,7 @@ async function post(route, data = {}) {
     method: 'POST',
     mode: 'cors',
     headers: {
+      'Authorization': getAuthorization(),
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(data)
@@ -40,6 +50,7 @@ async function put(route, data = {}) {
     method: 'PUT',
     mode: 'cors',
     headers: {
+      'Authorization': getAuthorization(),
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(data)
@@ -55,6 +66,7 @@ async function del(route, data = {}) {
     method: 'DELETE',
     mode: 'cors',
     headers: {
+      'Authorization': getAuthorization(),
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(data)

@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 import { Form, Input, Button, message } from 'antd';
 
-import { verifyLogin } from 'actions/Auth'
+import { verifyLogin, loginAdmin } from 'actions/Auth'
 
 function LoginPage() {
     const history = useHistory();   // Used for redirection
@@ -15,7 +15,7 @@ function LoginPage() {
      */
     const onFinish = (values) => {
         console.log('Received values of form: ', values);
-        if (verifyLogin(values)) {
+        if (loginAdmin(values)) {
             message.success("Login successfully")
             history.push("/")   // Redirect to home page
         } else {
