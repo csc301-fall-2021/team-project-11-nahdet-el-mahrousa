@@ -1,0 +1,32 @@
+$dark: #313131;
+$dark-gray: #3a3a3a;
+$light: #f3f3f3;
+
+@mixin round-border($radius: 15px) {
+  border-radius: $radius;
+}
+
+@mixin box-shadow($scale: 3px, $color: #31313150) {
+  box-shadow: $scale $scale $scale $color;
+}
+
+@mixin mx($margin: auto) {
+  margin-left: $margin;
+  margin-right: $margin;
+}
+
+@mixin my($margin: auto) {
+  margin-top: $margin;
+  margin-bottom: $margin;
+}
+
+
+@mixin px($padding: auto) {
+  padding-left: $padding;
+  padding-right: $padding;
+}
+
+@mixin py($padding: auto) {
+  padding-top: $padding;
+  padding-bottom: $padding;
+}
