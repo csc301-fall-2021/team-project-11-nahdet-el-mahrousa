@@ -70,7 +70,7 @@ class AdminBotController {
         })
 
         // If not all required fields are satisfied, then return.
-        if (uin === undefined) {
+        if (uin === null) {
             return response.NOT_SATISFIED
         } else {
             // Create the message
@@ -98,7 +98,7 @@ class AdminBotController {
         })
 
         // If not all required fields are satisfied, then return.
-        if (uin === undefined) {
+        if (uin === null) {
             return response.NOT_SATISFIED
         } else {
             // Delete the message
@@ -128,7 +128,7 @@ class AdminBotController {
         })
 
         // If not all required fields are satisfied, then return.
-        if (uin === undefined) {
+        if (uin === null) {
             return response.NOT_SATISFIED
         } else {
             // Update the message
@@ -160,7 +160,7 @@ class AdminBotController {
         })
 
         // If not all required fields are satisfied, then return.
-        if (uin === undefined) {
+        if (uin === null) {
             return response.NOT_SATISFIED
         } else {
             // Create the reply
@@ -188,7 +188,7 @@ class AdminBotController {
         })
 
         // If not all required fields are satisfied, then return.
-        if (uin === undefined) {
+        if (uin === null) {
             return response.NOT_SATISFIED
         } else {
             // Delete the reply
@@ -218,7 +218,7 @@ class AdminBotController {
         })
 
         // If not all required fields are satisfied, then return.
-        if (uin === undefined) {
+        if (uin === null) {
             return response.NOT_SATISFIED
         } else {
             // Update the reply
