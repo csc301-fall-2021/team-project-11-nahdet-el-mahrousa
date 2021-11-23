@@ -1,5 +1,6 @@
 import { message } from 'antd'
 import { fetchAdmins, postNewAdmin, deleteAdmin } from "api/AdminAccounts"
+import { backToLogin } from "actions/Auth"
 
 
 async function requestGetAdminAccounts(body) {
@@ -7,6 +8,9 @@ async function requestGetAdminAccounts(body) {
         const response = await fetchAdmins(body)
         if (response.statusCode === 200) {
             return response.entity
+        } else if (response.statusCode === 401) {
+            // Login expire or not valid, return to login
+            backToLogin()
         } else {
             throw new Error(response.msg)
         }
@@ -22,6 +26,9 @@ async function requestCreateAdminAccount(body) {
         const response = await postNewAdmin(body)
         if (response.statusCode === 200) {
             return response.entity
+        } else if (response.statusCode === 401) {
+            // Login expire or not valid, return to login
+            backToLogin()
         } else {
             throw new Error(response.msg)
         }
@@ -42,6 +49,9 @@ async function requestDeleteAdminAccount(body) {
         if (response.statusCode === 200) {
             return response.entity
             // throw new Error(response.msg)
+        } else if (response.statusCode === 401) {
+            // Login expire or not valid, return to login
+            backToLogin()
         } else {
             throw new Error(response.msg)
         }

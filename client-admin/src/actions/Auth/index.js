@@ -1,39 +1,39 @@
-import store from "../../store/store";
-import { loginAuth, logoutAuth } from "../../store/auths/auth-slice";
 import {
-  authLogin
-} from "../../api/authApi";
+    authLogin
+} from "api/auth"
 
-function loginAuthUser(userData) {
-    store.dispatch(loginAuth(userData));
-    console.log(localStorage.getItem('token'))
-}
-
-function verifyLogin({ userData }) {
-    // if (userData.get("token")){
-    //     authorization = 'Bearer ${token}';
-    //     return true;
-    // }
-    // authorization = undefined;
-    // return false;
-}
 
 async function loginAdmin({ username, password }) {
-    await authLogin({ username, password }, loginAuthUser);
-    if (localStorage.getItem('token') && localStorage.getItem('token') !== ''){
-        console.log("happy")
-        return true;
+    try {
+        const response = await authLogin({ username, password });
+        if (response.statusCode === 200) {
+            // Login successfully
+            const token = response.entity.accessToken
+            localStorage.setItem("token", token)
+            return true
+        } else if (response.statusCode === 403) {
+            // If invalid credential (wrong username password)
+            return false
+        } else {
+            throw new Error(response.msg)
+        }
+    } catch (error) {
+        console.log(error)
+        throw error
     }
-    console.log(localStorage.getItem('token'))
-    return false;
 }
 
 function logoutAdmin() {
-    store.dispatch(logoutAuth());
+    // store.dispatch(logoutAuth());
+    localStorage.removeItem('token')
+}
+
+function backToLogin() {
+    document.location.href = '/login'
 }
 
 export {
-    verifyLogin,
     loginAdmin,
-    logoutAdmin
+    logoutAdmin,
+    backToLogin
 }

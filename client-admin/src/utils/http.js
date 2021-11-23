@@ -2,11 +2,10 @@ const origin = process.env.REACT_APP_ORIGIN
 
 
 function getAuthorization() {
-  let authorization = undefined;
-  if (localStorage.getItem('token') && localStorage.getItem('token') !== ''){
+  let authorization;
+  if (localStorage.getItem('token') && localStorage.getItem('token') !== '') {
     let TOKEN = localStorage.getItem('token');
-    authorization = 'Bearer' + ' ' + TOKEN;
-    console.log(authorization)
+    authorization = 'Bearer ' + TOKEN;
   }
   return authorization;
 }
@@ -32,17 +31,21 @@ async function get(route, params = {}) {
 async function post(route, data = {}) {
   const url = origin + route
 
-  const response = await fetch(url, {
-    method: 'POST',
-    mode: 'cors',
-    headers: {
-      'Authorization': getAuthorization(),
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-  })
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Authorization': getAuthorization(),
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
 
-  return await response.json()
+    return await response.json()
+  } catch (error) {
+    throw error
+  }
 }
 
 async function put(route, data = {}) {

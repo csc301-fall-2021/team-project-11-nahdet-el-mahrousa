@@ -4,22 +4,29 @@ import { useHistory } from 'react-router-dom';
 
 import { Form, Input, Button, message } from 'antd';
 
-import { verifyLogin, loginAdmin } from 'actions/Auth'
+import { loginAdmin, logoutAdmin } from 'actions/Auth'
 
 function LoginPage() {
     const history = useHistory();   // Used for redirection
-    localStorage.removeItem('token');
+    // Coming to the login page, we first logout the user.
+    logoutAdmin()
+    
     /**
      * When user click LOGIN, send request to verify input. If valid, redirect to home page.
      * @param {*} values {username, password}
      */
-    const onFinish = (values) => {
-        console.log('Received values of form: ', values);
-        if (loginAdmin(values)) {
-            message.success("Login successfully")
-            history.push("/")   // Redirect to home page
-        } else {
-            message.warning("Invalid Credentials!")
+    const onFinish = async (values) => {
+        // console.log('Received values of form: ', values);
+        try {
+            const loginSuccess = await loginAdmin(values)
+            if (loginSuccess) {
+                message.success("Login successfully")
+                history.push("/")   // Redirect to home page
+            } else {
+                message.warning("Invalid Credentials!")
+            }
+        } catch(error) {
+            message.error(String(error))
         }
     };
 

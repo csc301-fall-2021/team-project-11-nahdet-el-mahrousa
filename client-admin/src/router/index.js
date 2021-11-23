@@ -9,20 +9,12 @@ import LoginPage from "pages/Login";
 
 const GuardedRoute = ({ component: Component, ...rest }) => (
     <Route {...rest} render={(props) => (
-        getAuthorization() === true
+        localStorage.getItem('token') && localStorage.getItem('token') !== '' // If has a credential
             ? <Component {...props} />
             : <Redirect to='/login' />
     )} />
 )
 
-function getAuthorization() {
-    console.log(localStorage.getItem('token'))
-    if (localStorage.getItem('token') && localStorage.getItem('token') !== ''){
-        console.log('hello')
-      return true;
-    }
-    return false;
-}
 
 export default class RenderRoutes extends React.Component {
     render() {
