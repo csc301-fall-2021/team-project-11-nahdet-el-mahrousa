@@ -6,6 +6,7 @@ import {
 
 function loginAuthUser(userData) {
     store.dispatch(loginAuth(userData));
+    console.log(localStorage.getItem('token'))
 }
 
 function verifyLogin({ userData }) {
@@ -17,8 +18,14 @@ function verifyLogin({ userData }) {
     // return false;
 }
 
-function loginAdmin({ username, password }) {
-    return authLogin({ username, password }, loginAuthUser);
+async function loginAdmin({ username, password }) {
+    await authLogin({ username, password }, loginAuthUser);
+    if (localStorage.getItem('token') && localStorage.getItem('token') !== ''){
+        console.log("happy")
+        return true;
+    }
+    console.log(localStorage.getItem('token'))
+    return false;
 }
 
 function logoutAdmin({ username, password }) {

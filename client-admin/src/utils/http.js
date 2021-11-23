@@ -3,8 +3,10 @@ const origin = process.env.REACT_APP_ORIGIN
 
 function getAuthorization() {
   let authorization = undefined;
-  if (localStorage.getItem('TOKEN') && localStorage.getItem('TOKEN') !== ''){
-    authorization = 'Bearer ${token}' + localStorage.getItem('TOKEN');
+  if (localStorage.getItem('token') && localStorage.getItem('token') !== ''){
+    let TOKEN = localStorage.getItem('token');
+    authorization = 'Bearer' + ' ' + TOKEN;
+    console.log(authorization)
   }
   return authorization;
 }

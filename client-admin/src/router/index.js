@@ -16,7 +16,8 @@ const GuardedRoute = ({ component: Component, ...rest }) => (
 )
 
 function getAuthorization() {
-    if (localStorage.getItem('TOKEN') && localStorage.getItem('TOKEN') !== ''){
+    console.log(localStorage.getItem('token'))
+    if (localStorage.getItem('token') && localStorage.getItem('token') !== ''){
         console.log('hello')
       return true;
     }
@@ -26,6 +27,24 @@ function getAuthorization() {
 export default class RenderRoutes extends React.Component {
     render() {
         return (
+            // <Switch>
+            //     {/* HOME */}
+            //     <Route exact path="/login" render={(props) => <LoginPage {...props} />} />
+
+            //     <GuardedRoute path='/' component={ HomePage }/>
+
+            //     {/* DATABASES */}
+
+            //     <GuardedRoute path='/database/bot' component={ BotPage }/>
+
+            //     <GuardedRoute path='/database/admin' component={ AdminAccountsPage }/>
+
+            //     {/* Statistics */}
+            //     <GuardedRoute path='/statistics' component={ StatisticsPage }/>
+
+            //     {/* NOT FOUND */}
+            //     <Route component={() => <h1>Not Found!</h1>} />
+            // </Switch>
             <Switch>
                 {/* HOME */}
                 <Route exact path="/" render={(props) => <HomePage {...props} />} />
@@ -33,17 +52,16 @@ export default class RenderRoutes extends React.Component {
                 <Route exact path="/login" render={(props) => <LoginPage {...props} />} />
 
                 {/* DATABASES */}
-
-                <GuardedRoute path='/database/bot' component={ BotPage }/>
-
-                <GuardedRoute path='/database/admin' component={ AdminAccountsPage }/>
+                <Route exact path="/database/bot" render={(props) => <BotPage {...props} />} />
+                <Route exact path="/database/admin" render={(props) => <AdminAccountsPage {...props} />} />
 
                 {/* Statistics */}
-                <GuardedRoute path='/statistics' component={ StatisticsPage }/>
+                <Route exact path="/statistics" render={(props) => <StatisticsPage {...props} />} />
 
                 {/* NOT FOUND */}
                 <Route component={() => <h1>Not Found!</h1>} />
             </Switch>
+
         )
     }
 }
