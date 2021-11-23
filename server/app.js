@@ -33,12 +33,12 @@ class AppFactory {
    * @param {*} app Express app
    */
   configApp(app) {
-    let envFile;
-    if (process.env.NODE_ENV) {
-      envFile = `.env.${process.env.NODE_ENV}`
-    } else {
-      envFile = `.env`
-    }
+    const envFile = `.env`
+    // if (process.env.NODE_ENV) {
+    //   envFile = `.env.${process.env.NODE_ENV}`
+    // } else {
+      
+    // }
     
     dotenv.config({ path: `./config/${envFile}` })
   }
