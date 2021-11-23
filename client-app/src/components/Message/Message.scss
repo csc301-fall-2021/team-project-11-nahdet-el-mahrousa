@@ -2,14 +2,16 @@
 
 .message-container {
     width: 100%;
+    max-width: 75%;
     margin-bottom: 2rem;
     margin-left: 1rem;
+    margin-right: 1rem;
 
     position: relative;
 
     .avatar {
-        width: 50px;
-        height: 50px;
+        width: 45px;
+        height: 45px;
 
         position: absolute;
         left: -1rem;
@@ -20,7 +22,8 @@
 
     .message-bubble {
         position: relative;
-        left: 3.5rem;
+        left: 3rem;
+        top: 0.3rem;
 
         background-color: white;
         width: 60%;
@@ -81,4 +84,31 @@
         }
     }
 
+}
+
+@media only screen and (max-width: 768px) {
+    .message-container {
+        .avatar {
+            left: -2rem;
+        }
+        .message-bubble {
+            left: 2rem;
+        }
+    }
+}
+
+@media only screen and (max-width: 360px) {
+    .message-container {
+        .avatar {
+            width: 40px;
+            height: 40px;
+            left: -2rem;
+        }
+        .message-bubble {
+            left: 1.5rem;
+            .message-content, .replies-container {
+                font-size: medium;
+            }
+        }
+    }
 }

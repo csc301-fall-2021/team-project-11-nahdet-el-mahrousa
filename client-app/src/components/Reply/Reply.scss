@@ -6,10 +6,10 @@
     
     
     .reply-bubble {
-        max-width: 60%;
+        max-width: 75%;
         margin-left: auto;
         background-color: #439d7d;
-        @include chat-bubble;
+        @include chat-bubble
         width: fit-content;
 
         .reply-content {
@@ -19,6 +19,16 @@
             font-size: large;
             text-align: right;
             
+        }
+    }
+}
+
+@media only screen and (max-width: 360px) {
+    .reply-container {
+        .reply-bubble {
+            .reply-content {
+                font-size: medium;
+            }
         }
     }
 }
