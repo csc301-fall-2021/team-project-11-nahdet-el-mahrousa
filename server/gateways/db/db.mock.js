@@ -30,12 +30,26 @@ const mockReplies = [
     }
 ]
 
+const mockAdmins = [
+    {
+    username: "admin1",
+    password: "******",
+    }, {
+    username: "admin2",
+    password: "******",
+    }, {
+    username: "admin3",
+    password: "******",
+    }
+]
+
 class MockDBHandler {
     constructor(uri = null) {
         this.lastMid = 3
         this.lastRid = 2
         this.messages = mockMessages
         this.replies = mockReplies
+        this.users = mockAdmins
     }
 
     async connect() {
