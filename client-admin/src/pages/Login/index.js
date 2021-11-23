@@ -8,7 +8,7 @@ import { verifyLogin, loginAdmin } from 'actions/Auth'
 
 function LoginPage() {
     const history = useHistory();   // Used for redirection
-
+    localStorage.removeItem('token');
     /**
      * When user click LOGIN, send request to verify input. If valid, redirect to home page.
      * @param {*} values {username, password}

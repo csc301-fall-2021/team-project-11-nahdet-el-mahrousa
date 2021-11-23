@@ -27,36 +27,20 @@ function getAuthorization() {
 export default class RenderRoutes extends React.Component {
     render() {
         return (
-            // <Switch>
-            //     {/* HOME */}
-            //     <Route exact path="/login" render={(props) => <LoginPage {...props} />} />
-
-            //     <GuardedRoute path='/' component={ HomePage }/>
-
-            //     {/* DATABASES */}
-
-            //     <GuardedRoute path='/database/bot' component={ BotPage }/>
-
-            //     <GuardedRoute path='/database/admin' component={ AdminAccountsPage }/>
-
-            //     {/* Statistics */}
-            //     <GuardedRoute path='/statistics' component={ StatisticsPage }/>
-
-            //     {/* NOT FOUND */}
-            //     <Route component={() => <h1>Not Found!</h1>} />
-            // </Switch>
             <Switch>
-                {/* HOME */}
-                <Route exact path="/" render={(props) => <HomePage {...props} />} />
-
                 <Route exact path="/login" render={(props) => <LoginPage {...props} />} />
 
                 {/* DATABASES */}
-                <Route exact path="/database/bot" render={(props) => <BotPage {...props} />} />
-                <Route exact path="/database/admin" render={(props) => <AdminAccountsPage {...props} />} />
+
+                <GuardedRoute path='/database/bot' component={ BotPage }/>
+
+                <GuardedRoute path='/database/admin' component={ AdminAccountsPage }/>
 
                 {/* Statistics */}
-                <Route exact path="/statistics" render={(props) => <StatisticsPage {...props} />} />
+                <GuardedRoute path='/statistics' component={ StatisticsPage }/>
+
+                {/* HOME */}
+                <GuardedRoute path='/' component={ HomePage }/>
 
                 {/* NOT FOUND */}
                 <Route component={() => <h1>Not Found!</h1>} />
@@ -65,5 +49,3 @@ export default class RenderRoutes extends React.Component {
         )
     }
 }
-
-

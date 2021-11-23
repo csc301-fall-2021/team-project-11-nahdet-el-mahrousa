@@ -28,7 +28,7 @@ async function loginAdmin({ username, password }) {
     return false;
 }
 
-function logoutAdmin({ username, password }) {
+function logoutAdmin() {
     store.dispatch(logoutAuth());
 }
 
