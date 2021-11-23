@@ -1,6 +1,6 @@
 import React from "react";
 import { Layout, PageHeader, Button } from 'antd';
-
+import { Redirect } from "react-router-dom"
 import Menu from "components/Menu";
 import AdminAccountsTable from "components/AdminAccounts/AdminAccountsTable";
 import CreateAdminDrawer from "components/AdminAccounts/CreateAdminDrawer";
@@ -17,7 +17,6 @@ class UsersPage extends React.Component {
     refreshTable = () => {
         this.setState({ tableRefresher: !this.state.tableRefresher })
     }
-
     render() {
         return (
             <Layout>

@@ -1,30 +1,39 @@
-import store from "../../store/store";
-import { updateAuth } from "../../store/auths/auth-slice";
 import {
-  authLogin,
-//   authCreate,
-  authLogout
-} from "../../api/authApi";
+    authLogin
+} from "api/auth"
 
-function dispatchAuth(userData) {
-    store.dispatch(updateAuth(userData));
+
+async function loginAdmin({ username, password }) {
+    try {
+        const response = await authLogin({ username, password });
+        if (response.statusCode === 200) {
+            // Login successfully
+            const token = response.entity.accessToken
+            localStorage.setItem("token", token)
+            return true
+        } else if (response.statusCode === 403) {
+            // If invalid credential (wrong username password)
+            return false
+        } else {
+            throw new Error(response.msg)
+        }
+    } catch (error) {
+        console.log(error)
+        throw error
+    }
 }
 
-// function createUser({ username, password }) {
-//     return authCreate({ username, password }, dispatchAuth);
-// }
-
-function verifyLogin({ username, password }) {
-    // return authLogin({ username, password }, dispatchAuth);
-    return username === "admin" && password === "admin"
+function logoutAdmin() {
+    // store.dispatch(logoutAuth());
+    localStorage.removeItem('token')
 }
 
-function verifyLogout({ username, password }) {
-    return authLogout({ username, password }, dispatchAuth);
+function backToLogin() {
+    document.location.href = '/login'
 }
 
 export {
-    verifyLogin,
-    // createUser,
-    verifyLogout
+    loginAdmin,
+    logoutAdmin,
+    backToLogin
 }

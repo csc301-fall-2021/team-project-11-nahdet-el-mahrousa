@@ -1,6 +1,15 @@
 const origin = process.env.REACT_APP_ORIGIN
 
 
+function getAuthorization() {
+  let authorization;
+  if (localStorage.getItem('token') && localStorage.getItem('token') !== '') {
+    let TOKEN = localStorage.getItem('token');
+    authorization = 'Bearer ' + TOKEN;
+  }
+  return authorization;
+}
+
 async function get(route, params = {}) {
   const url = new URL(origin + route)
 
@@ -11,6 +20,7 @@ async function get(route, params = {}) {
     method: 'GET',
     mode: 'cors',
     headers: {
+      'Authorization': getAuthorization(),
       'Content-Type': 'application/json'
     },
   })
@@ -21,16 +31,21 @@ async function get(route, params = {}) {
 async function post(route, data = {}) {
   const url = origin + route
 
-  const response = await fetch(url, {
-    method: 'POST',
-    mode: 'cors',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-  })
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Authorization': getAuthorization(),
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
 
-  return await response.json()
+    return await response.json()
+  } catch (error) {
+    throw error
+  }
 }
 
 async function put(route, data = {}) {
@@ -40,6 +55,7 @@ async function put(route, data = {}) {
     method: 'PUT',
     mode: 'cors',
     headers: {
+      'Authorization': getAuthorization(),
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(data)
@@ -55,6 +71,7 @@ async function del(route, data = {}) {
     method: 'DELETE',
     mode: 'cors',
     headers: {
+      'Authorization': getAuthorization(),
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(data)
