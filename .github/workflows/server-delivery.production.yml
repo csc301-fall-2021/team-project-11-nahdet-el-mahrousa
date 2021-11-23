@@ -67,11 +67,11 @@ jobs:
       - name: SETUP ENV VARIABLES
         run: NODE_ENV='prod'
 
-      - name: BUILD ENV VARIABLES TO config/.env.prod
-        run: echo $'${{ secrets.SERVER_ENV_PROD}}' > ./config/.env.prod
+      - name: BUILD ENV VARIABLES TO config/.env
+        run: echo $'${{ secrets.SERVER_ENV_PROD}}' > ./config/.env
 
-      - name: CHECK ENV VARIABLES IN config/.env.prod
-        run: cat ./config/.env.prod
+      - name: CHECK ENV VARIABLES IN config/.env
+        run: cat ./config/.env
 
       - name: HEROKU DEPLOY
         uses: akhileshns/heroku-deploy@v3.12.12
@@ -80,6 +80,6 @@ jobs:
           heroku_app_name: ${{secrets.HEROKU_PROD_SERVER_APP_NAME}}
           heroku_email: ${{secrets.HEROKU_PROD_SERVER_EMAIL}}
           appdir: "./server"
-          env_file: "./config/.env.prod"
+          env_file: "./config/.env"
 
 
