@@ -5,7 +5,7 @@ import { Drawer, Form, Button, Col, Row, Input, Select, DatePicker, Space, messa
 import { PlusOutlined } from '@ant-design/icons';
 import { sendMessageToBackend } from "actions/Bot";
 import BotWarning from "../BotWarning";
-
+const { TextArea } = Input;
 // Reference: https://ant.design/components/drawer-cn/#components-drawer-demo-form-in-drawer
 class NewMessageDrawer extends React.Component {
   state = {
@@ -78,7 +78,7 @@ class NewMessageDrawer extends React.Component {
                                   { type: 'string', min: 0 }
                               ]}
                           >
-                              <Input placeholder="Please enter message content" />
+                              <TextArea rows={4} />
                           </Form.Item>
                           <Form.Item
                               name="label"

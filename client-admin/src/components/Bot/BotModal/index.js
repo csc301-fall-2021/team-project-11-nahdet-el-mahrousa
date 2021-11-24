@@ -1,13 +1,53 @@
 import React, { useState } from "react";
 import { Space } from "antd";
 // import { useSelector } from "react-redux";
-import { Modal, Input, Select } from "antd";
+import { Modal, Input, Select, message, Popconfirm, Button } from "antd";
 import {
   sendReplyToBackend,
   sendMessageToBackend,
   deleteMessageToBackend,
 } from "../../../actions/Bot/index";
 import BotWarning from "../BotWarning";
+
+class DeleteButton extends React.Component {
+  state = {
+      visible: false,
+      confirmLoading: false
+  }
+
+  handleOk = async () => {
+      this.setState({ confirmLoading: true })
+
+      const msgToDelete = this.props.target
+      console.log('deleting ', msgToDelete)
+      // TODO: to async request
+      try {
+          const deletedMsg = await deleteMessageToBackend(msgToDelete)
+          this.setState({ visible: false })
+          this.setState({ confirmLoading: false })
+          message.success(`Deleted message`)
+      } catch (error) {
+          this.setState({ confirmLoading: false })
+          message.error(String(error))
+      }
+  };
+
+  render() {
+      return (
+          <Popconfirm
+              title="Confirm?"
+              visible={this.state.visible}
+              onConfirm={this.handleOk}
+              okButtonProps={{ loading: this.state.confirmLoading }}
+              onCancel={() => this.setState({ visible: false })}
+          >
+              <Button type="primary" onClick={() => this.setState({ visible: true })}>
+                  Delete
+              </Button>
+          </Popconfirm>
+      )
+  }
+}
 
 export function MessageOptionMenu(props) {
   const { Option } = Select;
@@ -98,7 +138,7 @@ export function MessageOptionMenu(props) {
     <div>
       <Space size="middle">
         <a onClick={showEditModal}>EDIT</a>
-        <a onClick={() => deleteMessageToBackend(props.msg._id)}>DELETE</a>
+        <DeleteButton target={props.msg._id} />
         <a onClick={showReplyModal}>NEW OPTION</a>
       </Space>
       <Modal
