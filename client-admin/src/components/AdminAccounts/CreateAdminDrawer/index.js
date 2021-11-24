@@ -76,7 +76,7 @@ class CreateAdminDrawer extends React.Component {
                                     { type: 'string', min: 6 }
                                 ]}
                             >
-                                <Input placeholder="Please enter user name" />
+                                <Input placeholder="Please enter username" />
                             </Form.Item>
                             <Form.Item
                                 name="password"
