@@ -37,7 +37,14 @@ class BotView extends React.Component {
                             if ("message" in chatItem) {
                                 const content = chatItem.message.content;
                                 let messages = content.split("\n"); // an array of message content
-                                messages.filter(m=>m!=="");
+                                //messages.filter(m=>m!=="");
+                                if (messages.length === 1) {
+                                    return (<Message
+                                        message={chatItem.message}
+                                        replies={chatItem.replies}
+                                        makeReply={(reply) => makeReply(this, reply)}
+                                    />)
+                                }
                                 const listItems = [];
                                 for (let i = 0; i < messages.length - 1; i++) {
                                     listItems.push(<Message
@@ -49,9 +56,8 @@ class BotView extends React.Component {
                                     replies={chatItem.replies}
                                     makeReply={(reply) => makeReply(this, reply)}
                                 />)
-
                                 return (
-                                    {listItems}
+                                    <ul>{listItems}</ul>
                                 )
                             } else if ("reply" in chatItem) {
                                 return <Reply reply={chatItem.reply} />
