@@ -18,6 +18,7 @@ class AppFactory {
   registerApp() {
     const app = express();
     this.configApp(app)
+    this.configGoogleAnalytics(app)
     this.registerExtensions(app);
     this.registerErrorHandler(app);
     this.registerGateways(app)
@@ -32,6 +33,11 @@ class AppFactory {
    */
   configApp(app) {
     dotenv.config({ path: `./config/.env.${process.env.NODE_ENV}` })
+  }
+
+
+  configGoogleAnalytics(app){
+
   }
 
   /**
