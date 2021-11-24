@@ -2,7 +2,7 @@ import React from 'react';
 import Message from 'components/Message';
 import Reply from 'components/Reply';
 
-import { initChat, makeReply } from "actions/Bot";
+import { resumeChat, initChat, makeReply } from "actions/Bot";
 
 import "./BotView.scss"
 import StartButton from 'components/StartButton';
@@ -16,7 +16,7 @@ class BotView extends React.Component {
     }
 
     componentWillMount = () => {
-        
+        resumeChat(this);
     }
 
     chatContainer = React.createRef();

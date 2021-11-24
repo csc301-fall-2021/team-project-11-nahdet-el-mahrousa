@@ -4,17 +4,17 @@ import { getFirstMessage, getNextMessage } from 'api/client-api';
 
 const log = console.log;
 
-// if has local and time == yesterday, 
-
 export function resumeChat(msgQueue) {
-    // check whether in local
-    // if yes, check time
-    // if yes, newQueue = storedQueue
-
-    const newQueue = storedQueue.chat;
-    msgQueue.setState({
-        chat: newQueue
-    }, () => msgQueue.scrollToMyRef());
+    if (localStorage != null) {
+        var currDate = new Date();
+        var pastDate = currDate.getDate() - 7;
+        if (localStorage.time < pastDate) {
+            const newQueue = localStorage.chat;
+            msgQueue.setState({
+                chat: newQueue
+            }, () => msgQueue.scrollToMyRef());
+        }
+    }
 }
 
 export async function initChat(msgQueue) {
