@@ -36,12 +36,12 @@ class NewMessageDrawer extends React.Component {
       this.setState({ loading: true })
       try {
           if (values.label === null) {
-            const createdUser = await sendMessageToBackend(null, values.content, '');
-            message.success(`Created new admin user ${createdUser.username}`)
+            await sendMessageToBackend(null, values.content, '');
+            message.success(`Created new message`)
             this.onClose()
           } else {
-            const createdUser = await sendMessageToBackend(null, values.content, values.label);
-            message.success(`Created new admin user ${createdUser.username}`)
+            await sendMessageToBackend(null, values.content, values.label);
+            message.success(`Created new message`)
             this.onClose()
           }
       } catch (error) {
