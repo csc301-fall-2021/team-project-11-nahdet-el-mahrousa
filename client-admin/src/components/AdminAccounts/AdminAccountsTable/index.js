@@ -108,6 +108,11 @@ class AdminAccountsTable extends React.Component {
             message.info("Refreshing data")
             this.onChange(this.state.pagination)
         }
+
+        if (props.query !== "") {
+            message.info("Searching data")
+            this.searchForData(props.query)
+        }
     }
 
     /**
@@ -118,29 +123,30 @@ class AdminAccountsTable extends React.Component {
      * @param {*} extra 
      */
     onChange = (pagination, filters, sorter) => {
-        console.log('params', pagination, filters, sorter);
+        // console.log('params', pagination, query, filters, sorter);
+        // const {query} = this.props
         this.fetch({
-            // sortField: sorter.field,
-            // sortOrder: sorter.order,
+            sortField: sorter.field,
+            sortOrder: sorter.order,
             pagination,
-            // ...filters,
-        });
+            ...filters,
+        }, );
+    }
+
+    searchForData = (query) => {
+        this.fetch({
+            pagination: this.state.pagination,
+            query
+        })
     }
 
 
     fetch = async (params = {}) => {
         this.setState({ loading: true })
         try {
-            const data = await requestGetAdminAccounts(params)//.then((data) => {
-            // this.setState({
-            //     loading: false,
-            //     data: data,
-            //     pagination: {
-            //         ...params.pagination,
-            //         total: data.length
-            //     }
-            // })
-            //})
+            // const query = this.props.query
+            console.log("Params: ", params)
+            const data = await requestGetAdminAccounts(params)
             this.setState({
                 loading: false,
                 data: data,

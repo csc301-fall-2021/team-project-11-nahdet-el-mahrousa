@@ -42,19 +42,8 @@ async function fetchAdmins(body) {
  */
 async function postNewAdmin(body) {
     try {
-        const response = {
-            msg: "OK",
-            statusCode: 200,
-            entity: {
-                _id: "dwd12dg3gf3e1",
-                name: "New Admin",
-                username: body.username
-            }
-        }
-        await sleep(500) // FIXME: DELETE ME
-
+        const response = await http.post("/user", body)
         return response
-
     } catch (error) {
         throw error
     }
@@ -68,17 +57,7 @@ async function postNewAdmin(body) {
  */
 async function deleteAdmin(body) {
     try {
-        const response = {
-            msg: "OK",
-            statusCode: 200,
-            entity: {
-                _id: body._id,
-                name: "deleted Admin",
-                username: "deletedAdmin"
-            }
-        }
-        await sleep(500) // FIXME: DELETE ME
-
+        const response = await http.del("/user", body)
         return response
     } catch (error) {
         throw error
