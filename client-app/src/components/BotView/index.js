@@ -15,6 +15,10 @@ class BotView extends React.Component {
         }
     }
 
+    componentWillMount = () => {
+        
+    }
+
     chatContainer = React.createRef();
 
     scrollToMyRef = () => {
@@ -31,12 +35,23 @@ class BotView extends React.Component {
                     {
                         this.state.chat.map((chatItem) => {
                             if ("message" in chatItem) {
+                                const content = chatItem.message.content;
+                                let messages = content.split("\n"); // an array of message content
+                                messages.filter(m=>m!=="");
+                                const listItems = [];
+                                for (let i = 0; i < messages.length - 1; i++) {
+                                    listItems.push(<Message
+                                        message={messages[i]}
+                                    />)
+                                }
+                                listItems.push(<Message
+                                    message={messages[messages.length - 1]}
+                                    replies={chatItem.replies}
+                                    makeReply={(reply) => makeReply(this, reply)}
+                                />)
+
                                 return (
-                                    <Message
-                                        message={chatItem.message}
-                                        replies={chatItem.replies}
-                                        makeReply={(reply) => makeReply(this, reply)}
-                                    />
+                                    {listItems}
                                 )
                             } else if ("reply" in chatItem) {
                                 return <Reply reply={chatItem.reply} />

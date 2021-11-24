@@ -4,6 +4,19 @@ import { getFirstMessage, getNextMessage } from 'api/client-api';
 
 const log = console.log;
 
+// if has local and time == yesterday, 
+
+export function resumeChat(msgQueue) {
+    // check whether in local
+    // if yes, check time
+    // if yes, newQueue = storedQueue
+
+    const newQueue = storedQueue.chat;
+    msgQueue.setState({
+        chat: newQueue
+    }, () => msgQueue.scrollToMyRef());
+}
+
 export async function initChat(msgQueue) {
     const newQueue = [...msgQueue.state.chat];
 
@@ -48,6 +61,7 @@ export async function makeReply(msgQueue, reply) {
         const entity = await getNextMessage(reply);
         console.log(entity);
         newQueue.push(entity);
+        // save to local
         msgQueue.setState({
             chat: newQueue
         }, () => msgQueue.scrollToMyRef());
