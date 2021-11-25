@@ -53,14 +53,13 @@ const columns = [
         title: 'User ID',
         dataIndex: '_id',
         key: '_id',
-        sorter: (a, b) => a._id < b._id,
-        // defaultSortOrder: 'descend',
-        sortDirections: ['ascend', 'descend'],
+        width: "220px",
     },
     {
         title: 'Name',
         dataIndex: 'name',
         key: 'name',
+        width: "400px",
         sorter: (a, b) => a.name < b.name,
         sortDirections: ['ascend', 'descend'],
     },
@@ -68,7 +67,9 @@ const columns = [
         title: 'Username',
         dataIndex: 'username',
         key: 'username',
+        width: "400px",
         sorter: (a, b) => a.username < b.username,
+        sortDirections: ['ascend', 'descend'],
     },
     {
         title: 'Actions',
@@ -90,14 +91,15 @@ class AdminAccountsTable extends React.Component {
         data: [],
         pagination: {
             current: 1,
-            pageSize: 1,
+            pageSize: 2,
         },
         loading: false,
     };
 
     componentDidMount() {
         const { pagination } = this.state;
-        this.fetch({ pagination });
+        const { query } = this.props;
+        this.fetch({ pagination, ...query });
     }
 
     // Force Re-rendering Reference: 
@@ -109,9 +111,9 @@ class AdminAccountsTable extends React.Component {
             this.onChange(this.state.pagination)
         }
 
+        console.log(props.query)
         if (props.query !== "") {
-            message.info("Searching data")
-            this.searchForData(props.query)
+            this.searchForData({ ...props.query })
         }
     }
 
@@ -122,31 +124,30 @@ class AdminAccountsTable extends React.Component {
      * @param {*} sorter 
      * @param {*} extra 
      */
-    onChange = (pagination, filters, sorter) => {
-        // console.log('params', pagination, query, filters, sorter);
-        // const {query} = this.props
+    onChange = (pagination, filters, sorter={field: "_id", order: "ascend"}) => {
         this.fetch({
             sortField: sorter.field,
             sortOrder: sorter.order,
             pagination,
             ...filters,
-        }, );
+            ...this.props.query
+        });
     }
 
     searchForData = (query) => {
         this.fetch({
             pagination: this.state.pagination,
-            query
+            ...query
         })
     }
 
 
-    fetch = async (params = {}) => {
+    fetch = async (params = { key: this.props.query.key, value: this.props.query.value }) => {
         this.setState({ loading: true })
         try {
-            // const query = this.props.query
+            let reqParams = { key: params.key, value: params.value }
             console.log("Params: ", params)
-            const data = await requestGetAdminAccounts(params)
+            const data = await requestGetAdminAccounts(reqParams)
             this.setState({
                 loading: false,
                 data: data,

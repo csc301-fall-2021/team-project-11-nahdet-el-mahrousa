@@ -1,17 +1,19 @@
 import React from "react";
-import { Layout, PageHeader, Button, Input, Space } from 'antd';
-import { Redirect } from "react-router-dom"
+import { Layout, PageHeader, Button, Input, Select, } from 'antd';
+// import { Redirect } from "react-router-dom"
 import Menu from "components/Menu";
 import AdminAccountsTable from "components/AdminAccounts/AdminAccountsTable";
 import CreateAdminDrawer from "components/AdminAccounts/CreateAdminDrawer";
 
 const { Content } = Layout;
+const { Option } = Select;
 
 
 class UsersPage extends React.Component {
     state = {
         tableRefresher: false,
-        query: ""
+        searchKey: "username",
+        searchValue: ""
     }
 
     // Force Re-rendering Reference: https://www.freecodecamp.org/news/force-refreshing-a-react-child-component-the-easy-way-6cdbb9e6d99c/
@@ -19,11 +21,15 @@ class UsersPage extends React.Component {
         this.setState({ tableRefresher: !this.state.tableRefresher })
     }
 
-    onSearch = (query) => {
-        console.log("Searching:", query)
+    onSearch = (searchValue) => {
+        console.log("Searching:", searchValue)
         this.setState({
-            query
+            searchValue
         })
+    }
+
+    onSelectSearchKey = (searchKey) => {
+        this.setState({ searchKey })
     }
 
     render() {
@@ -33,7 +39,6 @@ class UsersPage extends React.Component {
 
                 <Layout theme="light">
                     <PageHeader
-                        // ghost={false}
                         title="Admin Account Management"
                         extra={[
                             <Button key="3" onClick={this.refreshTable} >Refresh</Button>,
@@ -42,8 +47,18 @@ class UsersPage extends React.Component {
                     />
 
                     <Content style={{ padding: '1rem' }}>
-                        <Input.Search placeholder="input search text" allowClear onSearch={this.onSearch} style={{ width: "50%", marginBottom: "1rem" }} />
-                        <AdminAccountsTable refresh={this.state.tableRefresher} query={this.state.query} />
+                        {/* Search bar */}
+                        <Input.Group compact>
+                            {/* The option keys the user can search from */}
+                            <Select defaultValue="username" onChange={this.onSelectSearchKey}>
+                                {/* <Option value="_id">User ID</Option> */}
+                                <Option value="username">Username</Option>
+                                <Option value="name">Name</Option>
+                            </Select>
+                            <Input.Search placeholder="Search for a user" allowClear style={{ width: "50%", marginBottom: "1rem" }} onSearch={this.onSearch} />
+                        </Input.Group>
+
+                        <AdminAccountsTable refresh={this.state.tableRefresher} query={{ key: this.state.searchKey, value: this.state.searchValue }} />
                     </Content>
 
                 </Layout>

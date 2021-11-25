@@ -11,24 +11,7 @@ function sleep(ms) {
  */
 async function fetchAdmins(body) {
     try {
-        const response = {
-            msg: "OK",
-            statusCode: 200,
-            entity: [
-                {
-                    _id: "asddqwd1d12e1",
-                    name: "Tomas",
-                    username: "tomas1231"
-                },
-                {
-                    _id: "asd121assdqw",
-                    name: "John",
-                    username: "john1231"
-                },
-            ]
-        }
-        await sleep(500) // FIXME: DELETE ME
-
+        const response = await http.get("/user", body)
         return response
     } catch (error) {
         throw error
