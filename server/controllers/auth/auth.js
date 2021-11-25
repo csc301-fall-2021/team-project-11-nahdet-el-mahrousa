@@ -40,7 +40,7 @@ class AuthController {
     async getUsers(req) {
         const uin = getInput(req, {
             mandatory: ['key', 'value'],
-            fromBody: true
+            fromQuery: true
         })
 
         const availiableKeys = ["username", "name"]
