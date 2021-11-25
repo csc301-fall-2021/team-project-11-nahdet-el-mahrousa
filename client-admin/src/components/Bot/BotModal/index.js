@@ -22,7 +22,7 @@ class DeleteButton extends React.Component {
       console.log('deleting ', msgToDelete)
       // TODO: to async request
       try {
-          const deletedMsg = await deleteMessageToBackend(msgToDelete)
+          await deleteMessageToBackend(msgToDelete)
           this.setState({ visible: false })
           this.setState({ confirmLoading: false })
           message.success(`Deleted message`)
@@ -137,9 +137,9 @@ export function MessageOptionMenu(props) {
   return (
     <div>
       <Space size="middle">
-        <a onClick={showEditModal}>EDIT</a>
+        <Button onClick={showEditModal}>EDIT</Button>
         <DeleteButton target={props.msg._id} />
-        <a onClick={showReplyModal}>NEW OPTION</a>
+        <Button onClick={showReplyModal}>NEW OPTION</Button>
       </Space>
       <Modal
         title="Add New Reply"
