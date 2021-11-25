@@ -37,11 +37,11 @@ class EditMessageDrawer extends React.Component {
       try {
           if (values.label === null) {
             await sendMessageToBackend(this.props.target, values.content, '');
-            message.success(`Created new message`)
+            message.success(`Edited this message`)
             this.onClose()
           } else {
             await sendMessageToBackend(this.props.target, values.content, values.label);
-            message.success(`Created new message`)
+            message.success(`Edited this message`)
             this.onClose()
           }
       } catch (error) {
@@ -98,7 +98,7 @@ class EditMessageDrawer extends React.Component {
                       <Space style={{ marginTop: "20px" }}>
                           <Button onClick={this.onClose}>Cancel</Button>
                           <Button type="primary" htmlType="submit" loading={this.state.loading}>
-                              Create
+                              Edit
                           </Button>
                       </Space>
                   </Form>
