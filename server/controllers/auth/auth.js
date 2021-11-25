@@ -34,6 +34,24 @@ class AuthController {
         }
     }
 
+    async getUsers(req) {
+        const uin = getInput(req, {
+            mandatory: ['keyword'],
+            fromBody: true
+        })
+
+        if (uin === null) {
+            return response.NOT_SATISFIED
+        } else {
+            const result = await this.authService.getUsers(uin.keyword)
+            if (result === null) {
+                return response.INTERNAL_SERVER_ERROR
+            } else {
+                return respond({ entity: result })
+            }
+        }
+    }
+
     async deleteUser(req) {
         const uin = getInput(req, {
             mandatory: ['username'],

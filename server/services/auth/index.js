@@ -39,6 +39,16 @@ class UserService {
     }
 
     /**
+     * Get users based on given keyword.
+     * @param {string} keyword of the wanted users.
+     * @returns A user object array.
+     */
+     async getUsers(keyword) {
+        const users = await this.userDao.search({ username: new RegExp(".*" + keyword + ".*", "i") })
+        return users
+    }
+
+    /**
      * Create a user.
      * @param {String} username 
      * @param {String} password 
