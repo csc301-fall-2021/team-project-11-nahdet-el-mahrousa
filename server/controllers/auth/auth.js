@@ -92,8 +92,8 @@ class AuthController {
             }
 
             // Username and password matches, then we can create jwt token.
-            let accessToken = jwt.sign({ _id: loginUser._id, username: loginUser.username }, process.env.SECRET_KEY, { expiresIn: "30m" })
-            return respond({ entity: { accessToken, user: { _id: loginUser._id, username: loginUser.username, name: loginUser.name }} })
+            let accessToken = jwt.sign({ _id: loginUser._id, username: loginUser.username }, `${process.env.SECRET_KEY}`, { expiresIn: "30m" })
+            return respond({ entity: { accessToken } })
         }
     }
 }
