@@ -45,7 +45,11 @@ class UserService {
      */
      async getUsers(keyword) {
         const users = await this.userDao.search({ username: new RegExp(".*" + keyword + ".*", "i") })
-        return users
+        const result = []
+        for(let user of users){
+            result.push({ _id: user._id, username: user.username })
+        }
+        return result
     }
 
     /**
