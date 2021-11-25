@@ -1,5 +1,5 @@
 import React from 'react';
-import "./index.scss"
+import "./index.css"
 import { useHistory } from 'react-router-dom';
 
 import { Form, Input, Button, message } from 'antd';
