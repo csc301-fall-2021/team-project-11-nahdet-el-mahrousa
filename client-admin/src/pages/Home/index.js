@@ -2,6 +2,9 @@ import React from 'react';
 import Sider from "components/Menu";
 import AreaDemoPie from 'components/Bot/Summary/AreaDemoPie';
 import StageDemoPie from 'components/Bot/Summary/StageDemoPie';
+import VisitByLocationLines from 'components/Bot/Summary/VisitByLocationLines'
+import VisitByLocationChart from 'components/Bot/Summary/VisitByLocationChart'
+import VisitByQuestionChart from 'components/Bot/Summary/VisitByQuestionChart'
 import { Layout, Card, Avatar } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
@@ -15,18 +18,7 @@ class HomePage extends React.Component {
             <div className="page home-page">
                 <div className="main-view home-main">
                 <Layout>
-                    <div>The percentage of people from different area in Egypt</div>
-                    <AreaDemoPie />
-                    <div>The percentage of different stage</div>
-                    <StageDemoPie />
-                    {/* <Layout>
-                        <Content className="site-layout-background" style={{margin: "24px 16px",padding: 24,minHeight: 280,}}>
-                            <Card hoverable style={{ width: 240, height: 200, textAlign:"center"}} >
-                                <Avatar size={100} icon={<UserOutlined />} style={{marginBottom: 30}}/>
-                                <Meta title="User A"/>
-                            </Card>,
-                        </Content>
-                    </Layout> */}
+                    <Sider />
                 </Layout>
                 </div>
             </div>
