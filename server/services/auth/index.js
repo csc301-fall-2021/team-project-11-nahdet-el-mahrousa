@@ -39,13 +39,13 @@ class UserService {
     }
 
     /**
-     * Get users based on given keyword.
-     * @param {string} keyword of the wanted users.
+     * Get users based on given a key value pair.
+     * @param {string} key the key searching.
+     * @param {string} value of the key.
      * @returns A user object array.
      */
-     async getUsers(keyword) {
-        const users = await this.userDao.search({ username: new RegExp(".*" + keyword + ".*", "i") })
-        users.push(...await this.userDao.search({ name: new RegExp(".*" + keyword + ".*", "i") }))
+     async getUsers(key, value) {
+        const users = await this.userDao.search({ key: new RegExp(".*" + value + ".*", "i") })
         const result = []
         for(let user of users){
             result.push({ _id: user._id, username: user.username, name: user.name })

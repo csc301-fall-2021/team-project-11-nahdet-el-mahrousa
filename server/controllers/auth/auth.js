@@ -36,14 +36,18 @@ class AuthController {
 
     async getUsers(req) {
         const uin = getInput(req, {
-            mandatory: ['keyword'],
+            mandatory: ['key', 'value'],
             fromBody: true
         })
 
+        const availiableKeys = ["username", "name"]
+
         if (uin === null) {
             return response.NOT_SATISFIED
+        } else if (!uin.key in availiableKeys) {
+            return response.NOT_FOUND
         } else {
-            const result = await this.authService.getUsers(uin.keyword)
+            const result = await this.authService.getUsers(uin.key, uin.value)
             if (result === null) {
                 return response.INTERNAL_SERVER_ERROR
             } else {
@@ -86,7 +90,7 @@ class AuthController {
 
             // Username and password matches, then we can create jwt token.
             let accessToken = jwt.sign({ _id: loginUser._id, username: loginUser.username }, process.env.SECRET_KEY, { expiresIn: "30m" })
-            return respond({ entity: { accessToken } })
+            return respond({ entity: { accessToken, user: { _id: loginUser._id, username: loginUser.username, name: loginUser.name }} })
         }
     }
 }
