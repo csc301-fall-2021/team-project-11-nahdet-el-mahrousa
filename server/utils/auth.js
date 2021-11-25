@@ -8,7 +8,7 @@ function authenticationToken(req, res, next) {
     if (!token) {
         res.status(401).send('Unauthorized')
     } else {
-        jwt.verify(token, process.env.SECRET_KEY, (err, username) => {
+        jwt.verify(token, `${process.env.SECRET_KEY}`, (err, username) => {
             if (err) {
                 res.status(403).send(err)
             } else {

@@ -164,7 +164,7 @@ class AdminBotController {
             return response.NOT_SATISFIED
         } else {
             // Create the reply
-            const result = await this.botService.createReply(user, uin.content, uin.label, uin.fromMessage, uin.toMessage || null)
+            const result = await this.botService.createReply(user, uin.content, uin.label, uin.fromMessage, uin.toMessage)
             if (result === null) {
                 return response.FORBIDDEN
             } else {
