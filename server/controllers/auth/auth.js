@@ -15,7 +15,7 @@ class AuthController {
 
     async createUser(req) {
         const uin = getInput(req, {
-            mandatory: ['username', 'password'],
+            mandatory: ['username', 'password', 'name'],
             fromBody: true
         })
 
@@ -25,7 +25,7 @@ class AuthController {
             return respond({ msg: "Username already taken", statusCode: 400 })
         } else {
             logger.log(`User does not exist, allow creation.`)
-            const result = await this.authService.createUser(uin.username, uin.password)
+            const result = await this.authService.createUser(uin.username, uin.password, uin.name)
             if (result === null) {
                 return response.INTERNAL_SERVER_ERROR
             } else {

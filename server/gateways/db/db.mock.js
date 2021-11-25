@@ -34,12 +34,15 @@ const mockAdmins = [
     {
     username: "admin1",
     password: "******",
+    name: "abc"
     }, {
     username: "admin2",
     password: "******",
+    name: "abc"
     }, {
     username: "admin3",
     password: "******",
+    name: "abc"
     }
 ]
 
