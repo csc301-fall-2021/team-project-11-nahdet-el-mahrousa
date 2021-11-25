@@ -173,13 +173,13 @@ class BotService {
      * @param {ObjectId} toMessage The message id that this replies redirects to.
      * @returns New Reply. If user does not have privilege, return null.
      */
-    async createReply(user, content, label, fromMessage, nextMessage) {
+    async createReply(user, content, label, fromMessage, toMessage) {
         // Validate modifier's privilege
         if (!user.privilege.modifyBot) {
             return null
         }
 
-        const newReply = await this.replyDao.create({ content, label, fromMessage, nextMessage })
+        const newReply = await this.replyDao.create({ content, label, fromMessage, toMessage })
 
         if (newReply !== null) {
             logger.log(`[${user.username}] CREATED Reply \'${newReply._id}\'`)

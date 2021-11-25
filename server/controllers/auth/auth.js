@@ -13,7 +13,10 @@ class AuthController {
         this.authService = authService
     }
 
-    async createUser(req) {
+    async createUser(req, api) {
+        if(api === "initial" && (await this.authService.getUsers("username", "")).length != 0){
+            return response.FORBIDDEN
+        }
         const uin = getInput(req, {
             mandatory: ['username', 'password', 'name'],
             fromBody: true
