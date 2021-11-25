@@ -8,6 +8,7 @@ import {
   deleteMessageToBackend,
 } from "../../../actions/Bot/index";
 import BotWarning from "../BotWarning";
+import EditMessageDrawer from "../EditMessageDrawer";
 
 class DeleteButton extends React.Component {
   state = {
@@ -137,7 +138,7 @@ export function MessageOptionMenu(props) {
   return (
     <div>
       <Space size="middle">
-        <Button onClick={showEditModal}>EDIT</Button>
+        <EditMessageDrawer target={props.msg._id} />
         <DeleteButton target={props.msg._id} />
         <Button onClick={showReplyModal}>NEW OPTION</Button>
       </Space>
