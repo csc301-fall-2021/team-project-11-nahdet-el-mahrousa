@@ -43,7 +43,7 @@ class AuthController {
             fromQuery: true
         })
 
-        const availiableKeys = ["username", "name"]
+        const availiableKeys = ["username", "name", "_id"]
 
         if (uin === null) {
             return response.NOT_SATISFIED
