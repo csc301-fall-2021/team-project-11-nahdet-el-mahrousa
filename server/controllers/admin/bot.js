@@ -72,6 +72,8 @@ class AdminBotController {
         // If not all required fields are satisfied, then return.
         if (uin === null) {
             return response.NOT_SATISFIED
+        } else if ((await this.botService.getInitMessage()) && uin.label === "__init__"){
+            return response.FORBIDDEN
         } else {
             // Create the message
             const result = await this.botService.createMessage(user, uin.content, uin.label)
@@ -100,6 +102,8 @@ class AdminBotController {
         // If not all required fields are satisfied, then return.
         if (uin === null) {
             return response.NOT_SATISFIED
+        } else if ((await this.botService.getInitMessage()).convertedId === uin._id) {
+            return response.FORBIDDEN
         } else {
             // Delete the message
             const result = await this.botService.deleteMessage(user, uin._id)
