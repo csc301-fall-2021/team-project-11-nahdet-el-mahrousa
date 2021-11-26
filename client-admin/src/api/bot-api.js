@@ -17,6 +17,23 @@ export function getBot(dispatchMessage) {
     });
 }
 
+export function getQueryBot(dispatchMessage) {
+  let msg = [];
+  http.get("/admin/bot")
+    .then((response) => {
+      if (response.statusCode === 200) {
+        msg = response.entity;
+        console.log(response.entity);
+        dispatchMessage(msg);
+      } else {
+        console.log(response.msg);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
 export function createMessage(data, dispatchMessage) {
   console.log(data);
   http.post("/admin/bot/message", data)
