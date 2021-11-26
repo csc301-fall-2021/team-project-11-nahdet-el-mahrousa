@@ -6,6 +6,8 @@ const morgan = require('morgan');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const createDB = require('./gateways/db');
+const jwt = require('jsonwebtoken');
+const { JsonWebTokenError } = require('jsonwebtoken');
 
 /**
  * A factory model to build an Express.js app.
@@ -31,7 +33,14 @@ class AppFactory {
    * @param {*} app Express app
    */
   configApp(app) {
-    dotenv.config({ path: `./config/.env.${process.env.NODE_ENV}` })
+    const envFile = `.env`
+    // if (process.env.NODE_ENV) {
+    //   envFile = `.env.${process.env.NODE_ENV}`
+    // } else {
+      
+    // }
+    
+    dotenv.config({ path: `./config/${envFile}` })
   }
 
   /**
@@ -43,11 +52,15 @@ class AppFactory {
     const indexRouter = require('./api/index');
     const botRouter = require('./api/client/bot');
     const adminBotRouter = require('./api/admin/bot');
+    const userRouter = require('./api/auth/user')
+    const authRouter = require('./api/auth/auth')
 
     // Register Routers
     app.use('/', indexRouter);
     app.use('/bot', botRouter);
-    app.use('/admin', adminBotRouter)
+    app.use('/admin', adminBotRouter);
+    app.use('/user', userRouter)
+    app.use('/auth', authRouter)
   }
 
   /**
@@ -57,7 +70,7 @@ class AppFactory {
   async registerGateways(app) {
     // const dbHandler = new DBHandler()
     // await dbHandler.init(process.env.DATABASE_URI)
-    const db = createDB(process.env.DATABASE_URI, process.env.MOCK)
+    const db = createDB(process.env.DATABASE_URI, process.env.MOCK || false)
     await db.connect()
     this.db = db
   }
@@ -71,7 +84,7 @@ class AppFactory {
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
     app.use(cookieParser());
-    app.use(express.static(path.join(__dirname, 'public')));
+    // app.use(express.static(path.join(__dirname, 'public')));
     app.use(cors());
   }
 
