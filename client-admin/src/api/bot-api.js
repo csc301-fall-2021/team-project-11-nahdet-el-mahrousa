@@ -1,4 +1,5 @@
 import * as http from "../utils/http";
+const origin = process.env.REACT_APP_ORIGIN
 
 export function getBot(dispatchMessage) {
   let msg = [];
@@ -19,9 +20,12 @@ export function getBot(dispatchMessage) {
 
 export function getQueryBot(query, dispatchMessage) {
   let msg = [];
-  console.log(query);
-  http.get("/admin/bot")
+  const url = new URL(origin + "/admin/bot")
+  let body = query;
+  console.log(body);
+  http.get("/admin/bot", body)
     .then((response) => {
+      console.log(url.href)
       if (response.statusCode === 200) {
         msg = response.entity;
         console.log(response.entity);
