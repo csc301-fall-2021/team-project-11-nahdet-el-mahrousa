@@ -45,7 +45,7 @@ class UserService {
      * @returns A user object array.
      */
      async getUsers(key, value) {
-        if(key === "id"){
+        if(key === "_id"){
             key = "convertedId"
         }
         const users = await this.userDao.search({ [key]: new RegExp(".*" + value + ".*", "i") })
