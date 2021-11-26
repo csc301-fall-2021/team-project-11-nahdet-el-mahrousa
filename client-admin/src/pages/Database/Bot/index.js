@@ -4,18 +4,18 @@ import Menu from "components/Menu";
 import { Layout, PageHeader, Button, Space } from 'antd';
 
 import Messages from "../../../components/Bot/BotMessages/messages";
+import NewMessageDrawer from "components/Bot/NewMessageDrawer";
 import { getMessageFromBackend } from "../../../actions/Bot/index";
-import { AddNewMessageButton } from "../../../components/Bot/NewMessageModal/index";
 
 const { Header, Content } = Layout;
 
 class BotPage extends React.Component {
+
   render() {
     getMessageFromBackend();
     return (
       <Layout>
         <Menu />
-
         <Layout theme="light">
 
           <PageHeader
@@ -23,7 +23,7 @@ class BotPage extends React.Component {
             title="Bot Workflow Management"
             extra={[
               <Button key="3">Refresh</Button>,
-              <AddNewMessageButton />
+              <NewMessageDrawer></NewMessageDrawer>
             ]}
           >
             <Space>

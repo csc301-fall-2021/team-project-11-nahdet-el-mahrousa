@@ -5,6 +5,7 @@ import {
 
 async function loginAdmin({ username, password }) {
     try {
+        console.log({ username, password })
         const response = await authLogin({ username, password });
         if (response.statusCode === 200) {
             // Login successfully
@@ -14,7 +15,7 @@ async function loginAdmin({ username, password }) {
         } else if (response.statusCode === 403) {
             // If invalid credential (wrong username password)
             return false
-        } else {
+        }else {
             throw new Error(response.msg)
         }
     } catch (error) {
