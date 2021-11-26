@@ -26,7 +26,15 @@ class AdminBotController {
      */
     async getBot(req, user) {
         // TODO: How to do query.
-        const query = req.query
+        const query = {}
+        for(let key of Object.keys(req.query)){
+            let value = new RegExp(".*" + req.query[key] + ".*", "i")
+            if(key === "_id"){
+                query.convertedId = value
+            } else {
+                query[key] = value
+            }
+        }
         const result = await this.botService.getBot(user, query)
         if (result === null) {
             return response.FORBIDDEN
@@ -44,8 +52,15 @@ class AdminBotController {
     async getMessages(req, user) {
         // TODO: How to do query.
         // Get user input
-        const query = req.query
-
+        const query = {}
+        for(let key of Object.keys(req.query)){
+            let value = new RegExp(".*" + req.query[key] + ".*", "i")
+            if(key === "_id"){
+                query.convertedId = value
+            } else {
+                query[key] = value
+            }
+        }
         const result = await this.botService.getMessages(user, query)
         if (result === null) {
             return response.FORBIDDEN
