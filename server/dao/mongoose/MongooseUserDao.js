@@ -16,6 +16,7 @@ class MongooseUserDao {
         try {
             const newUser = new User({ username, password, name })
             const createdUser = await newUser.save()
+            await User.findByIdAndUpdate(createdUser._id, { convertedId: createdUser._id.toString() })
             logger.log(`MONGOOSE CREATED User ${createdUser._id}`)
             return newUser
         } catch (err) {
