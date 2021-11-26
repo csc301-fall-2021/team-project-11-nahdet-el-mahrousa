@@ -49,10 +49,10 @@ export function ReplyOptionMenu(props) {
   const { Option } = Select;
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
-  const [modalTextContent, setModalTextContent] = useState(props.data.content);
-  const [modalTextLabel, setModalTextLabel] = useState(props.data.label);
+  const [modalTextContent, setModalTextContent] = useState('');
+  const [modalTextLabel, setModalTextLabel] = useState('');
   const [displayWarning, setDisplayWarning] = useState(false);
-  const [modelToMessageId, setModelToMessageId] = useState(props.data.toMessage);
+  const [modelToMessageId, setModelToMessageId] = useState('');
 
   const data = useSelector(state => {
     return state.surveyData.messages
@@ -60,6 +60,9 @@ export function ReplyOptionMenu(props) {
 
   const showModal = () => {
     setVisible(true);
+    setModalTextLabel(props.data.label);
+    setModalTextContent(props.data.content);
+    setModelToMessageId(props.data.toMessage);
   };
 
 
@@ -98,6 +101,18 @@ export function ReplyOptionMenu(props) {
     // setModalTextLabel(event.target.value);s
   }
 
+  function onBlur() {
+    console.log('blur');
+  }
+  
+  function onFocus() {
+    console.log('focus');
+  }
+  
+  function onSearch(val) {
+    console.log('search:', val);
+  }
+
   return (
     <div>
       <Space size="middle">
@@ -114,7 +129,21 @@ export function ReplyOptionMenu(props) {
         <Input placeholder="Content" onChange={handleNewOptionTextContent} value={modalTextContent} />
         <BotWarning displayWarning={displayWarning}></BotWarning>
         <Input placeholder="Label (Optional)" onChange={handleNewOptionTextLabel} value={modalTextLabel} />
-        <Select style={{ width: 120 }} onChange={onMessageChange}>
+        
+        <Select
+          showSearch
+          style={{ width: 472 }}
+          placeholder="Type to Search To Message"
+          optionFilterProp="children"
+          value={modelToMessageId} 
+          onChange={onMessageChange}
+          onFocus={onFocus}
+          onBlur={onBlur}
+          onSearch={onSearch}
+          filterOption={(input, option) =>
+            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+          }
+        >
           {props.msgList.map(msg => {
             if (msg._id !== props.data.fromMessage)
               return <Option key={msg._id}>{msg.content}</Option>
