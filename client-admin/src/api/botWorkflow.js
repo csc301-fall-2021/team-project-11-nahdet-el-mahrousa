@@ -46,12 +46,12 @@ const data = function () {
 
 async function fetchWorkflow(params = {}) {
     try {
-        const response = {
-            msg: "OK",
-            statusCode: 200,
-            entity: data
-        }
-        
+        // const asd = {
+        //     msg: "OK",
+        //     statusCode: 200,
+        //     entity: data
+        // }
+        const response = await http.get('/admin/bot/workflow')
         return response
     } catch (error) {
         throw error

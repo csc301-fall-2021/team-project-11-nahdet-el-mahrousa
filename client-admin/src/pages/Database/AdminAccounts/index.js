@@ -51,7 +51,7 @@ class UsersPage extends React.Component {
                         <Input.Group compact>
                             {/* The option keys the user can search from */}
                             <Select defaultValue="username" onChange={this.onSelectSearchKey}>
-                                {/* <Option value="_id">User ID</Option> */}
+                                <Option value="_id">User ID</Option>
                                 <Option value="username">Username</Option>
                                 <Option value="name">Name</Option>
                             </Select>
