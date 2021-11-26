@@ -20,7 +20,6 @@ class AppFactory {
   registerApp() {
     const app = express();
     this.configApp(app)
-    this.configGoogleAnalytics(app)
     this.registerExtensions(app);
     this.registerErrorHandler(app);
     this.registerGateways(app)
@@ -45,9 +44,6 @@ class AppFactory {
   }
 
 
-  configGoogleAnalytics(app){
-
-  }
 
   /**
    * App uses routers.
@@ -60,6 +56,7 @@ class AppFactory {
     const adminBotRouter = require('./api/admin/bot');
     const userRouter = require('./api/auth/user')
     const authRouter = require('./api/auth/auth')
+    const statisticsRouter = require('./api/statistics/retrieve')
 
     // Register Routers
     app.use('/', indexRouter);
@@ -67,6 +64,7 @@ class AppFactory {
     app.use('/admin', adminBotRouter);
     app.use('/user', userRouter)
     app.use('/auth', authRouter)
+    app.use('statistics', statsticsRouter)
   }
 
   /**

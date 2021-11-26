@@ -1,5 +1,6 @@
 const logger = { log: console.log }
 const { Reply } = require('../../models/models.mongoose')
+const OnjectId = require("mongodb").ObjectId
 
 class MongooseReplyDao {
     constructor(db = null) {
@@ -25,6 +26,14 @@ class MongooseReplyDao {
             logger.log(err)
             return null
         }
+    }
+    //TODO: Decide on if we need it
+    async getMultiple(rid){
+        let ridInput = rid.map(function(val){
+            return ObjectId(val);
+        })
+        const reply = await Reply.find({"_id" : {"$in" : ridInput }});
+        return reply
     }
 
     /**

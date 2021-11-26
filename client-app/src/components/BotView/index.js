@@ -11,7 +11,8 @@ class BotView extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            chat: []
+            chat: [],
+            ReactGA: props.ReactGA
         }
     }
 

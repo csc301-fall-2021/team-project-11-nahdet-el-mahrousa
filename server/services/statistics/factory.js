@@ -1,11 +1,12 @@
-const retrieveDataDao = require('../../dao/statistics')
 const retrieveDataService = require('./index')
+const configGA = require('../../gateways/analysis')
+const {MessageDao, ReplyDao} = require('../../dao')
 
 
 function createRetrieveStatisticsService() {
-    const retrieveDataDao = new retrieveDataDao(this.process.trackId)
-
-    const retrieveDataService = new retrieveDataService(retrieveDataDao)
+    const googleAnalyticsGateway = new configGA()
+    const replyDao = new ReplyDao()
+    const retrieveDataService = new retrieveDataService(googleAnalyticsGateway, replyDao)
     return retrieveDataService
 }
 module.exports = createRetrieveStatisticsService

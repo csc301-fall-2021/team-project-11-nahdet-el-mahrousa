@@ -45,6 +45,12 @@ export async function makeReply(msgQueue, reply) {
     // Send a request to server
     // With the response, add a new Message to msgQueue
     try {
+        msgQueue.state.ReactGA.event({
+            category: 'Reply',
+            action: 'click',
+            label: reply._id
+            // Double check about the id!
+        })
         const entity = await getNextMessage(reply);
         console.log(entity);
         newQueue.push(entity);
