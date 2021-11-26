@@ -44,6 +44,30 @@ class AdminBotController {
     }
 
     /**
+     * Create a well formatted workflow.
+     * @param {Object} req Request.
+     * @param {User} user The user doing this operation.
+     * @returns Response object.
+     */
+     async getWorkflow(req, user) {
+        const query = {}
+        for(let key of Object.keys(req.query)){
+            let value = new RegExp(".*" + req.query[key] + ".*", "i")
+            if(key === "_id"){
+                query.convertedId = value
+            } else {
+                query[key] = value
+            }
+        }
+        const result = await this.botService.getWorkflow(user, query)
+        if (result === null) {
+            return response.FORBIDDEN
+        } else {
+            return respond({ entity: result })
+        }
+    }
+
+    /**
      * Get messages from query.
      * @param {Object} req Request.
      * @param {User} user The user doing this operation.
