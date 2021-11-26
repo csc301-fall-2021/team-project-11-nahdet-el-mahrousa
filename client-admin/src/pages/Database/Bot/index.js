@@ -5,7 +5,7 @@ import { Layout, PageHeader, Button, Space, Select, Input } from "antd";
 
 import Messages from "../../../components/Bot/BotMessages/messages";
 import NewMessageDrawer from "components/Bot/NewMessageDrawer";
-import { getMessageFromBackend } from "../../../actions/Bot/index";
+import { getMessageFromBackend, getQueryMessage } from "../../../actions/Bot/index";
 
 const { Header, Content } = Layout;
 const { Option } = Select;
@@ -27,6 +27,7 @@ class BotPage extends React.Component {
     this.setState({
       searchValue,
     });
+    getQueryMessage({key: this.state.searchKey, value: searchValue});
   };
 
   onSelectSearchKey = (searchKey) => {

@@ -17,8 +17,9 @@ export function getBot(dispatchMessage) {
     });
 }
 
-export function getQueryBot(dispatchMessage) {
+export function getQueryBot(query, dispatchMessage) {
   let msg = [];
+  console.log(query);
   http.get("/admin/bot")
     .then((response) => {
       if (response.statusCode === 200) {

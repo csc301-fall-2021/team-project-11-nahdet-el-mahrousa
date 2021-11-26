@@ -21,8 +21,8 @@ export function getMessageFromBackend() {
   // store.dispatch(replaceMessages(data))
 }
 
-export function getQueryMessage() {
-  getBot(dispatchMessage);
+export function getQueryMessage(query) {
+  getQueryBot(query, dispatchMessage);
   // const dispatch = useDispatch()
   // store.dispatch(replaceMessages(data))
 }
