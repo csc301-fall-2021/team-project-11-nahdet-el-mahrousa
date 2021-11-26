@@ -331,13 +331,17 @@ class BotService {
      */
     _generateNode(message) {
         const node = {
-            id: `Question ${message.convertedId}`,
+            id: `${message.convertedId}`,
             value: {
                 title: `${message.label}`,
                 items: [
                     {
-                        text: '_id',
-                        value: `Question ${message.convertedId}`
+                        text: 'id',
+                        value: `${message.convertedId}`
+                    },
+                    {
+                        text: 'label',
+                        value: `${message.label}`
                     },
                     {
                         text: 'content',
@@ -358,10 +362,14 @@ class BotService {
      _generateEdges(replies) {
         const edges = []
         for(let reply of replies){
+            let value = reply.label
+            if(!value || value === ""){
+                value = reply.content
+            }
             edges.push({
-                source: `Question ${reply.fromMessage}`,
-                target: `Question ${reply.toMessage}`,
-                value: `${reply.label}`,
+                source: `${reply.fromMessage}`,
+                target: `${reply.toMessage}`,
+                value: `${value}`,
             })
         }
         return edges
