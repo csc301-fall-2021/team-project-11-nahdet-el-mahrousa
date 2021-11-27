@@ -28,7 +28,7 @@ function getInput(req,
 
     // Get mandatory fields. If not found in any source, return undefined.
     for (let field of mandatory) {
-        let value = undefined
+        let value;
         if (fromBody && (field in body)) {
             value = body[field]
         } else if (fromParams && (field in params)) {
@@ -40,13 +40,13 @@ function getInput(req,
         if (value !== undefined) {
             inputs[field] = value
         } else {
-            return undefined
+            return null
         }
     }
 
     // Get optional fields. If not found in any source, get from optDefaults.
     for (let field of optional) {
-        let value = undefined
+        let value;
         if (fromBody && (field in body)) {
             value = body[field]
         } else if (fromParams && (field in params)) {

@@ -12,7 +12,7 @@ const config = (data) => {
     width: window.innerWidth - 232,
 
     nodeCfg: {
-      size: [300, 45],
+      size: [400, 45],
       style: {
         fill: '#e3e3e3',
         stroke: '#e3e3e3',
@@ -84,9 +84,9 @@ const config = (data) => {
     layout: {
       rankdir: 'LR',
       /** Number of pixels that separate nodes horizontally in the layout. */
-      ranksepFunc: () => 60,
+      ranksepFunc: () => 80,
       /** Number of pixels that separate nodes vertically in the layout. */
-      nodesepFunc: () => 10,
+      nodesepFunc: () => 20,
     },
 
     behaviors: ['drag-canvas', 'scroll-canvas', 'zoom-canvas'],

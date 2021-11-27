@@ -40,7 +40,7 @@ class CreateAdminDrawer extends React.Component {
         const { confirmPassword, ...body } = values
         try {
             const createdUser = await requestCreateAdminAccount(body)
-            message.success(`Created new admin user ${createdUser.username}`)
+            message.success(`Created new admin user ${createdUser.username}, please refresh.`)
             this.onClose()
         } catch (error) {
             message.error(String(error))
@@ -68,6 +68,16 @@ class CreateAdminDrawer extends React.Component {
                         autoComplete="off"
                     >
                         <Col>
+                        <Form.Item
+                                name="name"
+                                label="Name"
+                                rules={[
+                                    { required: true, message: 'Please enter the name of user' },
+                                    { type: 'string', min: 1 }
+                                ]}
+                            >
+                                <Input placeholder="Please enter user's name" />
+                            </Form.Item>
                             <Form.Item
                                 name="username"
                                 label="Username"
