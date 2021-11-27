@@ -7,7 +7,7 @@ import { sendMessageToBackend } from "actions/Bot";
 import BotWarning from "../BotWarning";
 const { TextArea } = Input;
 // Reference: https://ant.design/components/drawer-cn/#components-drawer-demo-form-in-drawer
-class NewMessageDrawer extends React.Component {
+class EditMessageDrawer extends React.Component {
   state = {
       visible: false,
       loading: false
@@ -36,12 +36,12 @@ class NewMessageDrawer extends React.Component {
       this.setState({ loading: true })
       try {
           if (values.label === null) {
-            await sendMessageToBackend(null, values.content, '');
-            message.success(`Created new message`)
+            await sendMessageToBackend(this.props.target, values.content, '');
+            message.success(`Edited this message`)
             this.onClose()
           } else {
-            await sendMessageToBackend(null, values.content, values.label);
-            message.success(`Created new message`)
+            await sendMessageToBackend(this.props.target, values.content, values.label);
+            message.success(`Edited this message`)
             this.onClose()
           }
       } catch (error) {
@@ -53,12 +53,12 @@ class NewMessageDrawer extends React.Component {
   render() {
       return (
           <>
-              <Button type="primary" onClick={this.showDrawer} icon={<PlusOutlined />}>
-                  Create new message
+              <Button type="primary" onClick={this.showDrawer}>
+                  EDIT
               </Button>
 
               <Drawer
-                  title="Create a new message"
+                  title="Edit this message"
                   width="30%"
                   onClose={this.onClose}
                   visible={this.state.visible}
@@ -98,7 +98,7 @@ class NewMessageDrawer extends React.Component {
                       <Space style={{ marginTop: "20px" }}>
                           <Button onClick={this.onClose}>Cancel</Button>
                           <Button type="primary" htmlType="submit" loading={this.state.loading}>
-                              Create
+                              Edit
                           </Button>
                       </Space>
                   </Form>
@@ -107,4 +107,4 @@ class NewMessageDrawer extends React.Component {
       );
   }
 }
-export default NewMessageDrawer
+export default EditMessageDrawer

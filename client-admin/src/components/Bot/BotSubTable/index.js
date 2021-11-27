@@ -6,6 +6,7 @@ class BotSubTable extends React.Component {
   render() {
     const columns = [
       { title: "Reply", dataIndex: "content", key: "content" },
+      { title: "From Message", dataIndex: "fromMessage", key: "fromMessage" },
       { title: "To Message", dataIndex: "toMessage", key: "toMessage" },
       { title: "Label", dataIndex: "label", key: "label" },
       {

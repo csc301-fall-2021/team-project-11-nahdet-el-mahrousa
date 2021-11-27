@@ -15,7 +15,7 @@ async function get(route, params = {}) {
 
   // Append query params to url
   Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
-
+  console.log(url.href)
   const response = await fetch(url, {
     method: 'GET',
     mode: 'cors',
