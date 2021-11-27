@@ -23,7 +23,7 @@ class HomePage extends React.Component {
                     <LeftMenu />
                 </div>
                 <div className="bot-view-section">
-                    <BotView ReactGA = {ReactGA}/>
+                    <BotView ReactGA= {ReactGA}/>
                     <div className="bottom-decoration"></div>
                 </div>
             </div>

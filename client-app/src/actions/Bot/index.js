@@ -18,6 +18,13 @@ export function loadMyData(msgQueue) {
     }
 }
 
+export function clearData(msgQueue) {
+    const newQueue = [];
+    msgQueue.setState({
+        chat: JSON.parse(newQueue)
+    }, () => msgQueue.scrollToMyRef());
+}
+
 export async function initChat(msgQueue) {
     const newQueue = [...msgQueue.state.chat];
 

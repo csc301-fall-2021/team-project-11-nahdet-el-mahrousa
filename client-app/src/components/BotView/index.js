@@ -3,9 +3,11 @@ import Message from 'components/Message';
 import Reply from 'components/Reply';
 
 import { loadMyData, initChat, makeReply } from "actions/Bot";
+import { unmountComponentAtNode } from "react-dom";
 
 import "./BotView.scss"
 import StartButton from 'components/StartButton';
+// import RefreshButton from 'components/RefreshButton';
 
 class BotView extends React.Component {
     constructor(props) {
@@ -13,15 +15,16 @@ class BotView extends React.Component {
         this.state = {
             chat: []
         }
+        this.handleClick = this.handleClick.bind(this);
     }
 
     componentDidMount() {
         loadMyData(this);
     }
 
-    // componentWillMount = () => {
-    //     resumeChat(this);
-    // }
+    handleClick() {
+        unmountComponentAtNode(document.getElementById('new-page'));
+    }
 
     chatContainer = React.createRef();
 
@@ -33,8 +36,9 @@ class BotView extends React.Component {
 
     render() {
         return (
-            <div ref={this.chatContainer} className="bot-view">
+            <div id="new-page" ref={this.chatContainer} className="bot-view">
                 <div className="bot-chat-container">
+                    <button onClick={this.handleClick}>Refresh</button>
                     <StartButton initChat={() => initChat(this)} />
                     {
                         this.state.chat.map((chatItem) => {
