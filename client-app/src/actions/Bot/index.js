@@ -4,14 +4,15 @@ import { getFirstMessage, getNextMessage } from 'api/client-api';
 
 const log = console.log;
 
-export function resumeChat(msgQueue) {
-    if (localStorage != null) {
+export function loadMyData(msgQueue) {
+    if (localStorage.getItem("chat") !== undefined) {
         var currDate = new Date();
         var pastDate = currDate.getDate() - 7;
-        if (localStorage.time < pastDate) {
-            const newQueue = localStorage.chat;
+        // only restore the page with data stored in the last 7 days
+        if (JSON.parse(localStorage.getItem("time")) >= pastDate) {
+            const newQueue = localStorage.getItem("chat");
             msgQueue.setState({
-                chat: newQueue
+                chat: JSON.parse(newQueue)
             }, () => msgQueue.scrollToMyRef());
         }
     }
@@ -58,13 +59,23 @@ export async function makeReply(msgQueue, reply) {
     // Send a request to server
     // With the response, add a new Message to msgQueue
     try {
+        // send statistics to google
+        msgQueue.props.ReactGA.event({
+            category: 'Reply',
+            action: 'click',
+            label: String(reply._id)
+        })
         const entity = await getNextMessage(reply);
         console.log(entity);
         newQueue.push(entity);
-        // save to local
         msgQueue.setState({
             chat: newQueue
         }, () => msgQueue.scrollToMyRef());
+        // record the response in local storage
+        localStorage.setItem("chat", JSON.stringify(msgQueue.state.chat));
+        // set today the respond date in local storage
+        var res_date = new Date();
+        localStorage.setItem("time", JSON.stringify(res_date.getDate()));
     }
     catch(error) {
         const err = `Action ${String(error)}. Please contact the staff.`
