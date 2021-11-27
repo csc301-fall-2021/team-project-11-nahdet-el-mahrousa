@@ -15,7 +15,7 @@ import {
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { sendReplyToBackend } from "actions/Bot";
-import BotWarning from "../BotWarning";
+
 const { TextArea } = Input;
 function onChange(value) {
   console.log(`selected ${value}`);
@@ -60,41 +60,9 @@ class NewOptionDrawer extends React.Component {
   submitForm = async (values) => {
     this.setState({ loading: true });
     try {
-      if (values.label === null && values.toMessage === null) {
-        await sendReplyToBackend("", values.content, "", this.props.target.msg._id, "");
-        message.success(`Created new reply`);
-        this.onClose();
-      } else if (values.label === null) {
-        await sendReplyToBackend(
-          "",
-          values.content,
-          "",
-          this.props.target.msg._id,
-          values.toMessage
-        );
-        message.success(`Created new reply`);
-        this.onClose();
-      } else if (values.toMessage === null) {
-        await sendReplyToBackend(
-          "",
-          values.content,
-          values.label,
-          this.props.target.msg._id,
-          ""
-        );
-        message.success(`Created new reply`);
-        this.onClose();
-      } else {
-        await sendReplyToBackend(
-          "",
-          values.content,
-          values.label,
-          this.props.target.msg._id,
-          values.toMessage
-        );
-        message.success(`Created new reply`);
-        this.onClose();
-      }
+      sendReplyToBackend(null, values.content, values.label || "", this.props.target.msg._id, values.toMessage || "");
+      message.success(`Created new reply`);
+      this.onClose();
     } catch (error) {
       message.error(String(error));
       this.setState({ loading: false });
@@ -120,7 +88,6 @@ class NewOptionDrawer extends React.Component {
         >
           <Form
             layout="vertical"
-            hideRequiredMark
             onFinish={this.submitForm}
             autoComplete="off"
           >
@@ -147,16 +114,15 @@ class NewOptionDrawer extends React.Component {
               </Form.Item>
               <Form.Item
                 name="toMessage"
-                label="toMessage"
+                label="Next Message"
                 rules={[
-                  { required: false, message: "Please search for toMessage" },
+                  { required: false, message: "Please search for next message" },
                   { type: "string", min: 0 },
                 ]}
               >
                 <Select
                   showSearch
-                  style={{ width: 300 }}
-                  placeholder="Select to message"
+                  placeholder="Select next message"
                   optionFilterProp="children"
                   onChange={onChange}
                   onFocus={onFocus}
@@ -170,7 +136,11 @@ class NewOptionDrawer extends React.Component {
                 >
                   {this.props.target.msgList.map((msg) => {
                     if (msg._id !== this.props.target.msg._id)
-                      return <Select key={msg._id}>{msg.content}</Select>;
+                      return (
+                        <Select key={msg._id}>
+                          {(msg._id + " ") + (msg.label !== "" ? msg.label + ": " : "") + msg.content}
+                        </Select>
+                      )
                   })}
                 </Select>
               </Form.Item>

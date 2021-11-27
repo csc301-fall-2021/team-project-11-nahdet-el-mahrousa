@@ -1,13 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { Space } from "antd";
 // import { useSelector } from "react-redux";
-import { Modal, Input, Select, message, Popconfirm, Button } from "antd";
+import { message, Popconfirm, Button } from "antd";
 import {
-  sendReplyToBackend,
-  sendMessageToBackend,
   deleteMessageToBackend,
-} from "../../../actions/Bot/index";
-import BotWarning from "../BotWarning";
+} from "actions/Bot/index";
+
 import EditMessageDrawer from "../EditMessageDrawer";
 import NewOptionDrawer from "../NewOptionDrawer";
 
@@ -20,14 +18,13 @@ class DeleteButton extends React.Component {
   handleOk = async () => {
     this.setState({ confirmLoading: true });
 
-    const msgToDelete = this.props.target;
-    console.log("deleting ", msgToDelete);
-    // TODO: to async request
+    const msgId = this.props.target;
+    // to async request
     try {
-      await deleteMessageToBackend(msgToDelete);
+      deleteMessageToBackend(msgId);
       this.setState({ visible: false });
       this.setState({ confirmLoading: false });
-      message.success(`Deleted message`);
+      message.success(`Deleted message ${msgId}`);
     } catch (error) {
       this.setState({ confirmLoading: false });
       message.error(String(error));
@@ -43,15 +40,15 @@ class DeleteButton extends React.Component {
         okButtonProps={{ loading: this.state.confirmLoading }}
         onCancel={() => this.setState({ visible: false })}
       >
-        <Button type="primary" onClick={() => this.setState({ visible: true })}>
-          DELETE
+        <Button danger onClick={() => this.setState({ visible: true })}>
+          Delete
         </Button>
       </Popconfirm>
     );
   }
 }
 
-export function MessageOptionMenu(props) {
+export default function MessageOptionMenu(props) {
   console.log(props);
   return (
     <div>

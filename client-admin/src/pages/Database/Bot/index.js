@@ -3,9 +3,9 @@ import React from "react";
 import Menu from "components/Menu";
 import { Layout, PageHeader, Button, Space, Select, Input } from "antd";
 
-import Messages from "../../../components/Bot/BotMessages/messages";
+import Messages from "components/Bot/BotMessages";
 import NewMessageDrawer from "components/Bot/NewMessageDrawer";
-import { getMessageFromBackend, getQueryMessage } from "../../../actions/Bot/index";
+import { getMessageFromBackend, getQueryMessage } from "actions/Bot";
 
 const { Header, Content } = Layout;
 const { Option } = Select;
@@ -27,7 +27,7 @@ class BotPage extends React.Component {
     this.setState({
       searchValue,
     });
-    getQueryMessage({key: this.state.searchKey, value: searchValue});
+    getQueryMessage({ key: this.state.searchKey, value: searchValue });
   };
 
   onSelectSearchKey = (searchKey) => {
@@ -35,7 +35,7 @@ class BotPage extends React.Component {
   };
 
   render() {
-    if (this.state.searchValue === ""){
+    if (this.state.searchValue === "") {
       getMessageFromBackend();
     }
     return (
@@ -61,9 +61,9 @@ class BotPage extends React.Component {
             <Input.Group compact>
               {/* The option keys the user can search from */}
               <Select defaultValue="content" onChange={this.onSelectSearchKey}>
-                {/* <Option value="_id">User ID</Option> */}
-                <Option value="content">content</Option>
-                <Option value="_id">_id</Option>
+                <Option value="_id">Message ID</Option>
+                <Option value="content">Content</Option>
+                <Option value="label">Label</Option>
               </Select>
               <Input.Search
                 placeholder="Search for a message"
@@ -73,7 +73,7 @@ class BotPage extends React.Component {
               />
             </Input.Group>
             <div className="container">
-              <Messages refresh={this.state.tableRefresher} query={{ key: this.state.searchKey, value: this.state.searchValue }}/>
+              <Messages refresh={this.state.tableRefresher} query={{ key: this.state.searchKey, value: this.state.searchValue }} />
             </div>
           </Content>
         </Layout>

@@ -38,7 +38,7 @@ class DeleteButton extends React.Component {
                 okButtonProps={{ loading: this.state.confirmLoading }}
                 onCancel={() => this.setState({ visible: false })}
             >
-                <Button type="primary" onClick={() => this.setState({ visible: true })}>
+                <Button danger onClick={() => this.setState({ visible: true })}>
                     Delete
                 </Button>
             </Popconfirm>

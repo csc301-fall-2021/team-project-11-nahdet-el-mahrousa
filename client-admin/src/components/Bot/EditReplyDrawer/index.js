@@ -1,22 +1,18 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React from "react";
 
 import {
   Drawer,
   Form,
   Button,
   Col,
-  Row,
   Input,
   Select,
-  DatePicker,
   Space,
   message,
 } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+
 import { sendReplyToBackend } from "actions/Bot";
-import BotWarning from "../BotWarning";
-const { TextArea } = Input;
+
 function onChange(value) {
   console.log(`selected ${value}`);
 }
@@ -60,41 +56,10 @@ class EditReplyDrawer extends React.Component {
   submitForm = async (values) => {
     this.setState({ loading: true });
     try {
-      if (values.label === null && values.toMessage === null) {
-        await sendReplyToBackend(this.props.target.data._id, values.content, "", this.props.target.data.fromMessage, "");
-        message.success(`Created new reply`);
-        this.onClose();
-      } else if (values.label === null) {
-        await sendReplyToBackend(
-          this.props.target.data._id,
-          values.content,
-          "",
-          this.props.target.data.fromMessage,
-          values.toMessage
-        );
-        message.success(`Created new reply`);
-        this.onClose();
-      } else if (values.toMessage === null) {
-        await sendReplyToBackend(
-          this.props.target.data._id,
-          values.content,
-          values.label,
-          this.props.target.data.fromMessage,
-          ""
-        );
-        message.success(`Created new reply`);
-        this.onClose();
-      } else {
-        await sendReplyToBackend(
-          this.props.target.data._id,
-          values.content,
-          values.label,
-          this.props.target.data.fromMessage,
-          values.toMessage
-        );
-        message.success(`Created new reply`);
-        this.onClose();
-      }
+      const id = this.props.target.data._id
+      sendReplyToBackend(id, values.content, values.label || "", this.props.target.data.fromMessage, values.toMessage);
+      message.success(`Created new reply`);
+      this.onClose();
     } catch (error) {
       message.error(String(error));
       this.setState({ loading: false });
@@ -105,21 +70,19 @@ class EditReplyDrawer extends React.Component {
     return (
       <>
         <Button
-          type="primary"
           onClick={this.showDrawer}
         >
-          EDIT
+          Edit
         </Button>
 
         <Drawer
-          title="Edit this reply"
+          title={`Edit Reply ${this.props.target.data._id}`}
           width="30%"
           onClose={this.onClose}
           visible={this.state.visible}
         >
           <Form
             layout="vertical"
-            hideRequiredMark
             onFinish={this.submitForm}
             autoComplete="off"
           >
@@ -128,17 +91,17 @@ class EditReplyDrawer extends React.Component {
                 name="content"
                 label="Content"
                 rules={[
-                  { required: true, message: "Please enter reply content" },
-                  { type: "string", min: 0 },
+                  { required: true, message: "Please enter reply content." },
+                  { type: "string", min: 1 },
                 ]}
               >
-                <Input placeholder="Please enter reply content" />
+                <Input placeholder="Please enter reply content." />
               </Form.Item>
               <Form.Item
                 name="label"
                 label="Label"
                 rules={[
-                  { required: false, message: "Please enter label" },
+                  { required: false, message: "Please enter label of the reply for admin." },
                   { type: "string", min: 0 },
                 ]}
               >
@@ -146,16 +109,15 @@ class EditReplyDrawer extends React.Component {
               </Form.Item>
               <Form.Item
                 name="toMessage"
-                label="toMessage"
+                label="Next Message"
                 rules={[
-                  { required: false, message: "Please search for toMessage" },
-                  { type: "string", min: 0 },
+                  { required: false, message: "Please search for next message this reply will direct to." },
                 ]}
               >
                 <Select
                   showSearch
-                  style={{ width: 300 }}
-                  placeholder="Select to message"
+                  // style={{ width: 300 }}
+                  placeholder="Select next message"
                   optionFilterProp="children"
                   onChange={onChange}
                   onFocus={onFocus}
@@ -169,7 +131,11 @@ class EditReplyDrawer extends React.Component {
                 >
                   {this.props.target.msgList.map((msg) => {
                     if (msg._id !== this.props.target.data.fromMessage)
-                      return <Select key={msg._id}>{msg.content}</Select>;
+                      return (
+                        <Select key={msg._id}>
+                          {(msg._id + " ") + (msg.label !== "" ? msg.label + ": " : "") + msg.content}
+                        </Select>
+                      );
                   })}
                 </Select>
               </Form.Item>
@@ -182,7 +148,7 @@ class EditReplyDrawer extends React.Component {
                 htmlType="submit"
                 loading={this.state.loading}
               >
-                Create
+                Submit Edit
               </Button>
             </Space>
           </Form>

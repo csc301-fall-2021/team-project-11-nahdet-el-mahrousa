@@ -3,7 +3,7 @@ import { Space } from "antd";
 import { useSelector } from "react-redux";
 import { Modal, Input, Select, message, Popconfirm, Button } from "antd";
 import { sendReplyToBackend, deleteReplyToBackend } from '../../../actions/Bot/index'
-import BotWarning from '../BotWarning'
+
 import EditReplyDrawer from "../EditReplyDrawer";
 
 class DeleteButton extends React.Component {
@@ -15,11 +15,11 @@ class DeleteButton extends React.Component {
   handleOk = async () => {
       this.setState({ confirmLoading: true })
 
-      const replyToDelete = this.props.target
-      console.log('deleting ', replyToDelete)
+      const replyId = this.props.target
+
       // TODO: to async request
       try {
-          await deleteReplyToBackend(replyToDelete)
+          deleteReplyToBackend(replyId)
           this.setState({ visible: false })
           this.setState({ confirmLoading: false })
           message.success(`Deleted reply`)
@@ -38,15 +38,15 @@ class DeleteButton extends React.Component {
               okButtonProps={{ loading: this.state.confirmLoading }}
               onCancel={() => this.setState({ visible: false })}
           >
-              <Button type="primary" onClick={() => this.setState({ visible: true })}>
-                  DELETE
+              <Button danger onClick={() => this.setState({ visible: true })}>
+                  Delete
               </Button>
           </Popconfirm>
       )
   }
 }
 
-export function ReplyOptionMenu(props) {
+export default function ReplyOptionMenu(props) {
   return (
     <div>
       <Space size="middle">
