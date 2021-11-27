@@ -35,7 +35,9 @@ class BotPage extends React.Component {
   };
 
   render() {
-    getMessageFromBackend();
+    if (this.state.searchValue === ""){
+      getMessageFromBackend();
+    }
     return (
       <Layout>
         <Menu />

@@ -21,11 +21,10 @@ export function getBot(dispatchMessage) {
 export function getQueryBot(query, dispatchMessage) {
   let msg = [];
   const url = new URL(origin + "/admin/bot")
-  let body = query;
+  let body = {[query.key]: query.value};
   console.log(body);
   http.get("/admin/bot", body)
     .then((response) => {
-      console.log(url.href)
       if (response.statusCode === 200) {
         msg = response.entity;
         console.log(response.entity);
