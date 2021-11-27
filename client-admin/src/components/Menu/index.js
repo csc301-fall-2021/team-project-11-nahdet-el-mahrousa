@@ -6,6 +6,7 @@ import {
   TeamOutlined,
   PieChartOutlined,
   QuestionCircleOutlined,
+  LogoutOutlined,
 } from "@ant-design/icons";
 
 const { SubMenu } = Menu;
@@ -68,6 +69,12 @@ const MenuComponent = () => {
             </Link>
           </Menu.Item>
         </SubMenu>
+
+        <Menu.Item key="5" icon={<LogoutOutlined />}>
+            <Link className="nav-item" to="/login">
+              Logout
+            </Link>
+          </Menu.Item>
 
       </Menu>
     </Sider>
