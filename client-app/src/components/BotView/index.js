@@ -2,7 +2,7 @@ import React from 'react';
 import Message from 'components/Message';
 import Reply from 'components/Reply';
 
-import { loadMyData, initChat, makeReply } from "actions/Bot";
+import { loadMyData, initChat, makeReply, clearData } from "actions/Bot";
 import { unmountComponentAtNode } from "react-dom";
 
 import "./BotView.scss"
@@ -22,8 +22,13 @@ class BotView extends React.Component {
         loadMyData(this);
     }
 
+    componentWillUnmount() {
+        clearData(this);
+        // document.removeEventListener("click", this.handleClick);
+    }
+
     handleClick() {
-        unmountComponentAtNode(document.getElementById('new-page'));
+        
     }
 
     chatContainer = React.createRef();
@@ -38,7 +43,7 @@ class BotView extends React.Component {
         return (
             <div id="new-page" ref={this.chatContainer} className="bot-view">
                 <div className="bot-chat-container">
-                    <button onClick={this.handleClick}>Refresh</button>
+                    <button onClick={() => clearData(this)}>Refresh</button>
                     <StartButton initChat={() => initChat(this)} />
                     {
                         this.state.chat.map((chatItem) => {

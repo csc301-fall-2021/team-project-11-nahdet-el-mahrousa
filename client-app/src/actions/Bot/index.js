@@ -19,7 +19,7 @@ export function loadMyData(msgQueue) {
 }
 
 export function clearData(msgQueue) {
-    const newQueue = [];
+    const newQueue = "";
     msgQueue.setState({
         chat: JSON.parse(newQueue)
     }, () => msgQueue.scrollToMyRef());
