@@ -44,7 +44,7 @@ class DeleteButton extends React.Component {
         onCancel={() => this.setState({ visible: false })}
       >
         <Button type="primary" onClick={() => this.setState({ visible: true })}>
-          Delete
+          DELETE
         </Button>
       </Popconfirm>
     );
