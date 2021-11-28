@@ -1,15 +1,6 @@
 import React from "react";
 
-import {
-  Drawer,
-  Form,
-  Button,
-  Col,
-  Input,
-  Select,
-  Space,
-  message,
-} from "antd";
+import { Drawer, Form, Button, Col, Input, Select, Space, message } from "antd";
 
 import { sendReplyToBackend } from "actions/Bot";
 
@@ -56,8 +47,14 @@ class EditReplyDrawer extends React.Component {
   submitForm = async (values) => {
     this.setState({ loading: true });
     try {
-      const id = this.props.target.data._id
-      sendReplyToBackend(id, values.content, values.label || "", this.props.target.data.fromMessage, values.toMessage);
+      const id = this.props.target.data._id;
+      sendReplyToBackend(
+        id,
+        values.content,
+        values.label || "",
+        this.props.target.data.fromMessage,
+        values.toMessage
+      );
       message.success(`Created new reply`);
       this.onClose();
     } catch (error) {
@@ -69,11 +66,7 @@ class EditReplyDrawer extends React.Component {
   render() {
     return (
       <>
-        <Button
-          onClick={this.showDrawer}
-        >
-          Edit
-        </Button>
+        <Button onClick={this.showDrawer}>Edit</Button>
 
         <Drawer
           title={`Edit Reply ${this.props.target.data._id}`}
@@ -82,6 +75,11 @@ class EditReplyDrawer extends React.Component {
           visible={this.state.visible}
         >
           <Form
+            initialValues={{
+              content: this.props.target.data.content,
+              label: this.props.target.data.label,
+              toMessage: this.props.target.data.toMessage,
+            }}
             layout="vertical"
             onFinish={this.submitForm}
             autoComplete="off"
@@ -101,7 +99,10 @@ class EditReplyDrawer extends React.Component {
                 name="label"
                 label="Label"
                 rules={[
-                  { required: false, message: "Please enter label of the reply for admin." },
+                  {
+                    required: false,
+                    message: "Please enter label of the reply for admin.",
+                  },
                   { type: "string", min: 0 },
                 ]}
               >
@@ -111,7 +112,11 @@ class EditReplyDrawer extends React.Component {
                 name="toMessage"
                 label="Next Message"
                 rules={[
-                  { required: false, message: "Please search for next message this reply will direct to." },
+                  {
+                    required: false,
+                    message:
+                      "Please search for next message this reply will direct to.",
+                  },
                 ]}
               >
                 <Select
@@ -133,7 +138,10 @@ class EditReplyDrawer extends React.Component {
                     if (msg._id !== this.props.target.data.fromMessage)
                       return (
                         <Select key={msg._id}>
-                          {(msg._id + " ") + (msg.label !== "" ? msg.label + ": " : "") + msg.content}
+                          {msg._id +
+                            " " +
+                            (msg.label !== "" ? msg.label + ": " : "") +
+                            msg.content}
                         </Select>
                       );
                   })}
