@@ -1,10 +1,10 @@
-const createRetrieveStatisticsService = require('../../services/statistics/factory')
-const retrieveStatisticsController = require('./')
+const CreateRetrieveStatisticsService = require('../../services/statistics/factory')
+const RetrieveStatisticsController = require('./retrieveStatisticsController')
 
 
 function createStatisticsController() {
-    const retrieveStatisticsService = createRetrieveStatisticsService()
-    const  retrieveStatisticsController = new retrieveStatisticsController(retrieveStatisticsService)
+    const retrieveStatisticsService = CreateRetrieveStatisticsService()
+    const  retrieveStatisticsController = new RetrieveStatisticsController(retrieveStatisticsService)
     return retrieveStatisticsController
 }
 

@@ -1,1 +1,1 @@
-module.exports = {statisticsAnalysis}
+module.exports = require("./statisticsAnalysis")
