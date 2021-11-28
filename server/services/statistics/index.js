@@ -9,13 +9,9 @@ class RetrieveDataService {
         this.replyDao = replyDao
     }
 
-    async retrieveData(viewId, startDate, endDate){
-        const response = await this.retrieveDataDao.retrieveData(viewId, startDate, endDate)
-        return response
-    }
 
     /**Helper function that receives a correctly formatted request body object for google analaytics reporting api and 
-     * return the report retrieved from that api
+     * return the raw report data retrieved from that api
      * 
      * @param {*} request A correctly formatted request body object containing the specific requirement for the report
      * @returns a google analytics report object to responde to the request object
@@ -32,81 +28,153 @@ class RetrieveDataService {
     
         
         let res = await ((await this.analyticsGateway.getAnalytics()).reports.batchGet(request));
-
         if (res.status !== 200){
             return null
         }
-
         return res.data
     };
     
     
+    async _requestReport(request){
+        let rawReport = null
+        try{
+            rawReport = await this._getReports(request)  
     
+            if (rawReport === null){
+                return null
+            }
+            return rawData
+        } catch(err){
+            logger.log(err)
+            return null
+        }      
+    }
+
+    async _generateRequest(startDate, endDate, metrics, dimensions, dimensionFilter=null){
+        if (filter === null){
+        return {
+            "reportRequests": [
+                {
+                "viewId": (await this.analyticsGateway.getView()),
+                "dateRanges": [
+                    {
+                    "startDate": startDate,
+                    "endDate": endDate
+                    }
+                ],
+                "metrics": metrics,
+                "dimensions": dimensions
+                }
+            ]
+        }
+    } else {
+        return {
+            "reportRequests": [
+                {
+                "viewId": (await this.analyticsGateway.getView()),
+                "dateRanges": [
+                    {
+                    "startDate": startDate,
+                    "endDate": endDate
+                    }
+                ],
+                "metrics": metrics,
+                "dimensions": dimensions,
+                "dimensionFilterClauses": dimensionFilter
+                }
+            ]
+        }
+
+    }
+    }
+
+
+    async _initialExtractReport(rawData){
+        let report = rawData["reports"][0]
+        let reportData = report["data"]
+        let reportDataRow = reportData["rows"]
+        let reportRowCount = reportData["rowCount"]
+        let res = {}
+        return {reportDataRow, reportRowCount, res}
+    }
+
+    async _assignSimpleTwoVariableName(inputName, inputLocation, currObject){
+        if (inputName === "rid"){
+            let rid = currRow["dimensions"][inputLocation[0]]
+            currObject["reply"] = rid                
+        }
+        if (inputName === "location"){
+                let countryName = currRow["dimensions"][inputLocation[0]]
+                let cityName = currRow["dimensions"][inputLocation[1]]
+                let city = cityName + ", " + countryName
+                currObject["location"] = city                    
+        }
+        return currObject
+    }
+
+    async _getSimpleTwoVariableStructure(rawData, xName, xLocation, yName, yLocation, valueName){
+        try{
+            let {reportDataRow, reportRowCount, res} = this._initialExtractReport(rawData)
+            res["data"] = []
+            for (let row = 0 ; row < reportRowCount; row += 1){
+                let currRow = reportDataRow[row]
+                let currObject = {}
+                
+                currObject = this._assignSimpleTwoVariableName(xName, xLocation, currObject)
+                currObject = this._assignSimpleTwoVariableName(yName, yLocation, currObject)
+                
+                currObject[valueName] = currRow["metrics"][0]["values"][0]
+
+
+                
+                if (currObject.hasOwnProperty("reply")){
+                
+                    try{
+                        let replyInfo = await this.replyDao.get(rid)
+                        currObject["replyLabel"] = replyInfo
+                    } catch(err){
+                        logger.log(err)
+                    }
+                }
+    
+                res["data"].push(currObject)
+    
+            }
+            return res
+        } catch(err){
+            logger.log(err)
+            return null
+        } 
+    }
 
 
 
     async getVisitNumberAndSumFromLocationPerDay(startDate, endDate){
 
-        let request = {
-                "reportRequests": [
-                    {
-                    "viewId": (await this.analyticsGateway.getView()),
-                    "dateRanges": [
-                        {
-                        "startDate": startDate,
-                        "endDate": endDate
-                        }
-                    ],
-                    "metrics": [
-                        {
-                        "expression": "ga:users"
-                        }
-                    ],
-                    "dimensions": [
-                        {
-                        "name": "ga:date"
-                        },
-                        {
-                        "name": "ga:country"
-                        },
-                        {
-                        "name": "ga:city"
-                        }
-    
-                    ]
-                    }
-                ]
+        let metrics = [
+            {
+            "expression": "ga:users"
             }
+        ]
+        let dimensions = [
+            {
+            "name": "ga:date"
+            },
+            {
+            "name": "ga:country"
+            },
+            {
+            "name": "ga:city"
+            }
+
+        ]
+        let request = this._generateRequest(startDate, endDate, metrics, dimensions) 
   
-            
-        
+                    
+        let rawReport = this._requestReport(request)
+        if (rawReport === null){return rawReport}
+        return this._reformatVisitNumberAndSumFromLocationPerDay(rawReport)
 
-    let rawReport = null
-    try{
-        rawReport = await this._getReports(request)  
-
-        if (rawReport === null){
-            return null
-        }
-    } catch(err){
-
-        return null
-    }  
-    return this._reformatVisitNumberAndSumFromLocationPerDay(rawReport)
-
-        /*
-        return {
-            "#date1": [
-                {
-                    "#Toronto":{
-                        "number of visit": #5
-                    },
-                    "sum per day": #5
-                }
-            ],
-            "sum total": #5
-        }
-        */
     }
  
       
@@ -114,12 +182,7 @@ class RetrieveDataService {
 
         
         try{
-            let report = rawData["reports"][0]
-            let reportData = report["data"]
-
-            let reportDataRow = reportData["rows"]
-            let reportRowCount = reportData["rowCount"]
-            let res = {}
+            let {reportDataRow, reportRowCount, res} = this._initialExtractReport(rawData)
             for (let row = 0 ; row < reportRowCount; row += 1){
                 let currRow = reportDataRow[row]
                 let date = currRow["dimensions"][0]
@@ -150,93 +213,58 @@ class RetrieveDataService {
             
         }catch{
             logger.log("Wrong raw data format input")
-            //logger.log(err)
             return null
         }
 
     }
+
+
+
     
     async getLocationVisitNumberFromReply(startDate, endDate, ridArray){
 
-        let ridFilter = []
-        for (let rid of ridArray){
-            ridFilter.push({
-                "dimensionName": "ga:eventLabel",
-                "operator": "EXACT",
-                "expressions": rid.toString()
-            })
-        }
 
-        let request = {
-            "reportRequests": [
-                {
-                "viewId": (await this.analyticsGateway.getView()),
-                "dateRanges": [
+        let metrics = [
+            {
+            "expression": "ga:users"
+            }
+        ]
+        let dimensions = [
+            {
+            "name": "ga:eventLabel"
+            },
+            {
+            "name": "ga:country"
+            },
+            {
+            "name": "ga:city"
+            }
+        ]
+        let filter = [
+            {
+                "filters": [
                     {
-                    "startDate": startDate,
-                    "endDate": endDate
-                    }
-                ],
-                "metrics": [
-                    {
-                    "expression": "ga:users"
-                    }
-                ],
-                "dimensions": [
-                    {
-                    "name": "ga:eventLabel"
-                    },
-                    {
-                    "name": "ga:city"
-                    },
-                    {
-                    "name": "ga:country"
-                    }
-                ],
-                "dimensionFilterClauses": [
-                    {
-                        "filters": ridFilter
+                        "dimensionName": "ga:eventLabel",
+                        "operator": "IN_LIST",
+                        "expressions": ridArray
                     }
                 ]
             }
         ]
-    }                       
-    let rawReport = null
 
-    //console.log(res)    
-
-    try{
-        rawReport = await this._getReports(request)  
-    } catch(err){
-
-        return null
-    }  
+    let request = this._generateRequest(startDate, endDate, metrics, dimensions, filter) 
+                              
+    let rawReport = this.requestReport(request)
+    if (rawReport === null){return rawReport}
     return this._reformatLocationVisitNumberFromReply(rawReport)
-        /*
-        return {
 
-            "#reply1": 
-                {"#Toronto": #5,
-                 "replyLabel": "#Hello",
-                 "replyContent": "#Hi there!"},
-            "#reply2":
-                {"#Toronto": #1,
-                "replyLabel": "#Hello",
-                "replyContent": "#Hi there!"}
-            "sumPerReply": #6
-        }
-        */
     }
 
 
     async _reformatLocationVisitNumberFromReply(rawData){
-
+        return this._assignSimpleTwoVariableName(rawData, "reply", [0], "location", [1, 2], "visit")
         try{
-            let report = rawData["reports"][0]
-            let reportData = report["data"]
-            let reportDataRow = reportData["rows"]
-            let reportRowCount = reportData["rowCount"]
-            let res = {}
+            let {reportDataRow, reportRowCount, res} = this._initialExtractReport(rawData)
             for (let row = 0 ; row < reportRowCount; row += 1){
                 let currRow = reportDataRow[row]
                 let rid = currRow["dimensions"][0]
@@ -310,98 +338,54 @@ class RetrieveDataService {
         }
         return {city, country}
     }
+
+
     async getReplyVisitNumberFromLocation(startDate, endDate, locationArray){
 
-        /*
-        let locationFilter = []
-        for (let location of locationArray){
-            locationFilter.push({
-                "dimensionName": "ga:country",
-                "operator": "IN_LIST",
-                "expressions": locationArray
-            })
-        }
-        */
 
         let {city, country} = _extractLocationInput(locationArray)
-        let request = {
-            "reportRequests": [
-                {
-                "viewId": (await this.analyticsGateway.getView()),
-                "dateRanges": [
-                    {
-                    "startDate": startDate,
-                    "endDate": endDate
-                    }
-                ],
-                "metrics": [
-                    {
-                    "expression": "ga:users"
-                    }
-                ],
-                "dimensions": [
-                    {
-                    "name": "ga:eventLabel"
-                    },
-                    {
-                    "name": "ga:country"
-                    },
-                    {
-                    "name": "ga:city"
-                    }
-                ],
-                "dimensionFilterClauses": [
-                    {
-                        "operator": "AND",
-                        "filters": [{
-                            "dimensionName": "ga:country",
-                            "operator": "IN_LIST",
-                            "expressions": country
-                        },
-                        {
-                            "dimensionName": "ga:city",
-                            "operator": "IN_LIST",
-                            "expressions": city
-                        }]
-                    }
-                ]
+        let metrics = [
+            {
+            "expression": "ga:users"
             }
         ]
-    }                       
-    let rawReport = null
-    try{
-        rawReport = await this._getReports(request)  
-    } catch(err){
-        console.log(err)
-        return null
-    }  
+        let dimensions = [
+            {
+            "name": "ga:eventLabel"
+            },
+            {
+            "name": "ga:country"
+            },
+            {
+            "name": "ga:city"
+            }
+        ]
+        let filter = [
+            {
+                "operator": "AND",
+                "filters": [{
+                    "dimensionName": "ga:country",
+                    "operator": "IN_LIST",
+                    "expressions": country
+                },
+                {
+                    "dimensionName": "ga:city",
+                    "operator": "IN_LIST",
+                    "expressions": city
+                }]
+            }
+        ]
+    let request = this._generateRequest(startDate, endDate, metrics, dimensions, filter)              
+    let rawReport = this.requestReport(request)
+    if (rawReport === null){return rawReport}
     return this._reformatReplyVisitNumberFromLocation(rawReport)
-        /*
-        return {
-            "#Toronto":
-            {"#label-content": {
-                "visitCount": #5,
-                "replyLabel": "#Hello",
-                "replyContent": "#Hi there!"
-            }},
-            "#Vancouver":
-            {"#label-content": {
-                "visitCount": #5,
-                "replyLabel": "#Hello",
-                "replyContent": "#Hi there!"
-            }},
-        }
-        */
     }
 
     async _reformatReplyVisitNumberFromLocation(rawData){
 
+        return this._getSimpleLabelLocationStructure(rawData, "location", [1, 2], "reply", [0], "visit")
         try{
-            let report = rawData["reports"][0]
-            let reportData = report["data"]
-            let reportDataRow = reportData["rows"]
-            let reportRowCount = reportData["rowCount"]
-            let res = {}
+            let {reportDataRow, reportRowCount, res} = this._initialExtractReport(rawData)
             for (let row = 0 ; row < reportRowCount; row += 1){
                 let currRow = reportDataRow[row]
                 let rid = currRow["dimensions"][0]
@@ -472,7 +456,7 @@ class RetrieveDataService {
 
 
         let {city, country} = _extractLocationInput(locationArray)        
-        let filter = [
+        let filterContent = [
             {
                 "dimensionName": "ga:city",
                 "operator": "IN_LIST",
@@ -489,151 +473,67 @@ class RetrieveDataService {
                 "expressions": replyArray
             }
         ]
-
-        let request = {
-            "reportRequests": [
-                {
-                "viewId": (await this.analyticsGateway.getView()),
-                "dateRanges": [
-                    {
-                    "startDate": startDate,
-                    "endDate": endDate
-                    }
-                ],
-                "metrics": [
-                    {
-                    "expression": "ga:users"
-                    }
-                ],
-                "dimensions": [
-                    {
-                    "name": "ga:eventLabel"
-                    },
-                    {
-                    "name": "ga:country"
-                    },
-                    {
-                    "name": "ga:city"
-                    }
-                ],
-                "dimensionFilterClauses": [
-                    {
-                        "operator": "AND",
-                        "filters": filter
-                    }
-                ]
+        let filter = [
+            {
+                "operator": "AND",
+                "filters": filter
             }
         ]
-    }                       
-    let rawReport = null
-    try{
-        rawReport = await this._getReports(request)  
-    } catch(err){
-        console.log(err)
-        return null
-    }  
+        let metrics = [
+            {
+            "expression": "ga:users"
+            }
+        ]
+        let dimensions = [
+            {
+            "name": "ga:eventLabel"
+            },
+            {
+            "name": "ga:country"
+            },
+            {
+            "name": "ga:city"
+            }
+        ]
+
+    let request = this._generateRequest(startDate, endDate, metrics, dimensions, filter)                       
+    let rawReport = this.requestReport(request)
+    if (rawReport === null){return rawReport}
     return this._reformatVisitNumberFromLocationAndReply(rawReport)
-        /*
-        return {
-            "#Toronto":
-            {"#label-content": {
-                "visitCount": #5,
-                "replyLabel": "#Hello",
-                "replyContent": "#Hi there!"
-            }},
-            "#Vancouver":
-            {"#label-content": {
-                "visitCount": #5,
-                "replyLabel": "#Hello",
-                "replyContent": "#Hi there!"
-            }},
-        }
-        */
+ 
     }
 
     async _reformatVisitNumberFromLocationAndReply(rawData){
-        try{
-        let report = rawData["reports"][0]
-        let reportData = report["data"]
-        let reportDataRow = reportData["rows"]
-        let reportRowCount = reportData["rowCount"]
-        let res = {}
-        res["data"] = []
-        for (let row = 0 ; row < reportRowCount; row += 1){
-            let currRow = reportDataRow[row]
-            let rid = currRow["dimensions"][0]
-            let countryName = currRow["dimensions"][1]
-            let cityName = currRow["dimensions"][2]
-            let city = cityName + ", " + countryName
-            let currObject = {}
-            currObject["reply"] = rid
-            currObject["location"] = city
-            currObject["visit"] = currRow["metrics"][0]["values"][0]
-            try{
-                let replyInfo = await this.replyDao.get(rid)
-                currObject["replyLabel"] = replyInfo
-            } catch(err){
-                logger.log(err)
-            }
-
-            res["data"].push(currObject)
-
-        }
-        return res
-    } catch(err){
-        logger.log(err)
-        return null
-    }
-
+        return this._getSimpleLabelLocationStructure(rawData, "reply", [0], "location", [1, 2], "visit")
     }
 
     async getAverageStayTimeFromLocation(startDate, endDate){
-        let request = {
-            "reportRequests": [
-                {
-                "viewId": (await this.analyticsGateway.getView()),
-                "dateRanges": [
-                    {
-                    "startDate": startDate,
-                    "endDate": endDate
-                    }
-                ],
-                "metrics": [
-                    {
-                    "expression": "ga:avgTimeOnPage"
-                    },
-                    {
-                        "expression": "ga:avgSessionDuration"
-                    }
-                ],
-                "dimensions": [
-                    {
-                    "name": "ga:country"
-                    },
-                    {
-                    "name": "ga:city"
-                    }
-                ]
+        let metrics = [
+            {
+            "expression": "ga:avgTimeOnPage"
+            },
+            {
+                "expression": "ga:avgSessionDuration"
             }
         ]
-    } 
-    let rawReport = null
-    try{
-        rawReport = await this._getReports(request)  
-    } catch(err){
-        return null
-    }  
+        let dimensions = [
+            {
+            "name": "ga:country"
+            },
+            {
+            "name": "ga:city"
+            }
+        ]
+    let request = this._generateRequest(startDate, endDate, metrics, dimensions) 
+    let rawReport = this.requestReport(request)
+    if (rawReport === null){return rawReport}
     return this._reformatAverageStayTimeFromLocation(rawReport)
-        //return {"#Toronto":{"averageSessionDuration": #10, "averagePageDuration": #10}}
+    
     }
  
     async _reformatAverageStayTimeFromLocation(rawData){
         try{
-        let report = rawData["reports"][0]
-        let reportData = report["data"]
-        let reportDataRow = reportData["rows"]
-        let reportRowCount = reportData["rowCount"]
-        let res = {}
+            let {reportDataRow, reportRowCount, res} = this._initialExtractReport(rawData)
         for (let row = 0 ; row < reportRowCount; row += 1){
             let currRow = reportDataRow[row]
             console.log(currRow["dimensions"])
@@ -652,55 +552,31 @@ class RetrieveDataService {
     }
 
     async getAverageStayTimeFromReply(startDate, endDate){
-        let request = {
-            "reportRequests": [
-                {
-                "viewId": (await this.analyticsGateway.getView()),
-                "dateRanges": [
-                    {
-                    "startDate": startDate,
-                    "endDate": endDate
-                    }
-                ],
-                "metrics": [
-                    {
-                    "expression": "ga:avgTimeOnPage"
-                    },
-                    {
-                    "expression": "ga:avgSessionDuration"
-                    }
-                ],
-                "dimensions": [
-                    {
-                    "name": "ga:eventLabel"
-                    }
-                ]
+
+
+
+        let metrics = [
+            {
+            "expression": "ga:avgTimeOnPage"
+            },
+            {
+            "expression": "ga:avgSessionDuration"
             }
         ]
-    } 
-    let rawReport = null
-    try{
-        rawReport = await this._getReports(request)  
-    } catch(err){
-
-        return null
-    }  
+        let dimensions = [
+            {
+            "name": "ga:eventLabel"
+            }
+        ]
+    let request = this._generateRequest(startDate, endDate, metrics, dimensions)
+    let rawReport = this._requestReport(request)
+    if (rawReport === null){return rawReport}
     return this._reformatAverageStayTimeFromReply(rawReport)
-        /*return {"#rid1":{"averageSessionDuration": #10, 
-        "averagePageDuration": #10,                 
-        "replyLabel": "#Hello",
-        "replyContent": "#Hi there!"}}*/
     }
 
     async _reformatAverageStayTimeFromReply(rawData){
         try{
-            let report = rawData["reports"][0]
-            let reportData = report["data"]
-            console.log(reportData)
-            let reportDataRow = reportData["rows"]
-            let reportRowCount = reportData["rowCount"]
-            console.log(reportRowCount)
-            let res = {}
+            let {reportDataRow, reportRowCount, res} = this._initialExtractReport(rawData)
             for (let row = 0 ; row < reportRowCount; row += 1){
                 let currRow = reportDataRow[row]
                 let rid = currRow["dimensions"][0]
@@ -734,46 +610,28 @@ class RetrieveDataService {
     */
 
     async getPlatformFromLocation(startDate, endDate){
-        let request = {
-            "reportRequests": [
-                {
-                "viewId": (await this.analyticsGateway.getView()),
-                "dateRanges": [
-                    {
-                    "startDate": startDate,
-                    "endDate": endDate
-                    }
-                ],
-                "metrics": [
-                    {
-                    "expression": "ga:users"
-                    }
-                ],
-                "dimensions": [
-                    {
-                    "name": "ga:deviceCategory"
-                    },
-                    {
-                    "name": "ga:country"
-                    },
-                    {
-                    "name": "ga:city"
-                    }
-                    
-                ]
+
+        let metrics = [
+            {
+            "expression": "ga:users"
             }
         ]
-    } 
-    let rawReport = null
-    try{
-        rawReport = await this._getReports(request)  
-    } catch{
-        return null
-    }  
+        let dimensions = [
+            {
+            "name": "ga:deviceCategory"
+            },
+            {
+            "name": "ga:country"
+            },
+            {
+            "name": "ga:city"
+            }
+            
+        ]
+    let request = this._generateRequest(startDate, endDate, metrics, dimensions)
+    let rawReport = this._requestReport(request)
+    if (rawReport === null){return rawReport}
     return this._reformatgetPlatformFromLocation(rawReport)
-        /*return {
-            "#Toront":{"#laptop": #5}
-        }*/
 
     }
 
@@ -782,11 +640,7 @@ class RetrieveDataService {
 
 async _reformatgetPlatformFromLocation(rawData){
     try{
-        let report = rawData["reports"][0]
-        let reportData = report["data"]
-        let reportDataRow = reportData["rows"]
-        let reportRowCount = reportData["rowCount"]
-        let res = {}
+        let {reportDataRow, reportRowCount, res} = this._initialExtractReport(rawData)
         for (let row = 0 ; row < reportRowCount; row += 1){
             let currRow = reportDataRow[row]
             // TODO: Combine city and Country
@@ -815,89 +669,67 @@ async _reformatgetPlatformFromLocation(rawData){
 }
 
 
-async getPlatformFromReply(startDate, endDate){
-    let request = {
-        "reportRequests": [
+    async getPlatformFromReply(startDate, endDate){
+
+        let metrics = [
             {
-            "viewId": (await this.analyticsGateway.getView()),
-            "dateRanges": [
-                {
-                "startDate": startDate,
-                "endDate": endDate
-                }
-            ],
-            "metrics": [
-                {
-                "expression": "ga:users"
-                }
-            ],
-            "dimensions": [
-                {
-                "name": "ga:deviceCategory"
-                },
-                {
-                "name": "ga:eventLabel"
-                }
-            ]
-        }
-    ]
-} 
-let rawReport = null
-try{
-    rawReport = await this._getReports(request)  
-} catch{
-    return null
-}  
-return this._reformatgetPlatformFromReply(rawReport)
-    /*return {
-        #rid1:{"#laptop": #5, "replyLabel": "Hi", "replyContent": "Hello"}
-    }*/
-
-}
-
-async _reformatgetPlatformFromReply(rawData){
-    try{
-        let report = rawData["reports"][0]
-        let reportData = report["data"]
-        let reportDataRow = reportData["rows"]
-        let reportRowCount = reportData["rowCount"]
-        let res = {}
-        for (let row = 0 ; row < reportRowCount; row += 1){
-            let currRow = reportDataRow[row]
-            let rid = currRow["dimensions"][1]
-            let platform = currRow["dimensions"][0]
-            let visitCount =parseInt(currRow["metrics"][0]["values"][0])
-            if (!(rid in res)){
-                let platformObject = {}
-                platformObject[platform] = visitCount
-                res[rid] = platformObject                    
-            } else if (!(platform in res[rid])){
-                res[rid][platform] = visitCount
-            } else {
-                res[rid][platform] += visitCount
+            "expression": "ga:users"
             }
-
-        }
+        ]
+        let dimensions = [
+            {
+            "name": "ga:deviceCategory"
+            },
+            {
+            "name": "ga:eventLabel"
+            }
+        ]
+    let request = this._generateRequest(startDate, endDate, metrics, dimensions)
+    let rawReport = this._requestReport(request)
+    if (rawReport === null){return rawReport}
+    return this._reformatgetPlatformFromReply(rawReport)
         
-        for(let [rid, replyObject] of Object.entries(res)){
-            //Toberemoved: 
-            try{
-            let replyInfo = await this.replyDao.get(rid)
-            replyObject["reply"] = replyInfo
-
-            } catch(err){
-                logger.log(err)    
-        } 
-           
-        }
-           
-        return res
-    }catch{
-        logger.log("Wrong raw data format input")
-        return null
     }
-}
-}
+
+    async _reformatgetPlatformFromReply(rawData){
+        try{
+            let {reportDataRow, reportRowCount, res} = this._initialExtractReport(rawData)
+            for (let row = 0 ; row < reportRowCount; row += 1){
+                let currRow = reportDataRow[row]
+                let rid = currRow["dimensions"][1]
+                let platform = currRow["dimensions"][0]
+                let visitCount =parseInt(currRow["metrics"][0]["values"][0])
+                if (!(rid in res)){
+                    let platformObject = {}
+                    platformObject[platform] = visitCount
+                    res[rid] = platformObject                    
+                } else if (!(platform in res[rid])){
+                    res[rid][platform] = visitCount
+                } else {
+                    res[rid][platform] += visitCount
+                }
+
+            }
+            
+            for(let [rid, replyObject] of Object.entries(res)){
+                //Toberemoved: 
+                try{
+                let replyInfo = await this.replyDao.get(rid)
+                replyObject["reply"] = replyInfo
+
+                } catch(err){
+                    logger.log(err)    
+            } 
+            
+            }
+            
+            return res
+        }catch{
+            logger.log("Wrong raw data format input")
+            return null
+        }
+    }
+    }
 
 
 module.exports = RetrieveDataService
