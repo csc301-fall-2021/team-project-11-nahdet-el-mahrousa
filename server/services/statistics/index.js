@@ -43,7 +43,7 @@ class RetrieveDataService {
             if (rawReport === null){
                 return null
             }
-            return rawData
+            return rawReport
         } catch(err){
             logger.log(err)
             return null
@@ -51,7 +51,7 @@ class RetrieveDataService {
     }
 
     async _generateRequest(startDate, endDate, metrics, dimensions, dimensionFilter=null){
-        if (filter === null){
+        if (dimensionFilter === null){
         return {
             "reportRequests": [
                 {
@@ -95,18 +95,18 @@ class RetrieveDataService {
         let reportDataRow = reportData["rows"]
         let reportRowCount = reportData["rowCount"]
         let res = {}
-        return {reportDataRow, reportRowCount, res}
+        return {report, reportData, reportDataRow, reportRowCount, res}
     }
 
-    async _assignSimpleTwoVariableName(inputName, inputLocation, currObject){
-        if (inputName === "rid"){
+    async _assignSimpleTwoVariableName(inputName, inputLocation, currObject, currRow){
+        if (inputName === "reply"){
             let rid = currRow["dimensions"][inputLocation[0]]
             currObject["reply"] = rid                
         }
         if (inputName === "location"){
                 let countryName = currRow["dimensions"][inputLocation[0]]
                 let cityName = currRow["dimensions"][inputLocation[1]]
-                let city = cityName + ", " + countryName
+                let city = cityName + "," + countryName
                 currObject["location"] = city                    
         }
         return currObject
@@ -114,14 +114,15 @@ class RetrieveDataService {
 
     async _getSimpleTwoVariableStructure(rawData, xName, xLocation, yName, yLocation, valueName){
         try{
-            let {reportDataRow, reportRowCount, res} = this._initialExtractReport(rawData)
+            let {report, reportData, reportDataRow, reportRowCount, res} = await this._initialExtractReport(rawData)
+            console.log(res)
             res["data"] = []
             for (let row = 0 ; row < reportRowCount; row += 1){
                 let currRow = reportDataRow[row]
                 let currObject = {}
                 
-                currObject = this._assignSimpleTwoVariableName(xName, xLocation, currObject)
-                currObject = this._assignSimpleTwoVariableName(yName, yLocation, currObject)
+                currObject = await this._assignSimpleTwoVariableName(xName, xLocation, currObject, currRow)
+                currObject = await this._assignSimpleTwoVariableName(yName, yLocation, currObject, currRow)
                 
                 currObject[valueName] = currRow["metrics"][0]["values"][0]
 
@@ -130,13 +131,13 @@ class RetrieveDataService {
                 if (currObject.hasOwnProperty("reply")){
                 
                     try{
-                        let replyInfo = await this.replyDao.get(rid)
+                        let replyInfo = await this.replyDao.get(currObject["reply"])
                         currObject["replyLabel"] = replyInfo
                     } catch(err){
                         logger.log(err)
                     }
                 }
-    
+                console.log(currObject)
                 res["data"].push(currObject)
     
             }
@@ -168,12 +169,12 @@ class RetrieveDataService {
             }
 
         ]
-        let request = this._generateRequest(startDate, endDate, metrics, dimensions) 
+        let request = await this._generateRequest(startDate, endDate, metrics, dimensions) 
   
                     
-        let rawReport = this._requestReport(request)
+        let rawReport = await this._requestReport(request)
         if (rawReport === null){return rawReport}
-        return this._reformatVisitNumberAndSumFromLocationPerDay(rawReport)
+        return await this._reformatVisitNumberAndSumFromLocationPerDay(rawReport)
 
     }
  
@@ -182,7 +183,7 @@ class RetrieveDataService {
 
         
         try{
-            let {reportDataRow, reportRowCount, res} = this._initialExtractReport(rawData)
+            let {report, reportData, reportDataRow, reportRowCount, res} = await this._initialExtractReport(rawData)
             for (let row = 0 ; row < reportRowCount; row += 1){
                 let currRow = reportDataRow[row]
                 let date = currRow["dimensions"][0]
@@ -211,7 +212,8 @@ class RetrieveDataService {
             res["sumTotal"] = reportData["totals"][0]["values"][0]
             return res
             
-        }catch{
+        }catch(err){
+            logger.log(err)
             logger.log("Wrong raw data format input")
             return null
         }
@@ -252,19 +254,19 @@ class RetrieveDataService {
             }
         ]
 
-    let request = this._generateRequest(startDate, endDate, metrics, dimensions, filter) 
+    let request = await this._generateRequest(startDate, endDate, metrics, dimensions, filter) 
                               
-    let rawReport = this.requestReport(request)
+    let rawReport = await this._requestReport(request)
     if (rawReport === null){return rawReport}
-    return this._reformatLocationVisitNumberFromReply(rawReport)
+    return await this._reformatLocationVisitNumberFromReply(rawReport)
 
     }
 
 
     async _reformatLocationVisitNumberFromReply(rawData){
-        return this._assignSimpleTwoVariableName(rawData, "reply", [0], "location", [1, 2], "visit")
+        return await this._getSimpleTwoVariableStructure(rawData, "reply", [0], "location", [1, 2], "visit")
         try{
-            let {reportDataRow, reportRowCount, res} = this._initialExtractReport(rawData)
+            let {report, reportData, reportDataRow, reportRowCount, res} = await this._initialExtractReport(rawData)
             for (let row = 0 ; row < reportRowCount; row += 1){
                 let currRow = reportDataRow[row]
                 let rid = currRow["dimensions"][0]
@@ -343,7 +345,7 @@ class RetrieveDataService {
     async getReplyVisitNumberFromLocation(startDate, endDate, locationArray){
 
 
-        let {city, country} = _extractLocationInput(locationArray)
+        let {city, country} = await this._extractLocationInput(locationArray)
         let metrics = [
             {
             "expression": "ga:users"
@@ -375,17 +377,17 @@ class RetrieveDataService {
                 }]
             }
         ]
-    let request = this._generateRequest(startDate, endDate, metrics, dimensions, filter)              
-    let rawReport = this.requestReport(request)
+    let request = await this._generateRequest(startDate, endDate, metrics, dimensions, filter)              
+    let rawReport = await this._requestReport(request)
     if (rawReport === null){return rawReport}
-    return this._reformatReplyVisitNumberFromLocation(rawReport)
+    return await this._reformatReplyVisitNumberFromLocation(rawReport)
     }
 
     async _reformatReplyVisitNumberFromLocation(rawData){
 
-        return this._getSimpleLabelLocationStructure(rawData, "location", [1, 2], "reply", [0], "visit")
+        return await this._getSimpleTwoVariableStructure(rawData, "location", [1, 2], "reply", [0], "visit")
         try{
-            let {reportDataRow, reportRowCount, res} = this._initialExtractReport(rawData)
+            let {report, reportData, reportDataRow, reportRowCount, res} = await this._initialExtractReport(rawData)
             for (let row = 0 ; row < reportRowCount; row += 1){
                 let currRow = reportDataRow[row]
                 let rid = currRow["dimensions"][0]
@@ -455,7 +457,7 @@ class RetrieveDataService {
     async getVisitNumberFromLocationAndReply(startDate, endDate, locationArray, replyArray){
 
 
-        let {city, country} = _extractLocationInput(locationArray)        
+        let {city, country} = await this._extractLocationInput(locationArray)        
         let filterContent = [
             {
                 "dimensionName": "ga:city",
@@ -476,7 +478,7 @@ class RetrieveDataService {
         let filter = [
             {
                 "operator": "AND",
-                "filters": filter
+                "filters": filterContent
             }
         ]
         let metrics = [
@@ -496,15 +498,15 @@ class RetrieveDataService {
             }
         ]
 
-    let request = this._generateRequest(startDate, endDate, metrics, dimensions, filter)                       
-    let rawReport = this.requestReport(request)
+    let request = await this._generateRequest(startDate, endDate, metrics, dimensions, filter)                       
+    let rawReport = await this._requestReport(request)
     if (rawReport === null){return rawReport}
-    return this._reformatVisitNumberFromLocationAndReply(rawReport)
+    return await this._reformatVisitNumberFromLocationAndReply(rawReport)
  
     }
 
     async _reformatVisitNumberFromLocationAndReply(rawData){
-        return this._getSimpleLabelLocationStructure(rawData, "reply", [0], "location", [1, 2], "visit")
+        return await this._getSimpleTwoVariableStructure(rawData, "reply", [0], "location", [1, 2], "visit")
     }
 
     async getAverageStayTimeFromLocation(startDate, endDate){
@@ -524,16 +526,16 @@ class RetrieveDataService {
             "name": "ga:city"
             }
         ]
-    let request = this._generateRequest(startDate, endDate, metrics, dimensions) 
-    let rawReport = this.requestReport(request)
+    let request = await this._generateRequest(startDate, endDate, metrics, dimensions) 
+    let rawReport = await this._requestReport(request)
     if (rawReport === null){return rawReport}
-    return this._reformatAverageStayTimeFromLocation(rawReport)
+    return await this._reformatAverageStayTimeFromLocation(rawReport)
     
     }
  
     async _reformatAverageStayTimeFromLocation(rawData){
         try{
-            let {reportDataRow, reportRowCount, res} = this._initialExtractReport(rawData)
+            let {report, reportData, reportDataRow, reportRowCount, res} = await this._initialExtractReport(rawData)
         for (let row = 0 ; row < reportRowCount; row += 1){
             let currRow = reportDataRow[row]
             console.log(currRow["dimensions"])
@@ -568,15 +570,15 @@ class RetrieveDataService {
             "name": "ga:eventLabel"
             }
         ]
-    let request = this._generateRequest(startDate, endDate, metrics, dimensions)
-    let rawReport = this._requestReport(request)
+    let request = await this._generateRequest(startDate, endDate, metrics, dimensions)
+    let rawReport = await this._requestReport(request)
     if (rawReport === null){return rawReport}
-    return this._reformatAverageStayTimeFromReply(rawReport)
+    return await this._reformatAverageStayTimeFromReply(rawReport)
     }
 
     async _reformatAverageStayTimeFromReply(rawData){
         try{
-            let {reportDataRow, reportRowCount, res} = this._initialExtractReport(rawData)
+            let {report, reportData, reportDataRow, reportRowCount, res} = await this._initialExtractReport(rawData)
             for (let row = 0 ; row < reportRowCount; row += 1){
                 let currRow = reportDataRow[row]
                 let rid = currRow["dimensions"][0]
@@ -609,6 +611,41 @@ class RetrieveDataService {
     }
     */
 
+    async getPlatformGeneral(startDate, endDate){
+        let metrics = [
+            {
+            "expression": "ga:users"
+            }
+        ]
+        let dimensions = [
+            {
+            "name": "ga:deviceCategory"
+            }
+        ]
+    let request = await this._generateRequest(startDate, endDate, metrics, dimensions)
+    let rawReport = await this._requestReport(request)
+    if (rawReport === null){return rawReport}
+    return await this._reformatgetPlatformGeneral(rawReport)
+
+    }
+
+    async _reformatgetPlatformGeneral(rawData){
+        try{
+        let {report, reportData, reportDataRow, reportRowCount, res} = await this._initialExtractReport(rawData)
+        
+        for (let row = 0 ; row < reportRowCount; row += 1){
+            let currRow = reportDataRow[row]
+            let platform = currRow["dimensions"][0]
+            res[platform] = currRow["metrics"][0]["values"][0]
+        }
+        return res
+    }catch{
+        logger.log("Wrong raw data format input")
+        return null
+    }
+
+    }
+
     async getPlatformFromLocation(startDate, endDate){
 
         let metrics = [
@@ -628,10 +665,10 @@ class RetrieveDataService {
             }
             
         ]
-    let request = this._generateRequest(startDate, endDate, metrics, dimensions)
-    let rawReport = this._requestReport(request)
+    let request = await this._generateRequest(startDate, endDate, metrics, dimensions)
+    let rawReport = await this._requestReport(request)
     if (rawReport === null){return rawReport}
-    return this._reformatgetPlatformFromLocation(rawReport)
+    return await this._reformatgetPlatformFromLocation(rawReport)
 
     }
 
@@ -640,7 +677,7 @@ class RetrieveDataService {
 
 async _reformatgetPlatformFromLocation(rawData){
     try{
-        let {reportDataRow, reportRowCount, res} = this._initialExtractReport(rawData)
+        let {report, reportData, reportDataRow, reportRowCount, res} = await this._initialExtractReport(rawData)
         for (let row = 0 ; row < reportRowCount; row += 1){
             let currRow = reportDataRow[row]
             // TODO: Combine city and Country
@@ -684,16 +721,16 @@ async _reformatgetPlatformFromLocation(rawData){
             "name": "ga:eventLabel"
             }
         ]
-    let request = this._generateRequest(startDate, endDate, metrics, dimensions)
-    let rawReport = this._requestReport(request)
+    let request = await this._generateRequest(startDate, endDate, metrics, dimensions)
+    let rawReport = await this._requestReport(request)
     if (rawReport === null){return rawReport}
-    return this._reformatgetPlatformFromReply(rawReport)
+    return await this._reformatgetPlatformFromReply(rawReport)
         
     }
 
     async _reformatgetPlatformFromReply(rawData){
         try{
-            let {reportDataRow, reportRowCount, res} = this._initialExtractReport(rawData)
+            let {report, reportData, reportDataRow, reportRowCount, res} = await this._initialExtractReport(rawData)
             for (let row = 0 ; row < reportRowCount; row += 1){
                 let currRow = reportDataRow[row]
                 let rid = currRow["dimensions"][1]

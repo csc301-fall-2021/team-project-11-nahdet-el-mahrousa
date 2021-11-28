@@ -20,7 +20,7 @@ router.get('/averageStayTime', async (req, res) => {
 } )
 
 router.get('/platform', async (req, res) => {
-    const response = await retrieveStatisticsController.getPlatformFromLocation(req)
+    const response = await retrieveStatisticsController.getPlatform(req)
     res.send(response)
 } )
 

@@ -43,15 +43,16 @@ class retrieveStatisticsController {
         if (uin === null){
             logger.log("start date or end date is not found in the request's parameter")
             return response.NOT_SATISFIED
-        } else {               
-            if (uin.ridArr !== null && uin.locationArr !== null){
-                return this._getVisitNumberFromLocationAndReply(uin)
-            } else if (uin.ridArr !== null){
-                return this._getVisitNumberFromReply(uin)
-            } else if (uin.locationArr !== null){
-                return this._getVisitNumberFromLocation(uin)
+        } else {            
+            console.log(uin)   
+            if (uin.hasOwnProperty("ridArr") && uin.hasOwnProperty("locationArr")){
+                return await this._getVisitNumberFromLocationAndReply(uin)
+            } else if (uin.hasOwnProperty("ridArr")){
+                return await this._getVisitNumberFromReply(uin)
+            } else if (uin.hasOwnProperty("locationArr")){
+                return await this._getVisitNumberFromLocation(uin)
             } else {
-                return this._getVisitNumberFromLocationPerDay(uin)
+                return await this._getVisitNumberFromLocationPerDay(uin)
             }
         } 
 
@@ -121,15 +122,15 @@ class retrieveStatisticsController {
             return response.NOT_SATISFIED
         } else {
             let fromType = ["location", "reply"]
-            if (!(uin.from in fromType)){
+            console.log(fromType.includes(uin.from))
+            if (!(fromType.includes(uin.from))){
                 logger.log("type not supported")
                 return response.NOT_SATISFIED
             }
-
             if (uin.from === "location"){
-                return this._getAverageStayTimeFromLocation(uin)
+                return await this._getAverageStayTimeFromLocation(uin)
             } else {
-                return this._getAverageStayTimeFromReply(uin)
+                return await this._getAverageStayTimeFromReply(uin)
             }
         }
 
@@ -151,30 +152,42 @@ class retrieveStatisticsController {
         return respond({entity: res})
     }
 
-    async getPlatform(uin){
+    async getPlatform(req){
         const uin = getInput(req, {
-            mandatory: ['startDate', 'endDate', "from"],
+            mandatory: ['startDate', 'endDate'],
+            optional: ['from'],
             fromQuery: true
         })
         if (uin === null){
             logger.log("start date or end date or from option is not found in the request")
             return response.NOT_SATISFIED
         } else {
+            if (!(uin.hasOwnProperty("from"))){
+                return await this._getPlatformGeneral(uin)
+            }
             let fromType = ["location", "reply"]
-            if (!(uin.from in fromType)){
+            if (!(fromType.includes(uin.from))){
                 logger.log("type not supported")
                 return response.NOT_SATISFIED
             }
             if (uin.from === "location"){
-                return this.getPlatformFromLocation(uin)
+                return await this._getPlatformFromLocation(uin)
             } else {
-                return this.getPlatformFromReply(uin)
+                return this._getPlatformFromReply(uin)
             }
         }
     }
 
 
-    async _getAverageStayTimeFromLocation(uin){
+    async _getPlatformGeneral(uin){
+        let res = await this.retrieveStatisticsService.getPlatformGeneral(uin.startDate, uin.endDate)
+        if (res === null){
+            return response.INTERNAL_SERVER_ERROR
+        }
+        return respond({entity: res})
+    }
+
+    async _getPlatformFromLocation(uin){
         let res = await this.retrieveStatisticsService.getPlatformFromLocation(uin.startDate, uin.endDate)
         if (res === null){
             return response.INTERNAL_SERVER_ERROR
@@ -183,7 +196,7 @@ class retrieveStatisticsController {
 
     }
 
-    async _getAverageStayTimeFromReply(uin){
+    async _getPlatformFromReply(uin){
         let res = await this.retrieveStatisticsService.getPlatformFromReply(uin.startDate, uin.endDate)
         if (res == null){
             return response.INTERNAL_SERVER_ERROR
