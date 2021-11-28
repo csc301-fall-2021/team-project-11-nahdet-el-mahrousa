@@ -3,11 +3,10 @@ import Message from 'components/Message';
 import Reply from 'components/Reply';
 
 import { loadChatHistory, initChat, makeReply, clearChatHistory } from "actions/Bot";
-// import { unmountComponentAtNode } from "react-dom";
 
 import "./BotView.scss"
 import StartButton from 'components/StartButton';
-// import RefreshButton from 'components/RefreshButton';
+import RefreshButton from 'components/RefreshButton';
 
 /**
  * Display a message to multiple paragraphs.
@@ -70,7 +69,7 @@ class BotView extends React.Component {
         return (
             <div ref={this.chatContainer} className="bot-view">
                 <div className="bot-chat-container">
-                    <button onClick={() => clearChatHistory(this)}>Refresh</button>
+                    <RefreshButton clearChatHistory={() => clearChatHistory(this)} />
                     <StartButton initChat={() => initChat(this)} />
                     {
                         // Chat items are retrieved from server

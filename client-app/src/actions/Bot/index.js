@@ -2,8 +2,6 @@ import { getFirstMessage, getNextMessage } from 'api/client-api';
 
 // Methods in this file modifies the Message component state
 
-const log = console.log;
-
 export function loadChatHistory(msgQueue) {
     if (localStorage.getItem("chatHistory")) {
         const dateThreshold = (new Date()).getDate() - 7;
