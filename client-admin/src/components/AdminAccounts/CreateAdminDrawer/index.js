@@ -42,6 +42,7 @@ class CreateAdminDrawer extends React.Component {
             const createdUser = await requestCreateAdminAccount(body)
             message.success(`Created new admin user ${createdUser.username}, please refresh.`)
             this.onClose()
+            this.props.refreshTable()
         } catch (error) {
             message.error(String(error))
             this.setState({ loading: false })

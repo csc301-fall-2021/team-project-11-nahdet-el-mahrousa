@@ -5,8 +5,10 @@ import {
   UserOutlined,
   TeamOutlined,
   PieChartOutlined,
-  QuestionCircleOutlined,
+  LineChartOutlined,
   LogoutOutlined,
+  HomeOutlined,
+  InsertRowAboveOutlined
 } from "@ant-design/icons";
 
 const { SubMenu } = Menu;
@@ -35,24 +37,26 @@ const MenuComponent = () => {
       style={{
         overflow: 'auto',
         height: '100vh',
+        position: 'fixed',
+        left: 0,
       }}
       theme="light"
     >
       <Menu className="siteBarLayout" mode="inline" openKeys={openKeys} onOpenChange={onOpenChange}>
 
-        <Menu.Item key="0" icon={<UserOutlined />}>
+        <Menu.Item key="0" icon={<HomeOutlined />}>
           <Link className="nav-item" to="/">
             Dashboard
           </Link>
         </Menu.Item>
 
-        <Menu.Item key="1" icon={<PieChartOutlined />}>
+        <Menu.Item key="1" icon={<LineChartOutlined />}>
           <Link className="nav-item" to="/statistics">
             Bot Statistics
           </Link>
         </Menu.Item>
 
-        <SubMenu key="database-submenu" icon={<TeamOutlined />} title="Manage">
+        <SubMenu key="database-submenu" icon={<InsertRowAboveOutlined />} title="Manage">
           <Menu.Item key="2">
             <Link className="nav-item" to="/database/bot">
               Bot Management
@@ -71,10 +75,10 @@ const MenuComponent = () => {
         </SubMenu>
 
         <Menu.Item key="5" icon={<LogoutOutlined />}>
-            <Link className="nav-item" to="/login">
-              Logout
-            </Link>
-          </Menu.Item>
+          <Link className="nav-item" to="/login">
+            Logout
+          </Link>
+        </Menu.Item>
 
       </Menu>
     </Sider>

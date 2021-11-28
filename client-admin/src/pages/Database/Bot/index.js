@@ -41,7 +41,7 @@ class BotPage extends React.Component {
     return (
       <Layout>
         <Menu />
-        <Layout theme="light">
+        <Layout theme="light" style={{ marginLeft: 200, minHeight: "100vh" }}>
           <PageHeader
             // ghost={false}
             title="Bot Workflow Management"

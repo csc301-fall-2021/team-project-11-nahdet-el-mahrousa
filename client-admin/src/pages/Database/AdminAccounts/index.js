@@ -37,12 +37,12 @@ class UsersPage extends React.Component {
             <Layout>
                 <Menu />
 
-                <Layout theme="light">
+                <Layout theme="light" style={{ marginLeft: 200, minHeight: "100vh" }}>
                     <PageHeader
                         title="Admin Account Management"
                         extra={[
                             <Button key="3" onClick={this.refreshTable} >Refresh</Button>,
-                            <CreateAdminDrawer />
+                            <CreateAdminDrawer refreshTable={this.refreshTable} />
                         ]}
                     />
 
@@ -58,7 +58,7 @@ class UsersPage extends React.Component {
                             <Input.Search placeholder="Search for a user" allowClear style={{ width: "50%", marginBottom: "1rem" }} onSearch={this.onSearch} />
                         </Input.Group>
 
-                        <AdminAccountsTable refresh={this.state.tableRefresher} query={{ key: this.state.searchKey, value: this.state.searchValue }} />
+                        <AdminAccountsTable refresh={this.state.tableRefresher} refreshTable={this.refreshTable} query={{ key: this.state.searchKey, value: this.state.searchValue }} />
                     </Content>
 
                 </Layout>

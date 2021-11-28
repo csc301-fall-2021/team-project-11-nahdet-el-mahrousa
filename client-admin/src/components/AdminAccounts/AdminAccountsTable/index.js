@@ -23,6 +23,7 @@ class DeleteButton extends React.Component {
             this.setState({ visible: false })
             this.setState({ confirmLoading: false })
             message.success(`Deleted user ${deletedUser.username}`)
+            this.props.refreshTable()
         } catch (error) {
             this.setState({ confirmLoading: false })
             message.error(String(error))
@@ -46,42 +47,6 @@ class DeleteButton extends React.Component {
     }
 }
 
-// The columns of the table
-// To get a field of the data, match dataIndex with the key of data.
-const columns = [
-    {
-        title: 'User ID',
-        dataIndex: '_id',
-        key: '_id',
-        width: "220px",
-    },
-    {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-        width: "400px",
-        sorter: (a, b) => a.name < b.name,
-        sortDirections: ['ascend', 'descend'],
-    },
-    {
-        title: 'Username',
-        dataIndex: 'username',
-        key: 'username',
-        width: "400px",
-        sorter: (a, b) => a.username < b.username,
-        sortDirections: ['ascend', 'descend'],
-    },
-    {
-        title: 'Actions',
-        key: 'actions',
-        render: (text, record) => (
-            <Space size="middle">
-                {/* record refers the the user item */}
-                <DeleteButton target={record} />
-            </Space>
-        ),
-    },
-];
 
 
 // Layout Reference: https://ant.design/components/table-cn/#components-table-demo-basic
@@ -91,7 +56,7 @@ class AdminAccountsTable extends React.Component {
         data: [],
         pagination: {
             current: 1,
-            pageSize: 2,
+            pageSize: 10,
         },
         loading: false,
     };
@@ -124,7 +89,7 @@ class AdminAccountsTable extends React.Component {
      * @param {*} sorter 
      * @param {*} extra 
      */
-    onChange = (pagination, filters, sorter={field: "_id", order: "ascend"}) => {
+    onChange = (pagination, filters, sorter = { field: "_id", order: "ascend" }) => {
         this.fetch({
             sortField: sorter.field,
             sortOrder: sorter.order,
@@ -164,10 +129,49 @@ class AdminAccountsTable extends React.Component {
         }
     }
 
+
+    // The columns of the table
+    // To get a field of the data, match dataIndex with the key of data.
+    columns = [
+        {
+            title: 'User ID',
+            dataIndex: '_id',
+            key: '_id',
+            width: "220px",
+        },
+        {
+            title: 'Name',
+            dataIndex: 'name',
+            key: 'name',
+            width: "400px",
+            sorter: (a, b) => a.name < b.name,
+            sortDirections: ['ascend', 'descend'],
+        },
+        {
+            title: 'Username',
+            dataIndex: 'username',
+            key: 'username',
+            width: "400px",
+            sorter: (a, b) => a.username < b.username,
+            sortDirections: ['ascend', 'descend'],
+        },
+        {
+            title: 'Actions',
+            key: 'actions',
+            render: (text, record) => (
+                <Space size="middle">
+                    {/* record refers the the user item */}
+                    <DeleteButton target={record} refreshTable={this.props.refreshTable} />
+                </Space>
+            ),
+        },
+    ];
+
+
     render() {
         return (
             <Table
-                columns={columns}
+                columns={this.columns}
                 rowKey={record => record._id}
                 dataSource={this.state.data}
                 onChange={this.onChange}
