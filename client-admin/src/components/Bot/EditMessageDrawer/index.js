@@ -35,7 +35,7 @@ class EditMessageDrawer extends React.Component {
     submitForm = async (values) => {
         this.setState({ loading: true })
         try {
-            const id = this.props.target
+            const id = this.props.target.msg._id
             sendMessageToBackend(id, values.content, values.label || '');
             message.success(`Edited message ${id}`)
             this.onClose()
@@ -53,12 +53,13 @@ class EditMessageDrawer extends React.Component {
                 </Button>
 
                 <Drawer
-                    title={`Edit Message ${this.props.target}`}
+                    title={`Edit Message ${this.props.target.msg._id}`}
                     width="30%"
                     onClose={this.onClose}
                     visible={this.state.visible}
                 >
                     <Form
+                        initialValues={{ content: this.props.target.msg.content, label: this.props.target.msg.label}}
                         layout="vertical"
                         hideRequiredMark
                         onFinish={this.submitForm}

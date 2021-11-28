@@ -53,7 +53,7 @@ export default function MessageOptionMenu(props) {
   return (
     <div>
       <Space size="middle">
-        <EditMessageDrawer target={props.msg._id} />
+        <EditMessageDrawer target={props} />
         <DeleteButton target={props.msg._id} />
         <NewOptionDrawer target={props} />
       </Space>
