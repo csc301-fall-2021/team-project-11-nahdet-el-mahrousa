@@ -4,7 +4,7 @@ import LeftMenu from "components/LeftMenu";
 import BotView from 'components/BotView';
 import "./HomePage.scss";
 import ReactGA from "react-ga";
-ReactGA.initialize(process.env.REACT_GOOGLE_ANALYTICS_TRACKING_ID);
+ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_TRACKING_ID || "UA-212303684-1");
 
 class HomePage extends React.Component {
     componentDidMount() {
