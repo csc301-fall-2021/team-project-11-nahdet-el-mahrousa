@@ -1,7 +1,5 @@
 # NAHDET EL MAHROUSA
 
-> _Note:_ This document is intended to be relatively short. Be concise and precise. Assume the reader has no prior knowledge of your application and is non-technical.
-
 The client app can be accessed through <https://nm-bot-prod.herokuapp.com/>. The admin dashboard can be accessed through <https://nm-admin-prod.herokuapp.com/>.
 
 ## Description
@@ -32,6 +30,10 @@ There will be a data analysis page that show the data collected from the user us
 
 ## Instructions
 
+
+**Since the app is deployed on Heroku, you may need to wait for a few seconds to awake the server, especially after clicking GET START button in bot.**
+
+
 ### Bot
 
 The BotView page contains the function that gives response automatically depend on user's choice.
@@ -46,11 +48,15 @@ Additional Concerns:
 - If you want to change any answer in the previous questions, just scroll up the page to that message and choose the option you want again. The new response that corresponds to this option will appear at the very bottom of the chat.
 - Same instruction as starting the chat again. Click the GET START button at the top will re-initialize the first message at the very bottom of the chat.
 
-### Admin-Bot
+### Admin-Dashboard
 
 The Admin Bot Management Page is used to add, edit, delete messages and replies.
 
-***NOTICE: The message that has label "__init__" is used to start the Bot chat. It must not be deleted and the label must not be changed. It is allowed to change the content of the initial message."***
+***NOTICE: The message that has label `__init__` is used to start the Bot chat. It must not be deleted and the label must not be changed. It is allowed to change the content of the initial message."***
+
+- Click the Menu -> Bot Management to view all messages and replies.
+- Replies are compacted, by clicking the "+" sign at the left to expand the replies.
+- Use the buttons to Add, Edit, and Delete messages or replies.
 
 To add a message, users need to click on the "NEW Message" button on the top left corner of the Bot page beside the menu. A modal will pop up once the button is clicked. User needs to enter the content of the message, label is optional. Users can cancel or submit the question they want to add by clicking on the "Cancel" and "OK" button on the bottom right corner of the modal. If the user did not enter a content, it will show a warning and the add new message request will not be made.
 
@@ -58,7 +64,7 @@ To edit a question, users can click on the "EDIT" button beside the question the
 
 To delete a message, users simply need to click on the "DELETE" button beside the question they want to delete under "Actions" and the request will be made immediately.
 
-To add a new reply under a message, users need to click on the "NEW OPTION" button beside the question they want to add the reply to under "Actions". Again, a modal will pop up once the button is clicked. User needs to enter the content of the reply, toMessage and label are optional. Users can select a message from the dropdown under label to add "toMessage" (doesn’t work yet when adding a new reply, but works when editing a reply). Users can cancel or submit the reply they want to add by clicking on the "Cancel" and "OK" button on the bottom right corner of the modal. If the user did not enter a content, it will show a warning and the edit message request will not be made.
+To add a new reply under a message, users need to click on the "NEW OPTION" button beside the question they want to add the reply to under "Actions". Again, a modal will pop up once the button is clicked. User needs to enter the content of the reply, toMessage and label are optional. Users can select a message from the dropdown under label to add "toMessage" **(doesn’t work yet when adding a new reply, but works when editing a reply, and this will be fixed in future deliverable)**. Users can cancel or submit the reply they want to add by clicking on the "Cancel" and "OK" button on the bottom right corner of the modal. If the user did not enter a content, it will show a warning and the edit message request will not be made.
 
 To see all the replies added to a question, users can click on the "+" button beside the id of the question. Once the "+" button is clicked, users are able to see all replies that belong to the question and users are able to make actions to the replies.
 
@@ -153,6 +159,6 @@ Setting up protection rules for the branches for delivery guarantees no accident
 
 ## Licenses
 
-This project is licensed under the terms of the MIT license. Any person can obtain a copy of this software and associated documentation files (the "Software"), to deal with it without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the the copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+This project is licensed under the terms of the MIT license. Any person can obtain a copy of this software and associated documentation files (the "Software"), to deal with it without restrictions.
 
 Nahdet El Mahrousa hopes this app can attract attentions to the issue of startup entrepreneurs and evoke inspirations of similar apps.
