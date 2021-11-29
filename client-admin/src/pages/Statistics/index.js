@@ -1,4 +1,5 @@
 import React from 'react';
+import DatePick from 'components/DatePicker/DatePicker'
 import StageDemoPie from 'components/Statistics/StageDemoPie';
 import VisitByLocationLines from 'components/Statistics/VisitByLocationLines'
 import VisitByLocationChart from 'components/Statistics/VisitByLocationChart'
@@ -21,10 +22,12 @@ class StatisticsPage extends React.Component {
 
                     <Content style={{ padding: '1rem' }}>
                         <div className="summary-section">
+                            
                             <div>The overview of people from different area</div>
                             <VisitByLocationLines />
                         </div>
                         <div className="summary-section">
+                            <DatePick />
                             <div>The percentage of people from different area in Egypt</div>
                             <VisitByLocationChart />
                         </div>
