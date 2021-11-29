@@ -265,60 +265,62 @@ class RetrieveDataService {
 
     async _reformatLocationVisitNumberFromReply(rawData){
         return await this._getSimpleTwoVariableStructure(rawData, "reply", [0], "location", [1, 2], "visit")
-        try{
-            let {report, reportData, reportDataRow, reportRowCount, res} = await this._initialExtractReport(rawData)
-            for (let row = 0 ; row < reportRowCount; row += 1){
-                let currRow = reportDataRow[row]
-                let rid = currRow["dimensions"][0]
-                let countryName = currRow["dimensions"][2]
-                let cityName = currRow["dimensions"][1]
-                let city = cityName + ", " + countryName
-                let visitCount =parseInt(currRow["metrics"][0]["values"][0])
-                if (!(rid in res)){
-                    let cityObject = {}
-                    cityObject[city] = visitCount
-                    res[rid] = cityObject                    
-                } else if (!(city in res[rid])){
-                    res[rid][city] = visitCount
-                } else {
-                    res[rid][city] += visitCount
-                }
+        // The summarized implementation:
+        // try{
+        //     let {report, reportData, reportDataRow, reportRowCount, res} = await this._initialExtractReport(rawData)
+        //     for (let row = 0 ; row < reportRowCount; row += 1){
+        //         let currRow = reportDataRow[row]
+        //         let rid = currRow["dimensions"][0]
+        //         let countryName = currRow["dimensions"][2]
+        //         let cityName = currRow["dimensions"][1]
+        //         let city = cityName + ", " + countryName
+        //         let visitCount =parseInt(currRow["metrics"][0]["values"][0])
+        //         if (!(rid in res)){
+        //             let cityObject = {}
+        //             cityObject[city] = visitCount
+        //             res[rid] = cityObject                    
+        //         } else if (!(city in res[rid])){
+        //             res[rid][city] = visitCount
+        //         } else {
+        //             res[rid][city] += visitCount
+        //         }
  
-            }
+        //     }
 
-            let ridArray = []
-            for (let [rid, cityObject] of Object.entries(res)){
-                let counter = 0
-                for (let [city, visit] of Object.entries(cityObject)){
-                    counter += visit
-                }
-                res[rid]["sumPerReply"] = counter
-                ridArray.push(rid)
-            }
+        //     let ridArray = []
+        //     for (let [rid, cityObject] of Object.entries(res)){
+        //         let counter = 0
+        //         for (let [city, visit] of Object.entries(cityObject)){
+        //             counter += visit
+        //         }
+        //         res[rid]["sumPerReply"] = counter
+        //         ridArray.push(rid)
+        //     }
 
-            res["sumTotal"] = reportData["totals"][0]["values"][0]
-            /*
-            let replyArray = this.replyDao.getMultiple(ridArray)
-            replyArray.map(function(val){
+        //     res["sumTotal"] = reportData["totals"][0]["values"][0]
+        //     /*
+        //     let replyArray = this.replyDao.getMultiple(ridArray)
+        //     replyArray.map(function(val){
                  
-            })
-            */
-            // TODO: Try to query them together
-            for(let [rid, cityObject] of Object.entries(res)){
-                if (rid !== "sumTotal"){
-                let replyInfo = await this.replyDao.get(rid)
-                cityObject["reply"] = replyInfo
-                }
-            }           
+        //     })
+        //     */
+        //     // TODO: Try to query them together
+        //     for(let [rid, cityObject] of Object.entries(res)){
+        //         if (rid !== "sumTotal"){
+        //         let replyInfo = await this.replyDao.get(rid)
+        //         cityObject["reply"] = replyInfo
+        //         }
+        //     }           
             
             
-            return res
+        //     return res
             
-        }catch(err){
-            logger.log(err)
-            logger.log("Wrong raw data format input")
-            return null
-        }
+            
+        //}catch(err){
+        //     logger.log(err)
+        //     logger.log("Wrong raw data format input")
+        //     return null
+        // }
 
     }
 
@@ -386,70 +388,71 @@ class RetrieveDataService {
     async _reformatReplyVisitNumberFromLocation(rawData){
 
         return await this._getSimpleTwoVariableStructure(rawData, "location", [1, 2], "reply", [0], "visit")
-        try{
-            let {report, reportData, reportDataRow, reportRowCount, res} = await this._initialExtractReport(rawData)
-            for (let row = 0 ; row < reportRowCount; row += 1){
-                let currRow = reportDataRow[row]
-                let rid = currRow["dimensions"][0]
-                let country = currRow["dimensions"][1]
-                let visitCount =parseInt(currRow["metrics"][0]["values"][0])
-                console.log(country)
-                if (!(country in res)){
-                    let replyObject = {}
-                    replyObject[rid] = {}
-                    replyObject[rid]["visitCount"] = visitCount
-                    res[country] = replyObject                    
-                } else if (!(rid in res[country])){
-                    res[country][rid] = {}
-                    res[country][rid]["visitCount"] = visitCount
-                } else {
-                    res[country][rid]["visitCount"] += visitCount
-                }
+        // The summaraized implementation:
+        // try{
+        //     let {report, reportData, reportDataRow, reportRowCount, res} = await this._initialExtractReport(rawData)
+        //     for (let row = 0 ; row < reportRowCount; row += 1){
+        //         let currRow = reportDataRow[row]
+        //         let rid = currRow["dimensions"][0]
+        //         let country = currRow["dimensions"][1]
+        //         let visitCount =parseInt(currRow["metrics"][0]["values"][0])
+        //         console.log(country)
+        //         if (!(country in res)){
+        //             let replyObject = {}
+        //             replyObject[rid] = {}
+        //             replyObject[rid]["visitCount"] = visitCount
+        //             res[country] = replyObject                    
+        //         } else if (!(rid in res[country])){
+        //             res[country][rid] = {}
+        //             res[country][rid]["visitCount"] = visitCount
+        //         } else {
+        //             res[country][rid]["visitCount"] += visitCount
+        //         }
  
-            }
+        //     }
 
 
-            for (let [country, replyObject] of Object.entries(res)){
-                let counter = 0
-                for (let [rid, infoObject] of Object.entries(replyObject)){
-                    counter += infoObject["visitCount"]
-                }
-                res[country]["sumPerCity"] = counter
-            }
+        //     for (let [country, replyObject] of Object.entries(res)){
+        //         let counter = 0
+        //         for (let [rid, infoObject] of Object.entries(replyObject)){
+        //             counter += infoObject["visitCount"]
+        //         }
+        //         res[country]["sumPerCity"] = counter
+        //     }
 
-            res["sumTotal"] = reportData["totals"][0]["values"][0]
-            /*
-            let replyArray = this.replyDao.getMultiple(ridArray)
-            replyArray.map(function(val){
+        //     res["sumTotal"] = reportData["totals"][0]["values"][0]
+        //     /*
+        //     let replyArray = this.replyDao.getMultiple(ridArray)
+        //     replyArray.map(function(val){
                  
-            })
-            */
-            // TODO: Try to query them together
-            for(let [country, replyObject] of Object.entries(res)){
-                if (country !== "sumTotal"){
+        //     })
+        //     */
+        //     // TODO: Try to query them together
+        //     for(let [country, replyObject] of Object.entries(res)){
+        //         if (country !== "sumTotal"){
 
                 
-                for(let [rid, replyObjectBody] of Object.entries(replyObject)){
-                    if (rid !== "sumPerCity"){
-                        try{
-                        let replyInfo = await this.replyDao.get(rid)
-                        replyObjectBody["reply"] = replyInfo
-                        }catch(err){
-                            logger.log(err)
-                        }
-                    }
-                }
-            }
-            }           
+        //         for(let [rid, replyObjectBody] of Object.entries(replyObject)){
+        //             if (rid !== "sumPerCity"){
+        //                 try{
+        //                 let replyInfo = await this.replyDao.get(rid)
+        //                 replyObjectBody["reply"] = replyInfo
+        //                 }catch(err){
+        //                     logger.log(err)
+        //                 }
+        //             }
+        //         }
+        //     }
+        //     }           
             
             
-            return res
+        //     return res
             
-        }catch(err){
-            console.log(err)
-            logger.log("Wrong raw data format input")
-            return null
-        }
+        // }catch(err){
+        //     console.log(err)
+        //     logger.log("Wrong raw data format input")
+        //     return null
+        // }
     }
 
 
@@ -770,3 +773,4 @@ async _reformatgetPlatformFromLocation(rawData){
 
 
 module.exports = RetrieveDataService
+
