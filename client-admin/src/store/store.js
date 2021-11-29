@@ -3,6 +3,6 @@ import messageReducer from './messages/message-slice'
 
 export default configureStore({
     reducer: {
-        surveyData: messageReducer
+        surveyData: messageReducer,
       }
 })
