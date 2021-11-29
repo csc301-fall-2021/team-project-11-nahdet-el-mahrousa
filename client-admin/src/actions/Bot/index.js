@@ -2,6 +2,7 @@ import store from "../../store/store";
 import { replaceMessages } from "../../store/messages/message-slice";
 import {
   getBot,
+  getQueryBot,
   createReply,
   deleteReply,
   editReply,
@@ -20,6 +21,12 @@ export function getMessageFromBackend() {
   // store.dispatch(replaceMessages(data))
 }
 
+export function getQueryMessage(query) {
+  getQueryBot(query, dispatchMessage);
+  // const dispatch = useDispatch()
+  // store.dispatch(replaceMessages(data))
+}
+
 export function sendReplyToBackend(
   _id,
   content,
@@ -29,7 +36,7 @@ export function sendReplyToBackend(
 ) {
   label = label ? label : "";
   toMessage = toMessage ? toMessage : null;
-  console.log(_id);
+
   if (!_id) {
     return createReply(
       { content, label, fromMessage, toMessage },

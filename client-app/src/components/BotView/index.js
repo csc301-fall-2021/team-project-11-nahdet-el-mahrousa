@@ -70,6 +70,7 @@ class BotView extends React.Component {
             <div ref={this.chatContainer} className="bot-view">
                 <div className="bot-chat-container">
                     {/* <RefreshButton clearChatHistory={() => clearChatHistory(this)} /> */}
+
                     <StartButton initChat={() => initChat(this)} />
                     {
                         // Chat items are retrieved from server
