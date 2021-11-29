@@ -26,8 +26,40 @@ class AdminBotController {
      */
     async getBot(req, user) {
         // TODO: How to do query.
-        const query = req.query
+        const query = {}
+        for(let key of Object.keys(req.query)){
+            let value = new RegExp(".*" + req.query[key] + ".*", "i")
+            if(key === "_id"){
+                query.convertedId = value
+            } else {
+                query[key] = value
+            }
+        }
         const result = await this.botService.getBot(user, query)
+        if (result === null) {
+            return response.FORBIDDEN
+        } else {
+            return respond({ entity: result })
+        }
+    }
+
+    /**
+     * Create a well formatted workflow.
+     * @param {Object} req Request.
+     * @param {User} user The user doing this operation.
+     * @returns Response object.
+     */
+     async getWorkflow(req, user) {
+        const query = {}
+        for(let key of Object.keys(req.query)){
+            let value = new RegExp(".*" + req.query[key] + ".*", "i")
+            if(key === "_id"){
+                query.convertedId = value
+            } else {
+                query[key] = value
+            }
+        }
+        const result = await this.botService.getWorkflow(user, query)
         if (result === null) {
             return response.FORBIDDEN
         } else {
@@ -44,8 +76,15 @@ class AdminBotController {
     async getMessages(req, user) {
         // TODO: How to do query.
         // Get user input
-        const query = req.query
-
+        const query = {}
+        for(let key of Object.keys(req.query)){
+            let value = new RegExp(".*" + req.query[key] + ".*", "i")
+            if(key === "_id"){
+                query.convertedId = value
+            } else {
+                query[key] = value
+            }
+        }
         const result = await this.botService.getMessages(user, query)
         if (result === null) {
             return response.FORBIDDEN
@@ -70,8 +109,10 @@ class AdminBotController {
         })
 
         // If not all required fields are satisfied, then return.
-        if (uin === undefined) {
+        if (uin === null) {
             return response.NOT_SATISFIED
+        } else if ((await this.botService.getInitMessage()) && uin.label === "__init__"){
+            return response.FORBIDDEN
         } else {
             // Create the message
             const result = await this.botService.createMessage(user, uin.content, uin.label)
@@ -98,8 +139,10 @@ class AdminBotController {
         })
 
         // If not all required fields are satisfied, then return.
-        if (uin === undefined) {
+        if (uin === null) {
             return response.NOT_SATISFIED
+        } else if ((await this.botService.getInitMessage()).convertedId === uin._id) {
+            return response.FORBIDDEN
         } else {
             // Delete the message
             const result = await this.botService.deleteMessage(user, uin._id)
@@ -128,7 +171,7 @@ class AdminBotController {
         })
 
         // If not all required fields are satisfied, then return.
-        if (uin === undefined) {
+        if (uin === null) {
             return response.NOT_SATISFIED
         } else {
             // Update the message
@@ -160,11 +203,11 @@ class AdminBotController {
         })
 
         // If not all required fields are satisfied, then return.
-        if (uin === undefined) {
+        if (uin === null) {
             return response.NOT_SATISFIED
         } else {
             // Create the reply
-            const result = await this.botService.createReply(user, uin.content, uin.label, uin.fromMessage, uin.toMessage || null)
+            const result = await this.botService.createReply(user, uin.content, uin.label, uin.fromMessage, uin.toMessage)
             if (result === null) {
                 return response.FORBIDDEN
             } else {
@@ -188,7 +231,7 @@ class AdminBotController {
         })
 
         // If not all required fields are satisfied, then return.
-        if (uin === undefined) {
+        if (uin === null) {
             return response.NOT_SATISFIED
         } else {
             // Delete the reply
@@ -218,7 +261,7 @@ class AdminBotController {
         })
 
         // If not all required fields are satisfied, then return.
-        if (uin === undefined) {
+        if (uin === null) {
             return response.NOT_SATISFIED
         } else {
             // Update the reply

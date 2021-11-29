@@ -67,11 +67,11 @@ jobs:
       - name: SETUP ENV VARIABLES
         run: NODE_ENV='staging'
 
-      - name: BUILD ENV VARIABLES TO config/.env.staging
-        run: echo $'${{ secrets.SERVER_ENV_STAGING}}' > ./config/.env.staging
+      - name: BUILD ENV VARIABLES TO config/.env
+        run: echo $'${{ secrets.SERVER_ENV_STAGING}}' > ./config/.env
 
-      - name: CHECK ENV VARIABLES IN config/.env.staging
-        run: cat ./config/.env.staging
+      - name: CHECK ENV VARIABLES IN config/.env
+        run: cat ./config/.env
 
       - name: HEROKU DEPLOY
         uses: akhileshns/heroku-deploy@v3.12.12
@@ -80,6 +80,6 @@ jobs:
           heroku_app_name: ${{secrets.HEROKU_STAGING_SERVER_APP_NAME}}
           heroku_email: ${{secrets.HEROKU_STAGING_SERVER_EMAIL}}
           appdir: "./server"
-          env_file: "./config/.env.staging"
+          env_file: "./config/.env"
 
 

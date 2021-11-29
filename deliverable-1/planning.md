@@ -6,18 +6,6 @@
 
 #### Q1: What are you planning to build?
 
- > Short (1 - 2 min' read)
- * Start with a single sentence, high-level description of the product.
- * Be clear - Describe the problem you are solving in simple terms.
- * Be concrete. For example:
-    * What are you planning to build? Is it a website, mobile app,
-   browser extension, command-line app, etc.?
-    * When describing the problem/need, give concrete examples of common use cases.
-    * Assume your the reader knows nothing about the problem domain and provide the necessary context. 
- * Focus on *what* your product does, and avoid discussing *how* you're going to implement it.
-   For example: This is not the time or the place to talk about which programming language and/or framework you are planning to use.
- * **Feel free (and very much encouraged) to include useful diagrams, mock-ups and/or links**.
-
 Our product is a website that helps early-stage startup entrepreneurs by providing valuable guidance and advice to them from different perspectives based on their current situation. It offers free legal and financial advice to these entrepreneurs since many early-stage entrepreneurs might not have enough financial support to afford to pay for financial consultations.
 
 In order for the advice to get straight to the point, users need to answer a series of questions about their startup idea or their existing startup. For instance, our questions are multiple-choice and users will be matched to different advice depending on which option to the question they select. Therefore, our product aims to provide customized legal, financial, and business advice pertaining to their specific situation.
@@ -27,10 +15,6 @@ Aside from our home page, we also have an administrative dashboard that provides
 Mockup: <https://www.figma.com/file/TmGYB8Q4o6dPayLtac8czI/D1-Mockup>
 
 #### Q2: Who are your target users?
-
-  > Short (1 - 2 min' read max)
- * Be specific (e.g. a 'a third-year university student studying Computer Science' and not 'a student')
- * **Feel free to use personas. You can create your personas as part of this Markdown file, or add a link to an external site (for example, [Xtensio](https://xtensio.com/user-persona/)).**
 
  Personas # 1:
  ***Joshua*** is senior year Egyptian student at University of Toronto for CS Specialist. Joshua has a great idea about building a mobile application that would made significant improvement in the IT industry. Unfortunately, Joshua have to work for living after graduation so he will barely have time to build the app, unless he could find an investor who could give him financial support for his app.
@@ -43,29 +27,24 @@ Mockup: <https://www.figma.com/file/TmGYB8Q4o6dPayLtac8czI/D1-Mockup>
 
 #### Q3: Why would your users choose your product? What are they using today to solve their problem/need?
 
-> Short (1 - 2 min' read max)
- * We want you to "connect the dots" for us - Why does your product (as described in your answer to Q1) fits the needs of your users (as described in your answer to Q2)?
- * Explain the benefits of your product explicitly & clearly.
-    * Save users time:
-    Instead of searching up on google, and go through pages of all different kinds of unrelated and disturbing information, user can follow the bot's questions to locate their questions and find *organized* and *analyzed* information provided by our partner that best fit to their situation and concern. For people in rural area, our app provide accessibility such that they do not need to call or travel to where our partner is located to ask for help.
-    For admin, our partners no more need to make a lot of surveys and can easily get information from our analytics.
+* Save users time:
+Instead of searching up on google, and go through pages of all different kinds of unrelated and disturbing information, user can follow the bot's questions to locate their questions and find *organized* and *analyzed* information provided by our partner that best fit to their situation and concern. For people in rural area, our app provide accessibility such that they do not need to call or travel to where our partner is located to ask for help.
+For admin, our partners no more need to make a lot of surveys and can easily get information from our analytics.
 
-    * Allow users to discover new information:
-    Our app is essentially for providing information and answering questions about how to run a startup. This app will put the information that hides in government documents and other people's experience on the table.
-    For admin dashboard, the admin can see detailed information of what topics are more concerned by which group of people. The app being online can be more accessible, so that people who previously did not contact our partner will have a chance to have their questions be seen by our partner.
+* Allow users to discover new information:
+Our app is essentially for providing information and answering questions about how to run a startup. This app will put the information that hides in government documents and other people's experience on the table.
+For admin dashboard, the admin can see detailed information of what topics are more concerned by which group of people. The app being online can be more accessible, so that people who previously did not contact our partner will have a chance to have their questions be seen by our partner.
 
-    * Provide users with more accurate and/or informative data:
-    The app will guide the user to realize their condition and locate their question, such that the provided answers are more related to the user. The answers and questions are provided by our partner, who has strong experience helping startups in the similar conditions.
+* Provide users with more accurate and/or informative data:
+The app will guide the user to realize their condition and locate their question, such that the provided answers are more related to the user. The answers and questions are provided by our partner, who has strong experience helping startups in the similar conditions.
 
-    * Does this application exist in another form? If so, how does your differ and provide value to the users?
-    A similar app is [Osome Singapore](https://osome.com/sg/pricing/). Our app will focus more on answering users' questions instead of introducing a service. It will be more lightweight and quick for the users.
+* Does this application exist in another form? If so, how does your differ and provide value to the users?
+A similar app is [Osome Singapore](https://osome.com/sg/pricing/). Our app will focus more on answering users' questions instead of introducing a service. It will be more lightweight and quick for the users.
 
-    * How does this align with your partner's organization's values/mission/mandate?
-    Our partner wants to provide helps to startup companies, this app can help them dealing with easy and common questions; at the same time, provide more data about what the startups are concerning so that they can modify their strategies accordingly.
+* How does this align with your partner's organization's values/mission/mandate?
+Our partner wants to provide helps to startup companies, this app can help them dealing with easy and common questions; at the same time, provide more data about what the startups are concerning so that they can modify their strategies accordingly.
 
 #### Q4: How will you build it?
-
-> Short (1-2 min' read max)
 
 * What is the technology stack? Specify any and all languages, frameworks, libraries, PaaS products or tools.
 
@@ -113,11 +92,6 @@ Possible testing tools include jest, react-testing-library, postman.
 
 #### Q5: What are the user stories that make up the MVP?
 
- * At least 5 user stories concerning the main features of the application - note that this can broken down further
- * You must follow proper user story format (as taught in lecture) ```As a <user of the app>, I want to <do something in the app> in order to <accomplish some goal>```
- * User stories must contain acceptance criteria. Examples of user stories with different formats can be found here: https://www.justinmind.com/blog/user-story-examples/. **It is important that you provide a link to an artifact containing your user stories**.
- * If you have a partner, these must be reviewed and accepted by them.
-
 1. As a startup entrepreneur, 
 I want to find an investor have interests with my business, 
 So that I could get financial supports. 
@@ -130,7 +104,7 @@ I want to find a reliable agency or lawyer,
 So that I could prepare all legal papers required for my business.
 Given legal documents are sent to my business.
 WHEN I read through the brief explanation about legal documents in the FAQ,
-THEN I unsterstand that are the papers asking and what should I say,
+THEN I understand that are the papers asking and what should I say,
 
 3. As a startup entrepreneur, 
 I want to connect with previous startup entrepreneurs,
@@ -163,16 +137,6 @@ THEN I will see which of our customers' problems is the most urgent to be resolv
 
 ----
 ## Intellectual Property Confidentiality Agreement 
-> Note this section is **not marked** but must be completed briefly if you have a partner. If you have any questions, please contact David and Adam.
->  
-**By default, you own any work that you do as part of your coursework.** However, some partners may want you to keep the project confidential after the course is complete. As part of your first deliverable, you should discuss and agree upon an option with your partner. Examples include:
-
-1. You can share the software and the code freely with anyone with or without a license, regardless of domain, for any use.
-2. You can upload the code to GitHub or other similar publicly available domains.
-3. You will only share the code under an open-source license with the partner but agree to not distribute it in any way to any other entity or individual. 
-4. You will share the code under an open-source license and distribute it as you wish but only the partner can access the system deployed during the course.
-
-**Briefly describe which option you have agreed to. Your partner cannot ask you to sign any legally binding agreements or documents pertaining to non-disclosure, confidentiality, IP ownership, etc.**
 
 We agreed that the software can be open-source, but data, including statistics and authentication information, should remain secure and private to the partner.
 
@@ -290,20 +254,16 @@ Describe meetings (and other events) you are planning to have.
 Describe your team's working culture.
 
 **Communications:**
- * What is the expected frequency? What methods/channels are appropriate? 
- * If you have a partner project, what is your process (in detail) for communicating with your partner?
 
 To ensure the necessary discussion on the project, we will hold the Zoom meetings online or in-person meetings on the campus. The expected frequency is 2 to 4 hours per week. On the other hand, we can message each other through Discord or WeChat group chat.
 
 When starting a new project, we will first have the meeting, let each member think of the project, and deliver the ideas. Then, by comparing each person’s opinion, we make a complete structure or plan that is the most appropriate and makes everyone agree. If there are any questions or misunderstandings, we will talk during the meeting. When everyone is clear and ready to start, we divide the work into parts. All members get their jobs to do. We will hold meetings every week to demonstrate the progress, ask questions, or connect the work.
 
 **Meetings:**
- * How are people held accountable for attending meetings, completing action items? Is there a moderator or process?
 
 The meeting will hold at a time that everyone can attend. Since we have worked together perfectly before in the CSC207 group project, we are sure that everyone is accountable for attending meetings and completing action items.
 
 **Conflict Resolution:**
- * List at least three team scenarios/conflicts you discussed in lecture and how you decided you will resolve them. Indecisions? Non-responsive team members? Any other scenarios you can think of?
 
 If there is a divarication, the group members will vote for the one they prefer. We will choose the one that most people support or compromise the decisions.
 If someone cannot finish the work for some reason, it should make other people know early. So we can reassign the parts.
@@ -312,17 +272,6 @@ If someone has problems with the work, it can find help from other members of th
 ----
 
 ## Highlights
-
-Specify 3 - 5 key decisions and/or insights that came up during your meetings
-and/or collaborative process.
-
- * Short (5 min' read max)
- * Decisions can be related to the product and/or the team process.
-    * Mention which alternatives you were considering.
-    * Present the arguments for each alternative.
-    * Explain why the option you decided on makes the most sense for your team/product/users.
- * Essentially, we want to understand how (and why) you ended up with your current product and process plan.
- * This section is useful for important information regarding your decision making process that may not necessarily fit in other sections.
 
 #### Decision 1
 
