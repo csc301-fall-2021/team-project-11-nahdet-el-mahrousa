@@ -2,7 +2,7 @@ import React from 'react';
 import Message from 'components/Message';
 import Reply from 'components/Reply';
 
-import { loadChatHistory, initChat, makeReply, clearChatHistory } from "actions/Bot";
+import { loadChatHistory, initChat, makeReply } from "actions/Bot";
 
 import "./BotView.scss"
 import StartButton from 'components/StartButton';
