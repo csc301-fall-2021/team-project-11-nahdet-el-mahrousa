@@ -15,7 +15,6 @@ class MessageList extends React.Component {
     render() {
         const { message, replies, view } = this.props
         const paragraphs = message.content.split("\n").filter(p => p !== "")
-        console.log(message)
         if (paragraphs.length === 1) {
             return (<Message
                 message={message}
@@ -25,7 +24,6 @@ class MessageList extends React.Component {
         } else {
             return (
                 paragraphs.map((content, i) => {
-                    console.log({ content })
                     if (i !== paragraphs.length - 1) {
                         return (<Message
                             message={{ content }}
@@ -49,8 +47,7 @@ class BotView extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            chat: [],
-            ReactGA: props.ReactGA
+            chat: []
         }
     }
 
@@ -78,7 +75,6 @@ class BotView extends React.Component {
                         // It can either be { message, replies } for a message,
                         // or { reply } for a reply. 
                         this.state.chat.map((chatItem) => {
-                            console.log(chatItem)
                             if ("message" in chatItem) {
                                 return <MessageList
                                     message={chatItem.message}

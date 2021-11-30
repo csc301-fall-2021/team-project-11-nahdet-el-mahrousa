@@ -49,7 +49,6 @@ class DeleteButton extends React.Component {
 }
 
 export default function MessageOptionMenu(props) {
-  console.log(props);
   return (
     <div>
       <Space size="middle">
