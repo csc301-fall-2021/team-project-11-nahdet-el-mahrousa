@@ -50,25 +50,11 @@ class RetrieveDataService {
         }      
     }
 
-    async _generateRequest(startDate, endDate, metrics, dimensions, dimensionFilter=null){
+    async _generateRequest(startDate, endDate, metrics, dimensions, dimensionFilter=null, pageToken=null){
+        let pageSize = "1000"
+        let resRequest = {}
         if (dimensionFilter === null){
-        return {
-            "reportRequests": [
-                {
-                "viewId": (await this.analyticsGateway.getView()),
-                "dateRanges": [
-                    {
-                    "startDate": startDate,
-                    "endDate": endDate
-                    }
-                ],
-                "metrics": metrics,
-                "dimensions": dimensions
-                }
-            ]
-        }
-    } else {
-        return {
+            resRequest = {
             "reportRequests": [
                 {
                 "viewId": (await this.analyticsGateway.getView()),
@@ -80,13 +66,83 @@ class RetrieveDataService {
                 ],
                 "metrics": metrics,
                 "dimensions": dimensions,
-                "dimensionFilterClauses": dimensionFilter
+                "samplingLevel":  "LARGE",
+                "pageSize": pageSize
+
+                }
+            ]
+        }
+        
+    } else {
+            resRequest = {
+            "reportRequests": [
+                {
+                "viewId": (await this.analyticsGateway.getView()),
+                "dateRanges": [
+                    {
+                    "startDate": startDate,
+                    "endDate": endDate
+                    }
+                ],
+                "metrics": metrics,
+                "dimensions": dimensions,
+                "dimensionFilterClauses": dimensionFilter,
+                "samplingLevel":  "LARGE",
+                "pageSize": pageSize
+
                 }
             ]
         }
 
     }
+
+    if (pageToken !== null){
+        resRequest["reportRequests"][0]["pageToken"] = pageToken
     }
+    return resRequest
+    }
+
+
+    async _combineReportPages(totalRawReport, rawReport){
+        let totalRawReportRow = totalRawReport["reports"][0]["data"]["rows"]
+        let rawReportRow = rawReport["reports"][0]["data"]["rows"]
+        for(eachRow of rawReportRow){
+            totalRawReportRow.push(eachRow) 
+        }
+        return totalRawReport
+    }
+
+    async _getRawReport(startDate, endDate, metrics, dimensions, dimensionFilter=null){
+        let pageToken = null
+        let request = await this._generateRequest(startDate, endDate, metrics, dimensions, dimensionFilter)
+        let totalRawReport = await this._requestReport(request)
+        if (totalRawReport === null){return totalRawReport}
+        if ("nextPageToken" in totalRawReport["reports"][0]){
+            pageToken = totalRawReport["reports"][0]["nextPageToken"]
+        } else {
+            pageToken = null
+        }
+
+        while (pageToken !== null){
+        let request = await this._generateRequest(startDate, endDate, metrics, dimensions, dimensionFilter, pageToken) 
+        
+
+                    
+        let rawReport = await this._requestReport(request)
+        if (rawReport === null){return rawReport}
+        if ("nextPageToken" in rawReport["reports"][0]){
+
+            pageToken = rawReport["reports"][0]["nextPageToken"]
+            totalRawReport = await this._combineReportPages(totalRawReport, rawReport)
+        } else {
+            pageToken = null
+        }
+
+
+        }
+        return totalRawReport
+    }
+
 
 
     async _initialExtractReport(rawData){
@@ -132,7 +188,7 @@ class RetrieveDataService {
                 
                     try{
                         let replyInfo = await this.replyDao.get(currObject["reply"])
-                        currObject["replyLabel"] = replyInfo
+                        currObject["replyObject"] = replyInfo
                     } catch(err){
                         logger.log(err)
                     }
@@ -169,10 +225,9 @@ class RetrieveDataService {
             }
 
         ]
-        let request = await this._generateRequest(startDate, endDate, metrics, dimensions) 
-  
-                    
-        let rawReport = await this._requestReport(request)
+
+    
+        let rawReport = await this._getRawReport(startDate, endDate, metrics, dimensions)
         if (rawReport === null){return rawReport}
         return await this._reformatVisitNumberAndSumFromLocationPerDay(rawReport)
 
@@ -254,9 +309,7 @@ class RetrieveDataService {
             }
         ]
 
-    let request = await this._generateRequest(startDate, endDate, metrics, dimensions, filter) 
-                              
-    let rawReport = await this._requestReport(request)
+    let rawReport = await this._getRawReport(startDate, endDate, metrics, dimensions, filter)
     if (rawReport === null){return rawReport}
     return await this._reformatLocationVisitNumberFromReply(rawReport)
 
@@ -379,8 +432,7 @@ class RetrieveDataService {
                 }]
             }
         ]
-    let request = await this._generateRequest(startDate, endDate, metrics, dimensions, filter)              
-    let rawReport = await this._requestReport(request)
+    let rawReport = await this._getRawReport(startDate, endDate, metrics, dimensions, filter)    
     if (rawReport === null){return rawReport}
     return await this._reformatReplyVisitNumberFromLocation(rawReport)
     }
@@ -501,8 +553,7 @@ class RetrieveDataService {
             }
         ]
 
-    let request = await this._generateRequest(startDate, endDate, metrics, dimensions, filter)                       
-    let rawReport = await this._requestReport(request)
+    let rawReport = await this._getRawReport(startDate, endDate, metrics, dimensions, filter)    
     if (rawReport === null){return rawReport}
     return await this._reformatVisitNumberFromLocationAndReply(rawReport)
  
@@ -529,8 +580,7 @@ class RetrieveDataService {
             "name": "ga:city"
             }
         ]
-    let request = await this._generateRequest(startDate, endDate, metrics, dimensions) 
-    let rawReport = await this._requestReport(request)
+    let rawReport = await this._getRawReport(startDate, endDate, metrics, dimensions)    
     if (rawReport === null){return rawReport}
     return await this._reformatAverageStayTimeFromLocation(rawReport)
     
@@ -573,8 +623,7 @@ class RetrieveDataService {
             "name": "ga:eventLabel"
             }
         ]
-    let request = await this._generateRequest(startDate, endDate, metrics, dimensions)
-    let rawReport = await this._requestReport(request)
+    let rawReport = await this._getRawReport(startDate, endDate, metrics, dimensions)    
     if (rawReport === null){return rawReport}
     return await this._reformatAverageStayTimeFromReply(rawReport)
     }
@@ -625,9 +674,8 @@ class RetrieveDataService {
             "name": "ga:deviceCategory"
             }
         ]
-    let request = await this._generateRequest(startDate, endDate, metrics, dimensions)
-    let rawReport = await this._requestReport(request)
-    if (rawReport === null){return rawReport}
+        let rawReport = await this._getRawReport(startDate, endDate, metrics, dimensions)
+        if (rawReport === null){return rawReport}
     return await this._reformatgetPlatformGeneral(rawReport)
 
     }
@@ -668,8 +716,7 @@ class RetrieveDataService {
             }
             
         ]
-    let request = await this._generateRequest(startDate, endDate, metrics, dimensions)
-    let rawReport = await this._requestReport(request)
+    let rawReport = await this._getRawReport(startDate, endDate, metrics, dimensions)    
     if (rawReport === null){return rawReport}
     return await this._reformatgetPlatformFromLocation(rawReport)
 
@@ -724,8 +771,7 @@ async _reformatgetPlatformFromLocation(rawData){
             "name": "ga:eventLabel"
             }
         ]
-    let request = await this._generateRequest(startDate, endDate, metrics, dimensions)
-    let rawReport = await this._requestReport(request)
+    let rawReport = await this._getRawReport(startDate, endDate, metrics, dimensions)    
     if (rawReport === null){return rawReport}
     return await this._reformatgetPlatformFromReply(rawReport)
         
