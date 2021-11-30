@@ -39,12 +39,31 @@ class UserService {
     }
 
     /**
+     * Get users based on given a key value pair.
+     * @param {string} key the key searching.
+     * @param {string} value of the key.
+     * @returns A user object array.
+     */
+     async getUsers(key, value) {
+        if(key === "_id"){
+            key = "convertedId"
+        }
+        const users = await this.userDao.search({ [key]: new RegExp(".*" + value + ".*", "i") })
+        const result = []
+        for(let user of users){
+            result.push({ _id: user._id, username: user.username, name: user.name })
+        }
+        return result
+    }
+
+    /**
      * Create a user.
      * @param {String} username 
      * @param {String} password 
+     * @param {String} name
      * @returns New User. If fail to create, return null.
      */
-    async createUser(username, password) {
+    async createUser(username, password, name) {
         // Check unique username
         const checkUsername = await this.userDao.search({ username })
         if (checkUsername.length > 0) {
@@ -53,12 +72,12 @@ class UserService {
         }
 
         const encryptedPassword = await this._encryptPassword(password)
-        const newUser = await this.userDao.create({ username, password: encryptedPassword })
+        const newUser = await this.userDao.create({ username, password: encryptedPassword, name })
 
         if (newUser !== null) {
             logger.log(`CREATED User ${newUser.username} `)
             // const { password, ...ret } = newUser
-            return  { _id: newUser._id, username: newUser.username}
+            return  { _id: newUser._id, username: newUser.username, name: newUser.name}
         } else {
             logger.log(`FAILED CREATE User \'${username}\'`)
             return null

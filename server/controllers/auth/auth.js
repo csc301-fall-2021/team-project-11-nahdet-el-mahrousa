@@ -13,9 +13,12 @@ class AuthController {
         this.authService = authService
     }
 
-    async createUser(req) {
+    async createUser(req, api) {
+        if(api === "initial" && (await this.authService.getUsers("username", "")).length != 0){
+            return response.FORBIDDEN
+        }
         const uin = getInput(req, {
-            mandatory: ['username', 'password'],
+            mandatory: ['username', 'password', 'name'],
             fromBody: true
         })
 
@@ -25,7 +28,29 @@ class AuthController {
             return respond({ msg: "Username already taken", statusCode: 400 })
         } else {
             logger.log(`User does not exist, allow creation.`)
-            const result = await this.authService.createUser(uin.username, uin.password)
+            const result = await this.authService.createUser(uin.username, uin.password, uin.name)
+            if (result === null) {
+                return response.INTERNAL_SERVER_ERROR
+            } else {
+                return respond({ entity: result })
+            }
+        }
+    }
+
+    async getUsers(req) {
+        const uin = getInput(req, {
+            mandatory: ['key', 'value'],
+            fromQuery: true
+        })
+
+        const availiableKeys = ["username", "name", "_id"]
+
+        if (uin === null) {
+            return response.NOT_SATISFIED
+        } else if (!uin.key in availiableKeys) {
+            return response.NOT_FOUND
+        } else {
+            const result = await this.authService.getUsers(uin.key, uin.value)
             if (result === null) {
                 return response.INTERNAL_SERVER_ERROR
             } else {

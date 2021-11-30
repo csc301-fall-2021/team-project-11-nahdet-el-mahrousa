@@ -72,7 +72,7 @@ class BotService {
         if (!rpl) {
             return undefined
         }
-        if (!("toMessage" in rpl) || !rpl.toMessage){
+        if (!("toMessage" in rpl) || !rpl.toMessage) {
             return null
         }
 
@@ -173,13 +173,13 @@ class BotService {
      * @param {ObjectId} toMessage The message id that this replies redirects to.
      * @returns New Reply. If user does not have privilege, return null.
      */
-    async createReply(user, content, label, fromMessage, nextMessage) {
+    async createReply(user, content, label, fromMessage, toMessage) {
         // Validate modifier's privilege
         if (!user.privilege.modifyBot) {
             return null
         }
 
-        const newReply = await this.replyDao.create({ content, label, fromMessage, nextMessage })
+        const newReply = await this.replyDao.create({ content, label, fromMessage, toMessage })
 
         if (newReply !== null) {
             logger.log(`[${user.username}] CREATED Reply \'${newReply._id}\'`)
@@ -321,6 +321,94 @@ class BotService {
         const replies = await this.replyDao.search()
         const bot = this._buildBotList({ messages, replies })
         return bot
+    }
+
+
+    /**
+     * Construct a node object for given message.
+     * @param {Array} message Message in database.
+     * @returns node object for workflow
+     */
+    _generateNode(message) {
+        const node = {
+            id: `${message.convertedId}`,
+            value: {
+                title: `${message.label}`,
+                items: [
+                    {
+                        text: 'id',
+                        value: `${message.convertedId}`
+                    },
+                    {
+                        text: 'label',
+                        value: `${message.label}`
+                    },
+                    {
+                        text: 'content',
+                        value: `${message.content}`
+                    }
+                ]
+            }
+        }
+
+        return node
+    }
+
+    /**
+     * Construct an array of edge objects for given message and corresponding replies.
+     * @param {Array} replies Replies from one message. 
+     * @returns an array of edge objects for workflow
+     */
+     _generateEdges(replies) {
+        const edges = []
+        for(let reply of replies){
+            let value = reply.label
+            if(!value || value === ""){
+                value = reply.content
+            }
+            edges.push({
+                source: `${reply.fromMessage}`,
+                target: `${reply.toMessage}`,
+                value: `${value}`,
+            })
+        }
+        return edges
+    }
+
+    /**
+     * Construct a workflow object for given messages and replies.
+     * @param {Array} messages Messages in database.
+     * @param {Array} replies All replies in database. 
+     * @returns { nodes, edges } where nodes and edges are array
+     */
+    _buildWorkFlow({ messages, replies }) {
+        const nodes = []
+        const edges = []
+
+        for (let msg of messages) {
+            nodes.push(this._generateNode(msg))
+            const repliesOfMessage = replies.filter(r => r.fromMessage.toString() === msg._id.toString())
+            edges.push(...this._generateEdges(repliesOfMessage))
+        }
+
+        return { nodes, edges }
+    }
+
+    /**
+     * Create a well formatted workflow.
+     * @param {User} user User that makes this operation.
+     * @param {*} query Query constraints on Messages.
+     * @returns A workflow that in format { nodes, edges } where nodes and edges are array
+     */
+    async getWorkflow(user, query) {
+        if (!user.privilege.accessBot) {
+            return null
+        }
+
+        const messages = await this.messageDao.search(query)
+        const replies = await this.replyDao.search()
+        const workflow = this._buildWorkFlow({ messages, replies })
+        return workflow
     }
 
 }
