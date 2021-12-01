@@ -16,7 +16,6 @@ class DeleteButton extends React.Component {
         this.setState({ confirmLoading: true })
 
         const userToDelete = this.props.target
-        console.log('deleting ', userToDelete)
         // TODO: to async request
         try {
             const deletedUser = await requestDeleteAdminAccount(userToDelete)
@@ -76,7 +75,6 @@ class AdminAccountsTable extends React.Component {
             this.onChange(this.state.pagination)
         }
 
-        console.log(props.query)
         if (props.query !== "") {
             this.searchForData({ ...props.query })
         }

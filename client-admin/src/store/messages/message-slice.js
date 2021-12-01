@@ -8,7 +8,6 @@ export const messageSlice = createSlice({
   },
   reducers: {
     replaceMessages: (state, action) => {
-      console.log(state, action.payload)
       state.messages = action.payload
     }
   }
