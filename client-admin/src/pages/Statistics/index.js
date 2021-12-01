@@ -7,10 +7,17 @@ import VisitByQuestionChart from 'components/Statistics/VisitByQuestionChart'
 import Menu from "components/Menu";
 import { Layout } from 'antd';
 import './index.css'
-const { Header, Content } = Layout;
+import { DatePicker, Space } from 'antd';
 
+/*function onChange(date, dateString) {
+  console.log(date, dateString);
+}*/
+
+const { Header, Content } = Layout;
+const { RangePicker } = DatePicker;
 
 class StatisticsPage extends React.Component {
+
     render() {
         return (
             <Layout>
@@ -22,8 +29,9 @@ class StatisticsPage extends React.Component {
 
                     <Content style={{ padding: '1rem' }}>
                         <div className="summary-section">
-                            
-                            <div>The overview of people from different area</div>
+                            <RangePicker
+                            onChange={this.onChange} />
+                            <div>The overview of people from different area</div>                   
                             <VisitByLocationLines />
                         </div>
                         <div className="summary-section">
@@ -32,6 +40,7 @@ class StatisticsPage extends React.Component {
                             <VisitByLocationChart />
                         </div>
                         <div className="summary-section">
+                            <DatePick />
                             <div>The percentage of people from different questions in our website</div>
                             <VisitByQuestionChart />
                         </div>

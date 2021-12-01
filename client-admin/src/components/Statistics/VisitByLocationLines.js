@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { Line } from '@ant-design/charts';
 
-const VisitByLocationLines = () => {
+const VisitByLocationLines = (props) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -17,6 +17,7 @@ const VisitByLocationLines = () => {
         console.log('fetch data failed', error);
       });
   };
+
   const config = {
     data,
     xField: 'year',
