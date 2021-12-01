@@ -33,6 +33,11 @@ router.delete("/bot/message", authenticationToken, async (req, res) => {
     res.status(response.statusCode).send(response)
 })
 
+router.get("/bot/reply", authenticationToken, async (req, res) => {
+    const response = await adminBotController.getReplies(req)
+    res.status(response.statusCode).send(response)
+})
+
 router.post("/bot/reply", authenticationToken, async (req, res) => {
     const response = await adminBotController.createReply(req, user)
     res.status(response.statusCode).send(response)

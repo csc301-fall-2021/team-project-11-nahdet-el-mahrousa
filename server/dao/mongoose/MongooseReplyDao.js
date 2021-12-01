@@ -20,6 +20,7 @@ class MongooseReplyDao {
         try {
             const newReply = new Reply({ content, label, fromMessage, toMessage })
             const createdReply = await newReply.save()
+            await Reply.findByIdAndUpdate(createdReply._id, { convertedId: createdReply._id.toString() })
             logger.log(`MONGOOSE CREATED Reply ${createdReply._id}`)
             return newReply
         } catch (err) {
@@ -52,7 +53,8 @@ class MongooseReplyDao {
      * @returns Array of Replies
      */
     async getAll() {
-        return await Reply.find().exec()
+        let replies = await Reply.find().exec()
+        return replies
     }
 
     /**
