@@ -48,5 +48,10 @@ router.delete("/bot/reply", authenticationToken, async (req, res) => {
     res.status(response.statusCode).send(response)
 })
 
+router.get("/bot/workflow", authenticationToken, async (req, res) => {
+    const workflowData = await adminBotController.getWorkflow(req, user)
+    res.status(workflowData.statusCode).send(workflowData)
+})
+
 
 module.exports = router

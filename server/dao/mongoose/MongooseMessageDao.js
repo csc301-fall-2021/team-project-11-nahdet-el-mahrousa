@@ -18,6 +18,7 @@ class MongooseMessageDao {
         try {
             const newMessage = new Message({ content, label })
             const createdMessage = await newMessage.save()
+            await Message.findByIdAndUpdate(createdMessage._id, { convertedId: createdMessage._id.toString() })
             logger.log(`MONGOOSE CREATED Message ${createdMessage._id}`)
             return newMessage
         } catch (err) {

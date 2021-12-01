@@ -7,7 +7,7 @@ class Message extends React.Component {
         const { message, replies, makeReply } = this.props
         return (
             <div className="message-container">
-                <div class="avatar"></div>
+                <div className="avatar"></div>
                 <div className="message-bubble">
                     <div className="message-content">
                         {message.content}

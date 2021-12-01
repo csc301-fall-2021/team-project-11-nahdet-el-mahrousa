@@ -2,7 +2,26 @@ import { getFirstMessage, getNextMessage } from 'api/client-api';
 
 // Methods in this file modifies the Message component state
 
-const log = console.log;
+export function loadChatHistory(msgQueue) {
+    if (localStorage.getItem("chatHistory")) {
+        const dateThreshold = (new Date()).getDate() - 7;
+        // only restore the page with data stored in the last 7 days
+        if (localStorage.getItem("chatTime") >= dateThreshold) {
+            const restoredData = localStorage.getItem("chatHistory");
+            msgQueue.setState({
+                chat: JSON.parse(restoredData)
+            }, () => msgQueue.scrollToMyRef());
+        }
+    }
+}
+
+export function clearChatHistory(msgQueue) {
+    localStorage.removeItem("chatHistory")
+    localStorage.removeItem("chatTime")
+    msgQueue.setState({
+        chat: []
+    }, () => msgQueue.scrollToMyRef());
+}
 
 export async function initChat(msgQueue) {
     const newQueue = [...msgQueue.state.chat];
@@ -10,14 +29,14 @@ export async function initChat(msgQueue) {
     // get first msg from API
     try {
         const entity = await getFirstMessage();
-        console.log(entity);
+        // console.log(entity);
         newQueue.push(entity);
         msgQueue.setState({
             chat: newQueue
-        });
-    } catch(error) {
-        const err = `Action ${String(error)}. Please contact the staff.`
-        console.log(err);
+        }, () => msgQueue.scrollToMyRef());
+    } catch (error) {
+        const err = `${String(error)}. Please contact the staff.`
+        console.error(err);
         newQueue.push({
             message: {
                 content: err
@@ -26,13 +45,13 @@ export async function initChat(msgQueue) {
         })
         msgQueue.setState({
             chat: newQueue
-        });
+        }, () => msgQueue.scrollToMyRef());
     }
 }
 
 // Function to add a reply, needs to be exported
 export async function makeReply(msgQueue, reply) {
-    log(msgQueue.state.chat, reply);
+    // log(msgQueue.state.chat, reply);
 
     const newQueue = [...msgQueue.state.chat];
     const replyInChat = { reply };
@@ -45,22 +64,26 @@ export async function makeReply(msgQueue, reply) {
     // Send a request to server
     // With the response, add a new Message to msgQueue
     try {
-        msgQueue.state.ReactGA.event({
+        // send statistics to google
+        msgQueue.props.ReactGA.event({
             category: 'Reply',
             action: 'click',
-            label: reply._id
-            // Double check about the id!
+            label: String(reply._id)
         })
         const entity = await getNextMessage(reply);
-        console.log(entity);
+        // console.log(entity);
         newQueue.push(entity);
         msgQueue.setState({
             chat: newQueue
-        });
-    }
-    catch(error) {
-        const err = `Action ${String(error)}. Please contact the staff.`
-        console.log(err);
+        }, () => msgQueue.scrollToMyRef());
+        
+        // record the response in local storage
+        localStorage.setItem("chatHistory", JSON.stringify(msgQueue.state.chat));
+        // set today the respond date in local storage
+        localStorage.setItem("chatTime", (new Date()).getDate());
+    } catch (error) {
+        const err = `${String(error)}. Please contact the staff.`
+        console.error(err);
         newQueue.push({
             message: {
                 content: err
@@ -69,6 +92,6 @@ export async function makeReply(msgQueue, reply) {
         })
         msgQueue.setState({
             chat: newQueue
-        });
+        }, () => msgQueue.scrollToMyRef());
     }
 }

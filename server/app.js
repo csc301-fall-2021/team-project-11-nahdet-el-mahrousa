@@ -64,7 +64,7 @@ class AppFactory {
     app.use('/admin', adminBotRouter);
     app.use('/user', userRouter)
     app.use('/auth', authRouter)
-    app.use('statistics', statsticsRouter)
+    app.use('/statistics', statisticsRouter)
   }
 
   /**
