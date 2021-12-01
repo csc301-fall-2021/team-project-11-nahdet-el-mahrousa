@@ -217,6 +217,9 @@ class RetrieveDataService {
       let rid = currRow["dimensions"][inputLocation[0]];
       try {
         let replyInfo = await this.replyDao.get(rid);
+        if (replyInfo === null){
+            return null
+        }
         let replyLabel = replyInfo["label"].substring(0, 6);
         if (replyLabel.length < replyInfo["label"].length) {
           replyLabel = replyLabel + "...";
@@ -228,7 +231,7 @@ class RetrieveDataService {
         currObject["reply"] = replyLabel + "/" + replyContent;
       } catch (err) {
         logger.log(err);
-        currObject["reply"] = rid;
+        return null
       }
     } else if (inputName === "location") {
       let countryName = currRow["dimensions"][inputLocation[0]];
@@ -275,16 +278,20 @@ class RetrieveDataService {
           currObject,
           currRow
         );
+        if (currObject !== null){
         currObject = await this._assignSimpleVariableName(
           yName,
           yLocation,
           currObject,
           currRow
         );
+        if (currObject !== null){
 
         currObject[valueName] = currRow["metrics"][0]["values"][valueLocation];
 
         res["data"].push(currObject);
+        }
+        }
       }
       return res;
     } catch (err) {
@@ -323,10 +330,11 @@ class RetrieveDataService {
           currObject,
           currRow
         );
-
+        if (currObject !== null){
         currObject[valueName] = currRow["metrics"][0]["values"][valueLocation];
 
         res["data"].push(currObject);
+        }
       }
       return res;
     } catch (err) {
