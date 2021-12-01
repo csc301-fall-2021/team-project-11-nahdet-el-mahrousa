@@ -12,8 +12,7 @@ class LeftMenu extends React.Component {
                     <div className="brand-name">Nahdet El Mahrousa Enterpreneur Helper</div>
                 </div>
                 <img className="photo" src={img} alt=""/>
-                
-                <FaqView />  {/* TODO: Don't need to do this right now */}
+                <FaqView />
             </div>
         )
     }
