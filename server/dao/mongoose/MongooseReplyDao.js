@@ -54,6 +54,9 @@ class MongooseReplyDao {
      */
     async getAll() {
         let replies = await Reply.find().exec()
+        for(let reply of replies){
+            await Reply.findByIdAndUpdate(reply._id, { convertedId: reply._id.toString() })
+        }
         return replies
     }
 
