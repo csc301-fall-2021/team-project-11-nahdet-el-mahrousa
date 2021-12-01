@@ -7,19 +7,18 @@ const { authenticationToken } = require('../../utils/auth')
 
 
 
-router.get('/visit', async (req, res) => {
-    // ?replyArr[]=1&replyArr[]=5&replyArr[]=6
+router.get('/visit', authenticationToken, async (req, res) => {
     const response = await retrieveStatisticsController.getVisit(req)
     res.send(response)
 } )
 
 
-router.get('/averageStayTime', async (req, res) => {
+router.get('/averageStayTime', authenticationToken, async (req, res) => {
     const response = await retrieveStatisticsController.getAverageStayTime(req)
     res.send(response)
 } )
 
-router.get('/platform', async (req, res) => {
+router.get('/platform', authenticationToken, async (req, res) => {
     const response = await retrieveStatisticsController.getPlatform(req)
     res.send(response)
 } )
