@@ -5,6 +5,8 @@ import VisitByLocationChart from 'components/Statistics/VisitByLocationChart'
 import VisitByReplyChart from 'components/Statistics/VisitByReplyChart'
 import VisitByLocationReplyChart from 'components/Statistics/VisitByLocationReplyChart';
 import PlatfromCount from 'components/Statistics/PlatformCount';
+import PlatformLocationChart from 'components/Statistics/PlatformLocation';
+import PlatformReplyChart from 'components/Statistics/PlatformReply';
 import Menu from "components/Menu";
 import './index.css'
 import { DatePicker, Space } from 'antd';
@@ -51,8 +53,18 @@ class StatisticsPage extends React.Component {
                         </div>
                         <div className="summary-section">
                             <DatePick />
-                            <div>The percentage comparsion between users used mobile or computer devices to access our website</div>
+                            <div>The percentage comparsion between users used mobile or computer devices</div>
                             <PlatfromCount />
+                        </div>
+                        <div className="summary-section">
+                            <DatePick />
+                            <div>The comparsion between users used mobile or computer devices at one location</div>
+                            <PlatformLocationChart />
+                        </div>
+                        <div className="summary-section">
+                            <DatePick />
+                            <div>The comparsion between users used mobile or computer devices with replys they are interested</div>
+                            <PlatformReplyChart />
                         </div>
                     </Content>
 

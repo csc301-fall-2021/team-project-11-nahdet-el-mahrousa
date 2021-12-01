@@ -42,7 +42,7 @@ export async function requestGetStayTimeStats( params ) {
     params.from = params.from||"Reply"
     
     try {
-        const response = await api.fetchVisitStats( params )
+        const response = await api.fetchStayTime( params )
         if (response.statusCode === 200) {
             // Format body, to trim characters.
             // const workflow = _fetchVisitStats(response.entity)
@@ -67,7 +67,7 @@ export async function requestGetPlatformStats( params ) {
     params.from = params.from||"Location"
     
     try {
-        const response = await api.fetchVisitStats( params )
+        const response = await api.fetchPlatform( params )
         if (response.statusCode === 200) {
             // Format body, to trim characters.
             // const workflow = _fetchVisitStats(response.entity)
