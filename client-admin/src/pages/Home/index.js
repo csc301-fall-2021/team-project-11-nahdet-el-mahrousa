@@ -1,7 +1,7 @@
 import React from 'react';
 import Menu from "components/Menu";
-import { Layout } from 'antd';
-const { Header, Content } = Layout;
+import { Layout, PageHeader } from 'antd';
+const { Content } = Layout;
 // import { UserOutlined } from "@ant-design/icons";
 // const { Meta } = Card;
 class HomePage extends React.Component {
@@ -10,9 +10,9 @@ class HomePage extends React.Component {
             <Layout>
                 <Menu />
 
-                <Layout theme="light">
+                <Layout theme="light" style={{ marginLeft: 200, minHeight: "100vh" }}>
 
-                    <Header style={{ "backgroundColor": "white" }}><h1>Admin Dashboard for NM Bot</h1></Header>
+                    <PageHeader title="Admin Dashboard for NM Bot" />
 
                     <Content style={{ padding: '1rem' }}>
                         

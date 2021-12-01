@@ -1,6 +1,6 @@
 import React from "react";
 import BotSubTable from "../BotSubTable";
-import { MessageOptionMenu } from "../BotModal";
+import MessageOptionMenu from "../BotMessageOptionMenu";
 import { Table } from "antd";
 
 class BotTable extends React.Component {
@@ -10,16 +10,32 @@ class BotTable extends React.Component {
       return entity.message;
     });
     const expandedRowRender = (data) => {
-      return <BotSubTable data={data} msgList={msgList}></BotSubTable>;
+      return <BotSubTable data={data} msgList={msgList} />;
     };
 
     const columns = [
-      { title: "ID", render: (data) => <span>{data.message._id}</span> },
+      {
+        title: "Message ID",
+        key: '_id',
+        width: "220px",
+        render: (data) => <span>{data.message._id}</span>,
+      },
       {
         title: "Question",
+        key: 'content',
+        // width: "450px",
         render: (data) => <span>{data.message.content}</span>,
+        sorter: (a, b) => a.message.content < b.message.content,
+        sortDirections: ['ascend', 'descend'],
       },
-      { title: "Label", render: (data) => <span>{data.message.label}</span> },
+      {
+        title: "Label",
+        key: 'label',
+        width: "250px",
+        render: (data) => <span>{data.message.label}</span>,
+        sorter: (a, b) => a.message.label < b.message.label,
+        sortDirections: ['ascend', 'descend'],
+      },
       {
         title: "Actions",
         key: "operation",
@@ -27,10 +43,11 @@ class BotTable extends React.Component {
           <MessageOptionMenu
             msg={data.message}
             msgList={msgList}
-          ></MessageOptionMenu>
+          />
         ),
       },
     ];
+
     return (
       <div>
         <Table
@@ -39,7 +56,7 @@ class BotTable extends React.Component {
           columns={columns}
           expandable={{ expandedRowRender }}
           dataSource={data}
-          pagination={{ position: ["bottomRights"] }}
+        // pagination={{ position: ["bottomRights"] }}
         />
       </div>
     );

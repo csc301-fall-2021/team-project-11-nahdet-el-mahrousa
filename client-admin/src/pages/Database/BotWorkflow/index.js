@@ -22,15 +22,8 @@ class BotWorkflowPage extends React.Component {
             <Layout>
                 <Menu />
 
-                <Layout theme="light">
-                    <PageHeader
-                        // ghost={false}
-                        title="Bot Workflow"
-                        // extra={[
-                        //     <Button key="3" onClick={this.refreshTable} >Refresh</Button>,
-                        //     <CreateAdminDrawer />
-                        // ]}
-                    />
+                <Layout theme="light" style={{ marginLeft: 200, minHeight: "100vh" }}>
+                    <PageHeader title="Bot Workflow" />
 
                     <Content style={{ padding: '1rem' }}>
                         <BotWorkflowGraph />

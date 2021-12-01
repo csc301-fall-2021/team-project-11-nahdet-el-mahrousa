@@ -1,12 +1,13 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
-import { Drawer, Form, Button, Col, Input, Space, message } from 'antd';
+import { Drawer, Form, Button, Col, Row, Input, Select, DatePicker, Space, message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { sendMessageToBackend } from "actions/Bot";
 
 const { TextArea } = Input;
 // Reference: https://ant.design/components/drawer-cn/#components-drawer-demo-form-in-drawer
-class NewMessageDrawer extends React.Component {
+class EditMessageDrawer extends React.Component {
     state = {
         visible: false,
         loading: false
@@ -34,8 +35,9 @@ class NewMessageDrawer extends React.Component {
     submitForm = async (values) => {
         this.setState({ loading: true })
         try {
-            sendMessageToBackend(null, values.content, values.label || '');
-            message.success(`Created new message`)
+            const id = this.props.target.msg._id
+            sendMessageToBackend(id, values.content, values.label || '');
+            message.success(`Edited message ${id}`)
             this.onClose()
         } catch (error) {
             message.error(String(error))
@@ -46,18 +48,20 @@ class NewMessageDrawer extends React.Component {
     render() {
         return (
             <>
-                <Button type="primary" onClick={this.showDrawer} icon={<PlusOutlined />}>
-                    Create new message
+                <Button onClick={this.showDrawer}>
+                    Edit
                 </Button>
 
                 <Drawer
-                    title="Create a new message"
+                    title={`Edit Message ${this.props.target.msg._id}`}
                     width="30%"
                     onClose={this.onClose}
                     visible={this.state.visible}
                 >
                     <Form
+                        initialValues={{ content: this.props.target.msg.content, label: this.props.target.msg.label}}
                         layout="vertical"
+                        hideRequiredMark
                         onFinish={this.submitForm}
                         autoComplete="off"
                     >
@@ -66,7 +70,7 @@ class NewMessageDrawer extends React.Component {
                                 name="content"
                                 label="Content"
                                 rules={[
-                                    { required: true, message: 'Please enter message content' },
+                                    { required: true, message: 'Please enter the content of message.' },
                                     { type: 'string', min: 1 }
                                 ]}
                             >
@@ -90,7 +94,7 @@ class NewMessageDrawer extends React.Component {
                         <Space style={{ marginTop: "20px" }}>
                             <Button onClick={this.onClose}>Cancel</Button>
                             <Button type="primary" htmlType="submit" loading={this.state.loading}>
-                                Create
+                                Submit Edit
                             </Button>
                         </Space>
                     </Form>
@@ -99,4 +103,4 @@ class NewMessageDrawer extends React.Component {
         );
     }
 }
-export default NewMessageDrawer
+export default EditMessageDrawer

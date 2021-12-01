@@ -12,6 +12,7 @@ import { DatePicker, Space } from 'antd';
 /*function onChange(date, dateString) {
   console.log(date, dateString);
 }*/
+import { Layout, PageHeader } from 'antd';
 
 const { Header, Content } = Layout;
 const { RangePicker } = DatePicker;
@@ -23,9 +24,8 @@ class StatisticsPage extends React.Component {
             <Layout>
                 <Menu />
 
-                <Layout theme="light">
-
-                    <Header style={{ "backgroundColor": "white" }}><h1>NM Bot Statistics</h1></Header>
+                <Layout theme="light" style={{ marginLeft: 200, minHeight: "100vh" }}>
+                    <PageHeader title="NM Bot Statistics" />
 
                     <Content style={{ padding: '1rem' }}>
                         <div className="summary-section">
