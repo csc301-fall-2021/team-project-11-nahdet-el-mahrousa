@@ -264,7 +264,6 @@ class RetrieveDataService {
     try {
       let { report, reportData, reportDataRow, reportRowCount, res } =
         await this._initialExtractReport(rawData);
-      console.log(res);
       res["data"] = [];
       for (let row = 0; row < reportRowCount; row += 1) {
         let currRow = reportDataRow[row];
@@ -336,9 +335,9 @@ class RetrieveDataService {
     }
   }
 
-  // ========================================================================================================================================
-  // The above functions are the general helper functions for this service. The below services will be the specific services for each feature
-  // ========================================================================================================================================
+  // ===============================================================================================================================================================================
+  // The above functions are the general helper functions for this service. The below services will be the specific services for each feature (and some associated helper functions)
+  // ===============================================================================================================================================================================
 
   /**Get the user visit number separated by day and location
    *
@@ -461,7 +460,7 @@ class RetrieveDataService {
       [0],
       "location",
       [1, 2],
-      "user",
+      "visit",
       0
     );
   }
@@ -475,11 +474,9 @@ class RetrieveDataService {
     let location = locationArray.map((value) => {
       return value.split(",");
     });
-    console.log(location);
     let city = [];
     let country = [];
     for (let eachLocation of location) {
-      console.log(eachLocation[0]);
       if (!(eachLocation[0] in city)) {
         city.push(eachLocation[0]);
       }
@@ -847,14 +844,13 @@ class RetrieveDataService {
    * @returns The restrucutred data report for frontend to render
    */
   async _reformatgetPlatformFromLocation(rawData) {
-    console.log("location?");
     return await this._getSimpleTwoVariableStructure(
       rawData,
       "location",
       [1, 2],
       "platform",
       [0],
-      "visit",
+      "user",
       0
     );
   }
@@ -903,7 +899,7 @@ class RetrieveDataService {
       [1],
       "platform",
       [0],
-      "visit",
+      "user",
       0
     );
   }
