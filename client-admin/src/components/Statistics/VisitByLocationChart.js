@@ -1,28 +1,47 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { Column } from '@ant-design/charts';
+import { requestGetVisitsStats } from "actions/Statistics"
+import { message } from 'antd'
 
-const VisitByLocationChart = () => {
-  const [data, setData] = useState([]);
+class VisitByLocationChart extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      loading: false,
+      data: [],
+    }
+  }
 
-  useEffect(() => {
-    asyncFetch();
-  }, []);
+  componentWillMount() {
+    this.fetch()
+  }
 
-  const asyncFetch = () => {
-    fetch('https://gw.alipayobjects.com/os/antfincdn/iPY8JFnxdb/dodge-padding.json')
-      .then((response) => response.json())
-      .then((json) => setData(json))
-      .catch((error) => {
-        console.log('fetch data failed', error);
-      });
-  };
-  const config = {
-    data,
+  /**
+   * Fetch workflow data from server.
+   * @param {*} params 
+   */
+   fetch = async (params = {}) => {
+    this.setState({ loading: true })
+    try {
+      const data = await requestGetVisitsStats(params)
+      this.setState({
+        data,
+        loading: false
+      })
+    } catch (error) {
+      message.error(String(error))
+      this.setState({
+        loading: false,
+      })
+    }
+  }
+
+  config = {
     isGroup: true,
-    xField: '月份',
-    yField: '月均降雨量',
-    seriesField: 'name',
+    xField: 'reply',
+    yField: 'visit',
+    seriesField: 'location',
     // 分组柱状图 组内柱子间的间距 (像素级别)
     dodgePadding: 2,
     label: {
@@ -43,9 +62,11 @@ const VisitByLocationChart = () => {
         },
       ],
     },
-  };
+  }
 
-  return <Column {...config} />;
-};
+  render () {
+    return <Column data={this.state.data} {...this.config} />;
+  }
+}
 
 export default VisitByLocationChart

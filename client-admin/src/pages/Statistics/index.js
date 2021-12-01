@@ -1,11 +1,11 @@
 import React from 'react';
 import DatePick from 'components/DatePicker/DatePicker'
-import StageDemoPie from 'components/Statistics/StageDemoPie';
 import VisitByLocationLines from 'components/Statistics/VisitByLocationLines'
 import VisitByLocationChart from 'components/Statistics/VisitByLocationChart'
-import VisitByQuestionChart from 'components/Statistics/VisitByQuestionChart'
+import VisitByReplyChart from 'components/Statistics/VisitByReplyChart'
+import VisitByLocationReplyChart from 'components/Statistics/VisitByLocationReplyChart';
+import PlatfromCount from 'components/Statistics/PlatformCount';
 import Menu from "components/Menu";
-import { Layout } from 'antd';
 import './index.css'
 import { DatePicker, Space } from 'antd';
 
@@ -31,22 +31,28 @@ class StatisticsPage extends React.Component {
                         <div className="summary-section">
                             <RangePicker
                             onChange={this.onChange} />
-                            <div>The overview of people from different area</div>                   
+                            <div>The overview of people from different area during this period</div>                   
                             <VisitByLocationLines />
                         </div>
                         <div className="summary-section">
                             <DatePick />
-                            <div>The percentage of people from different area in Egypt</div>
+                            <div>The amount of visit for a question from different locations</div>
                             <VisitByLocationChart />
                         </div>
                         <div className="summary-section">
                             <DatePick />
-                            <div>The percentage of people from different questions in our website</div>
-                            <VisitByQuestionChart />
+                            <div>The amount of visit of all types of questions at one location</div>
+                            <VisitByReplyChart />
                         </div>
                         <div className="summary-section">
-                            <div>The percentage of different stage</div>
-                            <StageDemoPie />
+                            <DatePick />
+                            <div>The amount of visit for a reply from different locations</div>
+                            <VisitByLocationReplyChart />
+                        </div>
+                        <div className="summary-section">
+                            <DatePick />
+                            <div>The percentage comparsion between users used mobile or computer devices to access our website</div>
+                            <PlatfromCount />
                         </div>
                     </Content>
 
