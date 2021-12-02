@@ -12,12 +12,11 @@ const defaultDateRange = {
 }
 
 // Reference: https://charts.ant.design/zh/examples/line/multiple#line-label
-class VisitLocationSateLineGraph extends React.Component {
+class VisitLocationStatLineGraph extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       loading: false,
-      data: [],
       ...defaultDateRange,
     }
   }
@@ -34,10 +33,12 @@ class VisitLocationSateLineGraph extends React.Component {
     this.setState({ loading: true })
     try {
       const data = await requestGetVisitsStats(params)
+      this.props.setData(data)
       this.setState({
-        data,
+        // data,
         loading: false
       })
+      
     } catch (error) {
       message.error(String(error))
       this.setState({
@@ -94,7 +95,7 @@ class VisitLocationSateLineGraph extends React.Component {
 
   render() {
     return (
-      <Col span={10} offset={1}>
+      <Col span={24}>
         <Space direction="vertical" size={6} style={{ width: "100%" }}>
           <Title level={2}>Visitor trends</Title>
           {/* <Space> */}
@@ -105,7 +106,7 @@ class VisitLocationSateLineGraph extends React.Component {
           />
 
           <Line
-            data={this.state.data}
+            data={this.props.data}
             loading={this.state.loading}
             {...this.config}
           />
@@ -117,4 +118,4 @@ class VisitLocationSateLineGraph extends React.Component {
   }
 }
 
-export default VisitLocationSateLineGraph;
+export default VisitLocationStatLineGraph;

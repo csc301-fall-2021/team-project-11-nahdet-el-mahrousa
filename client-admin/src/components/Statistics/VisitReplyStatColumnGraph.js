@@ -12,12 +12,11 @@ const defaultDateRange = {
 }
 
 
-class VisitReplyStatLineGraph extends React.Component {
+class VisitReplyStatColumnGraph extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             loading: false,
-            data: [],
             ...defaultDateRange,
             replies: [],    // Store all replies from server
             ridArr: ["619eccb110b1965f4b94719e", "619ef869871baaa33b8da9f9", "619efbf9871baaa33b8daaa4"]      // Store the replies to query
@@ -37,8 +36,9 @@ class VisitReplyStatLineGraph extends React.Component {
         this.setState({ loading: true })
         try {
             const data = await requestGetVisitReplyStats(params)
+            this.props.setData(data)
             this.setState({
-                data,
+                // data,
                 loading: false
             })
         } catch (error) {
@@ -116,7 +116,7 @@ class VisitReplyStatLineGraph extends React.Component {
 
     render() {
         return (
-            <Col span={10} offset={1}>
+            <Col span={24}>
                 <Space direction="vertical" size={6} style={{ width: "100%" }}>
                     <Title level={2}>Count of Reply by Location</Title>
                     {/* <Space> */}
@@ -148,7 +148,7 @@ class VisitReplyStatLineGraph extends React.Component {
                     </Row>
 
                     <Column
-                        data={this.state.data}
+                        data={this.props.data}
                         loading={this.state.loading}
                         {...this.config}
                     />
@@ -160,4 +160,4 @@ class VisitReplyStatLineGraph extends React.Component {
     }
 }
 
-export default VisitReplyStatLineGraph;
+export default VisitReplyStatColumnGraph;

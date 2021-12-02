@@ -29,7 +29,7 @@ export async function requestGetVisitsStats(params) {
             throw new Error(response.msg)
         }
     } catch (err) {
-        console.log(err)
+        console.error(err)
         throw err
     }
 }
@@ -62,7 +62,7 @@ export async function requestGetVisitReplyStats(params) {
             throw new Error(response.msg)
         }
     } catch (err) {
-        console.log(err)
+        console.error(err)
         throw err
     }
 }
@@ -116,58 +116,89 @@ export async function requestPlatformStat(params) {
             throw new Error(response.msg)
         }
     } catch (err) {
-        console.log(err)
+        console.error(err)
+        throw err
+    }
+}
+
+export async function requestWeeklyVisitStat() {
+    function getLastWeek() {
+        var today = new Date();
+        var lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
+        return lastWeek;
+    }
+
+    function sumVisit(data) {
+        const locationVisits = {}
+        let maxLocation = ""
+        let maxLocationVisits = 0
+        let sum = 0
+        data.forEach(d => {
+            let visit = Number(d.visit)
+            sum += visit
+            locationVisits[d.location] = locationVisits[d.location] ? locationVisits[d.location] + visit : visit
+            if (locationVisits[d.location] > maxLocationVisits){
+                maxLocationVisits = locationVisits[d.location]
+                maxLocation = d.location
+            }
+        })
+        return {
+            maxLocation,
+            maxLocationVisits,
+            sum
+        }
+    }
+
+    const startDate = getLastWeek().toISOString().split('T')[0]
+    const endDate = (new Date()).toISOString().split('T')[0]
+
+    try {
+        const response = await api.fetchVisitStats({ startDate, endDate })
+
+        if (response.statusCode === 200) {
+            // Format body, to trim characters.
+            const data = sumVisit(response.entity.data)
+            return data
+        } else if (response.statusCode === 401) {
+            // Login expire or not valid, return to login
+            backToLogin()
+        } else {
+            throw new Error(response.msg)
+        }
+    } catch (err) {
+        console.error(err)
         throw err
     }
 }
 
 
-// export async function requestGetStayTimeStats( params ) {
+export async function requestGetAvgStayTime(params) {
+    function format(data) {
+        return data.map(d => {
+            return {
+                location: d.location,
+                averagePageDuration: Number(d.averagePageDuration)
+            }
+        })
+    }
 
-//     params.startDate = params.startDate||"2021-11-01"
-//     params.endDate = params.endDate||"2021-12-03"
-//     params.from = params.from||"Reply"
+    params.startDate = params.startDate || "2021-11-01"
+    params.endDate = params.endDate || "2021-12-03"
 
-//     try {
-//         const response = await api.fetchStayTime( params )
-//         if (response.statusCode === 200) {
-//             // Format body, to trim characters.
-//             // const workflow = _fetchVisitStats(response.entity)
-//             const data = formatVisit(response.entity.data)
-//             return data
-//         } else if (response.statusCode === 401) {
-//             // Login expire or not valid, return to login
-//             backToLogin()
-//         } else {
-//             throw new Error(response.msg)
-//         }
-//     } catch (err) {
-//         console.log(err)
-//         throw err
-//     }
-// }
-
-// export async function requestGetPlatformStats( params ) {
-
-//     params.startDate = params.startDate||"2021-11-01"
-//     params.endDate = params.endDate||"2021-12-03"
-//     params.from = params.from||"Location"
-
-//     try {
-//         const response = await api.fetchPlatform( params )
-//         if (response.statusCode === 200) {
-//             // Format body, to trim characters.
-//             // const workflow = _fetchVisitStats(response.entity)
-//             const data = formatVisit(response.entity.data)
-//             return data
-//         } else if (response.statusCode === 401) {
-//             // Login expire or not valid, return to login
-//             backToLogin()
-//         } else {
-//             throw new Error(response.msg)
-//         }
-//     } catch (err) {
-//         console.log(err)
-//         throw err
-//     }
-// }
+    try {
+        const response = await api.fetchStayTime(params)
+        if (response.statusCode === 200) {
+            // Format body, to trim characters.
+            const data = format(response.entity.averagePageDuration.data)
+            return data
+        } else if (response.statusCode === 401) {
+            // Login expire or not valid, return to login
+            backToLogin()
+        } else {
+            throw new Error(response.msg)
+        }
+    } catch (err) {
+        console.error(err)
+        throw err
+    }
+}

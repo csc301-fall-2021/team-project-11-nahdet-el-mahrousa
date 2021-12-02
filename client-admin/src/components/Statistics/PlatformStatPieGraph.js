@@ -17,7 +17,6 @@ class PlatformStatPieGraph extends React.Component {
     super(props)
     this.state = {
       loading: false,
-      data: [],
       ...defaultDateRange,
     }
   }
@@ -35,8 +34,9 @@ class PlatformStatPieGraph extends React.Component {
     try {
       // console.log(params)
       const data = await requestPlatformStat(params)
+      this.props.setData(data)
       this.setState({
-        data,
+        // data,
         loading: false
       })
     } catch (error) {
@@ -92,7 +92,7 @@ class PlatformStatPieGraph extends React.Component {
 
   render() {
     return (
-      <Col span={10} offset={1}>
+      <Col span={24}>
         <Space direction="vertical" size={6} style={{ width: "100%" }}>
           <Title level={2}>Visitor Platforms</Title>
           {/* <Space> */}
@@ -103,7 +103,7 @@ class PlatformStatPieGraph extends React.Component {
           />
 
           <Pie
-            data={this.state.data}
+            data={this.props.data}
             loading={this.state.loading}
             {...this.config}
           />

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Typography } from 'antd';
 import { Link } from 'react-router-dom';
 import {
   UserOutlined,
@@ -11,8 +11,11 @@ import {
   InsertRowAboveOutlined
 } from "@ant-design/icons";
 
+import Logo from "assets/NM_logo.png"
+
 const { SubMenu } = Menu;
 const { Sider } = Layout;
+const { Title } = Typography
 
 // Reference: https://ant.design/components/menu-cn/#components-menu-demo-sider-current
 
@@ -42,17 +45,20 @@ const MenuComponent = () => {
       }}
       theme="light"
     >
+      <div className="logo" style={{ marginTop: "1rem", marginBottom: "1rem", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
+        <img src={Logo} style={{ width: "60%", marginLeft: "auto", marginRight: "auto" }} />
+      </div>
       <Menu className="siteBarLayout" mode="inline" openKeys={openKeys} onOpenChange={onOpenChange}>
 
-        <Menu.Item key="0" icon={<HomeOutlined />}>
+        {/* <Menu.Item key="0" icon={<HomeOutlined />}>
           <Link className="nav-item" to="/">
             Dashboard
           </Link>
-        </Menu.Item>
+        </Menu.Item> */}
 
         <Menu.Item key="1" icon={<LineChartOutlined />}>
           <Link className="nav-item" to="/statistics">
-            Bot Statistics
+            Dashboard
           </Link>
         </Menu.Item>
 
