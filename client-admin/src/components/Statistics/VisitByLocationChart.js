@@ -21,7 +21,7 @@ class VisitByLocationChart extends React.Component {
    * Fetch workflow data from server.
    * @param {*} params 
    */
-   fetch = async (params = {}) => {
+  fetch = async (params = {}) => {
     this.setState({ loading: true })
     try {
       const data = await requestGetVisitsStats(params)
@@ -64,7 +64,7 @@ class VisitByLocationChart extends React.Component {
     },
   }
 
-  render () {
+  render() {
     return <Column data={this.state.data} {...this.config} />;
   }
 }

@@ -1,22 +1,24 @@
 import React from 'react';
 import DatePick from 'components/DatePicker/DatePicker'
-import VisitByLocationLines from 'components/Statistics/VisitByLocationLines'
-import VisitByLocationChart from 'components/Statistics/VisitByLocationChart'
-import VisitByReplyChart from 'components/Statistics/VisitByReplyChart'
-import VisitByLocationReplyChart from 'components/Statistics/VisitByLocationReplyChart';
-import PlatfromCount from 'components/Statistics/PlatformCount';
-import PlatformLocationChart from 'components/Statistics/PlatformLocation';
-import PlatformReplyChart from 'components/Statistics/PlatformReply';
+import VisitLocationStatLineGraph from 'components/Statistics/VisitLocationStatLineGraph'
+import VisitReplyStatColumnGraph from 'components/Statistics/VisitReplyStatColumnGraph';
+import PlatformStatPieGraph from 'components/Statistics/PlatformStatPieGraph';
+// import VisitByLocationChart from 'components/Statistics/VisitByLocationChart'
+// import VisitByReplyChart from 'components/Statistics/VisitByReplyChart'
+// import VisitByLocationReplyChart from 'components/Statistics/VisitByLocationReplyChart';
+// import PlatfromCount from 'components/Statistics/PlatformCount';
+// import PlatformLocationChart from 'components/Statistics/PlatformLocation';
+// import PlatformReplyChart from 'components/Statistics/PlatformReply';
 import Menu from "components/Menu";
-import './index.css'
-import { DatePicker, Space } from 'antd';
+// import './index.css'
+import { DatePicker, Space, Row, Col } from 'antd';
 
 /*function onChange(date, dateString) {
   console.log(date, dateString);
 }*/
 import { Layout, PageHeader } from 'antd';
 
-const { Header, Content } = Layout;
+const { Content } = Layout;
 const { RangePicker } = DatePicker;
 
 class StatisticsPage extends React.Component {
@@ -29,14 +31,22 @@ class StatisticsPage extends React.Component {
                 <Layout theme="light" style={{ marginLeft: 200, minHeight: "100vh" }}>
                     <PageHeader title="NM Bot Statistics" />
 
-                    <Content style={{ padding: '1rem' }}>
-                        <div className="summary-section">
-                            <RangePicker
-                            onChange={this.onChange} />
-                            <div>The overview of people from different area during this period</div>                   
-                            <VisitByLocationLines />
-                        </div>
-                        <div className="summary-section">
+                    <Content style={{ padding: '2rem' }}>
+                        <Row style={{ marginBottom: '2rem' }}>
+                            <PlatformStatPieGraph />
+                            <VisitLocationStatLineGraph />
+
+                        </Row>
+
+                        <Row style={{ marginBottom: '2rem' }}>
+                            <VisitReplyStatColumnGraph />
+                        </Row>
+
+                        <Row style={{ marginBottom: '2rem' }}>
+
+                        </Row>
+
+                        {/* <div className="summary-section">
                             <DatePick />
                             <div>The amount of visit for a question from different locations</div>
                             <VisitByLocationChart />
@@ -65,7 +75,7 @@ class StatisticsPage extends React.Component {
                             <DatePick />
                             <div>The comparsion between users used mobile or computer devices with replys they are interested</div>
                             <PlatformReplyChart />
-                        </div>
+                        </div> */}
                     </Content>
 
                 </Layout>
