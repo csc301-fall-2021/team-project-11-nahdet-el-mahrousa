@@ -7,7 +7,7 @@ class RefreshButton extends React.Component {
     render() {
         const { clearChatHistory } = this.props
         return (
-            <div className="refresh-view">
+            <div className="refresh-container">
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
                 <button className="refresh-btn" onClick={clearChatHistory}><i class="fa fa-refresh"></i></button>
             </div>

@@ -8,9 +8,9 @@ class StartButton extends React.Component {
         const { initChat } = this.props
         return (
             <div className="starter-view">
-                <button className="start-btn" onClick={initChat}> Get Start </button>
+                <button className="start-btn" onClick={initChat}> Start A Chat with NM Bot </button>
             </div>
-            
+
         )
     }
 }

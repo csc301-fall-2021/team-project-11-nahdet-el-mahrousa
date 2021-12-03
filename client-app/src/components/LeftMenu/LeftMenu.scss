@@ -3,6 +3,11 @@
     height: 100%;
     background-color: white;
     padding: 1rem;
+    
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
 
     .brand-container {
         width: 100%;
@@ -16,16 +21,9 @@
     }
 }
 
-.photo {
-    width: 20vw;
-    height: width;
-    position: relative;
-    left: 15%;
-
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.brand-logo {
+    width: 150px;
+    height: auto;
 }
 
 @media only screen and (max-width: 768px) {
@@ -33,7 +31,7 @@
         position: relative;
         bottom: 20px;
     }
-    .photo {
-        width: 0vw;
+    .brand-logo {
+        display: none;
     }
 }

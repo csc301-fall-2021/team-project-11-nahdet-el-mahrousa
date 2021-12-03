@@ -1,17 +1,12 @@
-.refresh-view {
-    width: 100%;
-    height: 100px;
-    top: 96.5%;
-    left: 97%;
+.refresh-container {
+    width: 30px;
+    height: 30px;
+    bottom: 0;
+    right: 20px;
     position: fixed;
-
-    // display:flex;
-    // flex-direction: column;
-    // justify-content: center;
-    // align-items: center;
 }
-.refresh-btn {
 
+.refresh-btn {
     color: white;
     background-color: #333333;
     border: none;
@@ -30,11 +25,11 @@
     }
 }
 
-@media only screen and (max-width: 768px) {
-    .refresh-view {
-        left: 92%;
-    }
-    .start-btn {
-        font-size: small;
-    }
-}
+// @media only screen and (max-width: 768px) {
+//     .refresh-view {
+//         left: 92%;
+//     }
+//     .start-btn {
+//         font-size: small;
+//     }
+// }
