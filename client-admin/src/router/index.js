@@ -33,7 +33,7 @@ export default class RenderRoutes extends React.Component {
                 <GuardedRoute exact path='/statistics' component={StatisticsPage} />
 
                 {/* HOME */}
-                <GuardedRoute exact path='/' component={HomePage} />
+                <GuardedRoute exact path='/' component={StatisticsPage} />
 
                 {/* NOT FOUND */}
                 <Route component={() => <h1>Not Found!</h1>} />
