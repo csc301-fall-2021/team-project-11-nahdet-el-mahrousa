@@ -72,7 +72,7 @@ class BotService {
         if (!rpl) {
             return undefined
         }
-        if (!("toMessage" in rpl) || !rpl.toMessage){
+        if (!("toMessage" in rpl) || !rpl.toMessage) {
             return null
         }
 
@@ -127,16 +127,10 @@ class BotService {
 
     /**
      * 
-     * @param {User} user User that makes this operation.
-     * @param {Object} query Query constraints.
-     * @returns Response of Replies that satisfy the constraints.
+     * @returns Response of all Replies.
      */
-    async getReplies(user, query) {
-        if (!user.privilege.accessBot) {
-            return null
-        }
-
-        const replies = await this.replyDao.search(query)
+    async getReplies() {
+        const replies = await this.replyDao.getAll()
         return replies
     }
 
@@ -173,13 +167,13 @@ class BotService {
      * @param {ObjectId} toMessage The message id that this replies redirects to.
      * @returns New Reply. If user does not have privilege, return null.
      */
-    async createReply(user, content, label, fromMessage, nextMessage) {
+    async createReply(user, content, label, fromMessage, toMessage) {
         // Validate modifier's privilege
         if (!user.privilege.modifyBot) {
             return null
         }
 
-        const newReply = await this.replyDao.create({ content, label, fromMessage, nextMessage })
+        const newReply = await this.replyDao.create({ content, label, fromMessage, toMessage })
 
         if (newReply !== null) {
             logger.log(`[${user.username}] CREATED Reply \'${newReply._id}\'`)
@@ -309,18 +303,131 @@ class BotService {
     /**
      * Create a well formatted bot.
      * @param {User} user User that makes this operation.
-     * @param {*} query Query constraints on Messages.
+     * @param {*} messageQuery Query constraints on Messages.
+     * @param {*} replyQuery Query constraints on Replies.
      * @returns A well formatted object containing all the messages and replies: [ { message, replies } ]
      */
-    async getBot(user, query) {
+    async getBot(user, messageQuery, replyQuery) {
+        if (!user.privilege.accessBot) {
+            return null
+        }
+
+        let messages = await this.messageDao.search(messageQuery)
+        const addOnReplies = await this.replyDao.search(replyQuery)
+
+        if(Object.keys(replyQuery).length !== 0 && Object.keys(messageQuery).length === 0){
+            messages = []
+        }
+
+        const messageIds = []
+
+        for(let message of messages){
+            messageIds.push(message.convertedId)
+        }
+
+        for(let reply of addOnReplies){
+            let addOnMessage = await this.messageDao.search({convertedId: reply.fromMessage})
+            if(addOnMessage.length <= 0){
+                continue
+            }
+            addOnMessage = addOnMessage[0]
+            if (messageIds.indexOf(addOnMessage.convertedId) < 0){
+                messages.push(addOnMessage)
+                messageIds.push(addOnMessage.convertedId)
+            }
+        }
+
+        const allReplies = await this.replyDao.getAll()
+        const bot = this._buildBotList({ messages, replies: allReplies })
+        return bot
+    }
+
+
+    /**
+     * Construct a node object for given message.
+     * @param {Array} message Message in database.
+     * @returns node object for workflow
+     */
+    _generateNode(message) {
+        const node = {
+            id: `${message.convertedId}`,
+            value: {
+                title: `${message.label}`,
+                items: [
+                    {
+                        text: 'id',
+                        value: `${message.convertedId}`
+                    },
+                    {
+                        text: 'label',
+                        value: `${message.label}`
+                    },
+                    {
+                        text: 'content',
+                        value: `${message.content}`
+                    }
+                ]
+            }
+        }
+
+        return node
+    }
+
+    /**
+     * Construct an array of edge objects for given message and corresponding replies.
+     * @param {Array} replies Replies from one message. 
+     * @returns an array of edge objects for workflow
+     */
+     _generateEdges(replies) {
+        const edges = []
+        for(let reply of replies){
+            let value = reply.label
+            if(!value || value === ""){
+                value = reply.content
+            }
+            edges.push({
+                source: `${reply.fromMessage}`,
+                target: `${reply.toMessage}`,
+                value: `${value}`,
+            })
+        }
+        return edges
+    }
+
+    /**
+     * Construct a workflow object for given messages and replies.
+     * @param {Array} messages Messages in database.
+     * @param {Array} replies All replies in database. 
+     * @returns { nodes, edges } where nodes and edges are array
+     */
+    _buildWorkFlow({ messages, replies }) {
+        const nodes = []
+        const edges = []
+
+        for (let msg of messages) {
+            nodes.push(this._generateNode(msg))
+            const repliesOfMessage = replies.filter(r => r.fromMessage.toString() === msg._id.toString())
+            edges.push(...this._generateEdges(repliesOfMessage))
+        }
+
+        return { nodes, edges }
+    }
+
+    /**
+     * Create a well formatted workflow.
+     * @param {User} user User that makes this operation.
+     * @param {*} query Query constraints on Messages.
+     * @returns A workflow that in format { nodes, edges } where nodes and edges are array
+     */
+    async getWorkflow(user, query) {
         if (!user.privilege.accessBot) {
             return null
         }
 
         const messages = await this.messageDao.search(query)
         const replies = await this.replyDao.search()
-        const bot = this._buildBotList({ messages, replies })
-        return bot
+        const workflow = this._buildWorkFlow({ messages, replies })
+        return workflow
     }
 
 }

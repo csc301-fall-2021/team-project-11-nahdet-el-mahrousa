@@ -10,7 +10,6 @@ export async function httpGet(route) {
 }
 
 export async function httpPost(route, data = {}) {
-  console.log(JSON.stringify(data));
   const url = origin + route;
   const response = await fetch(url, {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.

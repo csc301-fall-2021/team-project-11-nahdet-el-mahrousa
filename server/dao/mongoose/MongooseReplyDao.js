@@ -1,5 +1,6 @@
 const logger = { log: console.log }
 const { Reply } = require('../../models/models.mongoose')
+const OnjectId = require("mongodb").ObjectId
 
 class MongooseReplyDao {
     constructor(db = null) {
@@ -19,12 +20,21 @@ class MongooseReplyDao {
         try {
             const newReply = new Reply({ content, label, fromMessage, toMessage })
             const createdReply = await newReply.save()
+            await Reply.findByIdAndUpdate(createdReply._id, { convertedId: createdReply._id.toString() })
             logger.log(`MONGOOSE CREATED Reply ${createdReply._id}`)
             return newReply
         } catch (err) {
             logger.log(err)
             return null
         }
+    }
+    //TODO: Decide on if we need it
+    async getMultiple(rid){
+        let ridInput = rid.map(function(val){
+            return ObjectId(val);
+        })
+        const reply = await Reply.find({"_id" : {"$in" : ridInput }});
+        return reply
     }
 
     /**
@@ -43,7 +53,11 @@ class MongooseReplyDao {
      * @returns Array of Replies
      */
     async getAll() {
-        return await Reply.find().exec()
+        let replies = await Reply.find().exec()
+        for(let reply of replies){
+            await Reply.findByIdAndUpdate(reply._id, { convertedId: reply._id.toString() })
+        }
+        return replies
     }
 
     /**

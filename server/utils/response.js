@@ -2,7 +2,7 @@ const { ReasonPhrases, StatusCodes, UNAUTHORIZED } = require('http-status-codes'
 
 const response = {
     OK: { msg: ReasonPhrases.OK, statusCode: StatusCodes.OK, entity: null },
-    NOT_SATISFIED: { msg: "Service Requirements Not Satisfied", statusCode: StatusCodes.OK, entity: null },
+    NOT_SATISFIED: { msg: "Service Requirements Not Satisfied", statusCode: 400, entity: null },
     
     UNAUTHORIZED: { msg: ReasonPhrases.UNAUTHORIZED, statusCode: StatusCodes.UNAUTHORIZED, entity: null },
     FORBIDDEN: { msg: ReasonPhrases.FORBIDDEN, statusCode: StatusCodes.FORBIDDEN, entity: null },
@@ -10,6 +10,8 @@ const response = {
     
     TIMEOUT: { msg: ReasonPhrases.REQUEST_TIMEOUT, statusCode: StatusCodes.REQUEST_TIMEOUT, entity: null },
     SERVICE_UNAVAILABLE: { msg: ReasonPhrases.SERVICE_UNAVAILABLE, statusCode: StatusCodes.SERVICE_UNAVAILABLE, entity: null },
+    
+    INTERNAL_SERVER_ERROR: { msg: ReasonPhrases.INTERNAL_SERVER_ERROR, statusCode: StatusCodes.INTERNAL_SERVER_ERROR, entity: null },
 }
 
 

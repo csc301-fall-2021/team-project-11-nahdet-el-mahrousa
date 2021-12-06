@@ -1,117 +1,137 @@
-import { getItems, postItems, deleteItems, putItems } from "../util/http";
+import { backToLogin } from "actions/Auth";
+import { message } from "antd";
+import * as http from "../utils/http";
+const origin = process.env.REACT_APP_ORIGIN
 
 export function getBot(dispatchMessage) {
   let msg = [];
-  getItems("/admin/bot")
+  http.get("/admin/bot")
     .then((response) => {
       if (response.statusCode === 200) {
         msg = response.entity;
-        console.log(response.entity);
         dispatchMessage(msg);
+      } else if (response.statusCode === 401){
+        backToLogin()
       } else {
-        console.log(response.msg);
+        message.warning(response.msg)
       }
     })
     .catch((error) => {
-      console.log(error);
+      console.error(error);
+    });
+}
+
+export function getQueryBot(query, dispatchMessage) {
+  let msg = [];
+  let body = {[query.key]: query.value};
+  http.get("/admin/bot", body)
+    .then((response) => {
+      if (response.statusCode === 200) {
+        msg = response.entity;
+        dispatchMessage(msg);
+      } else if (response.statusCode === 401){
+        backToLogin()
+      } else {
+        message.warning(response.msg);
+      }
+    })
+    .catch((error) => {
+      console.error(error);
     });
 }
 
 export function createMessage(data, dispatchMessage) {
-  console.log(data);
-  postItems("/admin/bot/message", data)
+  http.post("/admin/bot/message", data)
     .then((response) => {
       if (response.statusCode === 200) {
-        console.log(response.msg);
         getBot(dispatchMessage);
+      } else if (response.statusCode === 401){
+        backToLogin()
       } else {
-        console.log(response.msg);
+        message.warning(response.msg);
       }
     })
     .catch((error) => {
-      console.log(error);
+      console.error(error);
     });
 }
 
 export function deleteMessage(data, dispatchMessage) {
-  console.log(data);
-  deleteItems("/admin/bot/message", data)
+  http.del("/admin/bot/message", data)
     .then((response) => {
       if (response.statusCode === 200) {
-        console.log(response.msg);
         getBot(dispatchMessage);
+      } else if (response.statusCode === 401){
+        backToLogin()
       } else {
-        console.log(response.msg);
+        message.warning(response.msg);
       }
     })
     .catch((error) => {
-      console.log(error);
+      console.error(error);
     });
 }
 
 export function editMessage(data, dispatchMessage) {
-  console.log(data);
-  putItems("/admin/bot/message", data)
+  http.put("/admin/bot/message", data)
     .then((response) => {
       if (response.statusCode === 200) {
-        console.log(response.msg);
         getBot(dispatchMessage);
+      } else if (response.statusCode === 401){
+        backToLogin()
       } else {
-        console.log(response.msg);
+        message.warning(response.msg);
       }
     })
     .catch((error) => {
-      console.log(error);
+      console.error(error);
     });
 }
 export function deleteReply(data, dispatchMessage) {
-  let msg = [];
-  console.log(data);
-  deleteItems("/admin/bot/reply", data)
+  http.del("/admin/bot/reply", data)
     .then((response) => {
       if (response.statusCode === 200) {
-        console.log(response.msg);
         getBot(dispatchMessage);
+      } else if (response.statusCode === 401){
+        backToLogin()
       } else {
-        console.log(response.msg);
+        message.warning(response.msg);
       }
     })
     .catch((error) => {
-      console.log(error);
+      console.error(error);
     });
 }
 
 export function createReply(data, dispatchMessage) {
-  let msg = [];
-  console.log(data);
-  postItems("/admin/bot/reply", data)
+  http.post("/admin/bot/reply", data)
     .then((response) => {
       if (response.statusCode === 200) {
-        console.log(response.msg);
         getBot(dispatchMessage);
+      } else if (response.statusCode === 401){
+        backToLogin()
       } else {
-        console.log(response.msg);
+        message.warning(response.msg);
       }
     })
     .catch((error) => {
-      console.log(error);
+      console.error(error);
     });
 }
 
 export function editReply(data, dispatchMessage) {
-  let msg = [];
-  console.log(data);
-  putItems("/admin/bot/reply", data)
+  http.put("/admin/bot/reply", data)
     .then((response) => {
       if (response.statusCode === 200) {
-        console.log(response.msg);
         getBot(dispatchMessage);
+      } else if (response.statusCode === 401){
+        backToLogin()
       } else {
-        console.log(response.msg);
+        message.warning(response.msg);
       }
     })
     .catch((error) => {
-      console.log(error);
+      console.error(error);
     });
 }
 
@@ -123,6 +143,6 @@ export function editReply(data, dispatchMessage) {
 //    })
 //    .then((response) => {
 //    }, (error) => {
-//       console.log(error);
+//       console.error(error);
 //    });
 // }

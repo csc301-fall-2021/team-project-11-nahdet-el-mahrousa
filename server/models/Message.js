@@ -4,7 +4,8 @@
  */
 const MessageSchema = {
     label: String,
-    content: String
+    content: String,
+    convertedId: String
 }
 
 module.exports = MessageSchema;

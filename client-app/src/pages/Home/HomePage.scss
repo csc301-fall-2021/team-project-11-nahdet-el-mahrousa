@@ -24,11 +24,28 @@
 
     .bot-view-section {
         width: 70%;
-        height: $content-height;
+        height: 96%;
 
         .bottom-decoration {
             background: #333333;
             height: $deco-height;
+            width: 100%;
+        }
+    }
+
+    
+}
+
+@media only screen and (max-width: 768px) {
+    .home-page {
+        flex-direction: column;
+        .left-menu-section {
+            height: 20%;
+            width: 100%;
+        }
+
+        .bot-view-section {
+            height: 76%;
             width: 100%;
         }
     }

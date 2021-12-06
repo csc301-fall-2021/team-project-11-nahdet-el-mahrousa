@@ -2,35 +2,37 @@
 
 .message-container {
     width: 100%;
+    max-width: 75%;
     margin-bottom: 2rem;
     margin-left: 1rem;
+    margin-right: 1rem;
 
     position: relative;
 
     .avatar {
-        width: 50px;
-        height: 50px;
+        width: 45px;
+        height: 45px;
 
         position: absolute;
-        top: -1rem;
         left: -1rem;
 
         background-color: #ad523b;
         border-radius: 50%;
-        
     }
 
     .message-bubble {
-        background-color: white;
+        position: relative;
+        left: 3rem;
+        top: 0.3rem;
 
-        
-        width: 60%;
+        background-color: white;
         @include chat-bubble();
+        width: fit-content;
+        min-width: 30%;
         
         .message-content {
             padding-left: 1rem;
             padding-right: 1rem;
-            // margin-bottom: 1rem;
 
             font-size: large;
             color: black;
@@ -39,6 +41,7 @@
 
         .replies-container {
             width: 90%;
+            
             margin-left: auto;
             margin-right: auto;
             margin-top: 1rem;
@@ -51,7 +54,6 @@
 
             .reply-option {
                 width: 90%;
-
                 margin: 5px;
                 margin-left: auto;
                 margin-right: auto;
@@ -60,11 +62,13 @@
                 justify-content: center;
 
                 .reply-option-btn {
-                    min-width: 40%;
-                    
+                    min-width: 90%;
+                    padding: 1rem;
                     padding-top: .5rem;
                     padding-bottom: .5rem;
+                    
 
+                    font-size: 100%;
                     color: white;
                     background-color: #439d7dee;
                     border: none;
@@ -76,11 +80,38 @@
                     }
 
                     &:active {
-                        background-color: #439d7dff;
+                        background-color: #439d7d;
                     }
                 }
             }
         }
     }
 
+}
+
+@media only screen and (max-width: 768px) {
+    .message-container {
+        .avatar {
+            left: -2rem;
+        }
+        .message-bubble {
+            left: 2rem;
+        }
+    }
+}
+
+@media only screen and (max-width: 360px) {
+    .message-container {
+        .avatar {
+            width: 40px;
+            height: 40px;
+            left: -2rem;
+        }
+        .message-bubble {
+            left: 1.5rem;
+            .message-content, .replies-container {
+                font-size: medium;
+            }
+        }
+    }
 }
