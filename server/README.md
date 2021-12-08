@@ -44,3 +44,4 @@ DATABASE_URI='mongodb+srv://<**username**>:<**password**>@nm-bot-csc301-dev.4t78
 ## Deployment
 
 The server is hosted by Heroku. Continuous Delivery is setup with GitHub Actions, which will be triggered on push to `main` and `staging` branches.
+
