@@ -1,15 +1,16 @@
-# NM Bot Server
+# **NM Bot Server**
 
-A Node.js + Express.js + MongoDB implementation of the server side of NM Bot app.
+A Node.js + Express.js + MongoDB + Google Analytics implementation of the server side of NM Bot app.
 
-## Features
+## **Features**
 
 The server contains function for both client and admin operations.
 
 - Bot chat: requesting messages from reply.
 - Managing Bot content.
+- Sending and Getting statistic data to google analytics
 
-## Set-up Instructions
+## **Set-up Instructions**
 
 ```shell
 # Load environment variables
@@ -30,17 +31,51 @@ npm run test
 node_modules/.bin/jest --detectOpenHandles -i "<test-file-name>"
 ```
 
-## Configuration
+## **Configuration**
 
-The app requires configuration of a MongoDB database URI to be stored in `/config` as `.env` files. The name of config file should match the `NODE_ENV` environment.
+The app requires configuration of some environment variables in `/config` as `.env` files. The name of config file should match the `NODE_ENV` environment.
 
-```shell
+An example of the environment file should in the below form:
+
+```sh
 # Example
-# Setting NODE_ENV='dev' needs to have a .env.dev file.
-# in /config/.env.dev
-DATABASE_URI='mongodb+srv://<**username**>:<**password**>@nm-bot-csc301-dev.4t78f.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+# The environment name
+NODE_ENV=dev
+
+# App name
+APP_NAME=NM_BOT_DEV
+
+# MongoDB URL
+DATABASE_URI=
+
+# Key for Authentication
+SECRET_KEY=
+
+# Google Analytic info
+GOOGLE_SERVICE_ACCOUNT_CREDENTIAL_KEY=
+REACT_GOOGLE_ANALYTICS_TRACKING_ID=
+GOOGLE_ANALYTICS_ALL_WEB_DATA_VIEW_ID=
 ```
 
-## Deployment
+## **Deployment**
 
 The server is hosted by Heroku. Continuous Delivery is setup with GitHub Actions, which will be triggered on push to `main` and `staging` branches.
+
+## **API**
+
+Please check the wiki for this repository.
+
+## **Contribution**
+
+Tianyang Hu:
+ - Client Bot
+ - User
+ - Admin search function
+
+Yuxuan Liu:
+ - Architecture
+ - Admin Bot Management
+ - Database
+
+Siyang LiU:
+ - Statistic
