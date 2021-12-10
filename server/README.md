@@ -15,7 +15,6 @@ The server contains function for both client and admin operations.
 ```shell
 # Load environment variables
 ## PowerShell
-$env:NODE_ENV="dev"  # dev | staging | prod
 # Requires .env files to be stored in /config.
 
 # Install dependencies
