@@ -57,8 +57,9 @@ Serena Yu:
  - User Authentication
 
 Yuxuan Liu:
- - Statstic
+ - Admin Dashboard Page
  - Admin Account Management Page
 
 Mark Yin:
- - Statistic
+ - Admin Dashboard Page
+ - Side Navbar
