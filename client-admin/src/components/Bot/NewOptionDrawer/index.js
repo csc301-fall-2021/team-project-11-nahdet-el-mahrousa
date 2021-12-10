@@ -60,9 +60,11 @@ class NewOptionDrawer extends React.Component {
   submitForm = async (values) => {
     this.setState({ loading: true });
     try {
+      // call sendReplyToBackend action.
       sendReplyToBackend(null, values.content, values.label || "", this.props.target.msg._id, values.toMessage || "");
       message.success(`Created new reply`);
       this.onClose();
+      // handle error
     } catch (error) {
       message.error(String(error));
       this.setState({ loading: false });
@@ -72,6 +74,7 @@ class NewOptionDrawer extends React.Component {
   render() {
     return (
       <>
+        {/* show drawer when button is clicked */}
         <Button
           type="primary"
           onClick={this.showDrawer}
@@ -86,6 +89,7 @@ class NewOptionDrawer extends React.Component {
           onClose={this.onClose}
           visible={this.state.visible}
         >
+           {/* form inside the drawer */}
           <Form
             layout="vertical"
             onFinish={this.submitForm}
@@ -95,6 +99,7 @@ class NewOptionDrawer extends React.Component {
               <Form.Item
                 name="content"
                 label="Content"
+                // content is required
                 rules={[
                   { required: true, message: "Please enter reply content" },
                   { type: "string", min: 0 },
@@ -105,6 +110,7 @@ class NewOptionDrawer extends React.Component {
               <Form.Item
                 name="label"
                 label="Label"
+                // label is not required
                 rules={[
                   { required: false, message: "Please enter label" },
                   { type: "string", min: 0 },
@@ -115,11 +121,13 @@ class NewOptionDrawer extends React.Component {
               <Form.Item
                 name="toMessage"
                 label="Next Message"
+                // toMessage is not required
                 rules={[
                   { required: false, message: "Please search for next message" },
                   { type: "string", min: 0 },
                 ]}
               >
+                {/* search and select the next message */}
                 <Select
                   showSearch
                   placeholder="Select next message"
@@ -147,6 +155,7 @@ class NewOptionDrawer extends React.Component {
             </Col>
 
             <Space style={{ marginTop: "20px" }}>
+              {/* cancel and submit button */}
               <Button onClick={this.onClose}>Cancel</Button>
               <Button
                 type="primary"

@@ -19,10 +19,12 @@ class DeleteButton extends React.Component {
 
       // TODO: to async request
       try {
+        // call deleteReplyToBackend action to delete reply when user clicks ok.
           deleteReplyToBackend(replyId)
           this.setState({ visible: false })
           this.setState({ confirmLoading: false })
           message.success(`Deleted reply`)
+          // handle error.
       } catch (error) {
           this.setState({ confirmLoading: false })
           message.error(String(error))
@@ -31,6 +33,7 @@ class DeleteButton extends React.Component {
 
   render() {
       return (
+        // use popconfirm to make sure user wants to delete the reply.
           <Popconfirm
               title="Confirm?"
               visible={this.state.visible}
@@ -49,8 +52,11 @@ class DeleteButton extends React.Component {
 export default function ReplyOptionMenu(props) {
   return (
     <div>
+      {/* use EditReplyDrawer and DeleteButton components */}
       <Space size="middle">
+        {/* pass in props */}
         <EditReplyDrawer target={props} />
+        {/* pass in props.data._id */}
         <DeleteButton target={props.data._id} />
       </Space>
     </div>
