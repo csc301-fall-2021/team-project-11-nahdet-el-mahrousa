@@ -313,10 +313,14 @@ class BotService {
         }
 
         let messages = await this.messageDao.search(messageQuery)
-        const addOnReplies = await this.replyDao.search(replyQuery)
+        let addOnReplies = await this.replyDao.search(replyQuery)
 
         if(Object.keys(replyQuery).length !== 0 && Object.keys(messageQuery).length === 0){
             messages = []
+        }
+
+        if(Object.keys(replyQuery).length === 0){
+            addOnReplies = []
         }
 
         const messageIds = []

@@ -52,7 +52,6 @@ class retrieveStatisticsController {
       );
       return response.NOT_SATISFIED;
     } else {
-      console.log(uin);
       if (uin.hasOwnProperty("ridArr") && uin.hasOwnProperty("locationArr")) {
         return await this._getVisitNumberFromLocationAndReply(uin);
       } else if (uin.hasOwnProperty("ridArr")) {
@@ -172,7 +171,6 @@ class retrieveStatisticsController {
       return response.NOT_SATISFIED;
     } else {
       let fromType = ["location", "reply"];
-      console.log(fromType.includes(uin.from));
       if (!fromType.includes(uin.from)) {
         logger.log("type not supported");
         return response.NOT_SATISFIED;
