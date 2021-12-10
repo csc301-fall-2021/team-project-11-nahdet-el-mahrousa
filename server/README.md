@@ -38,9 +38,6 @@ An example of the environment file should in the below form:
 
 ```sh
 # Example
-# The environment name
-NODE_ENV=dev
-
 # App name
 APP_NAME=NM_BOT_DEV
 
