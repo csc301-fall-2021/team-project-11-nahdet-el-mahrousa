@@ -48,6 +48,7 @@ class EditReplyDrawer extends React.Component {
     this.setState({ loading: true });
     try {
       const id = this.props.target.data._id;
+      // call sendReplyToBackend action, and pass data to backend.
       sendReplyToBackend(
         id,
         values.content,
@@ -55,7 +56,7 @@ class EditReplyDrawer extends React.Component {
         this.props.target.data.fromMessage,
         values.toMessage
       );
-      message.success(`Created new reply`);
+      message.success(`Edited new reply`);
       this.onClose();
     } catch (error) {
       message.error(String(error));
@@ -66,15 +67,17 @@ class EditReplyDrawer extends React.Component {
   render() {
     return (
       <>
+        {/* show drawer when button is clicked */}
         <Button onClick={this.showDrawer}>Edit</Button>
-
         <Drawer
           title={`Edit Reply ${this.props.target.data._id}`}
           width="30%"
           onClose={this.onClose}
           visible={this.state.visible}
         >
+          {/* form inside the drawer */}
           <Form
+            // fill in current values of content, label, and toMessage
             initialValues={{
               content: this.props.target.data.content,
               label: this.props.target.data.label,
@@ -89,6 +92,7 @@ class EditReplyDrawer extends React.Component {
                 name="content"
                 label="Content"
                 rules={[
+                  // content is required
                   { required: true, message: "Please enter reply content." },
                   { type: "string", min: 1 },
                 ]}
@@ -100,6 +104,7 @@ class EditReplyDrawer extends React.Component {
                 label="Label"
                 rules={[
                   {
+                    // label is not required
                     required: false,
                     message: "Please enter label of the reply for admin.",
                   },
@@ -113,12 +118,14 @@ class EditReplyDrawer extends React.Component {
                 label="Next Message"
                 rules={[
                   {
+                    // toMessage is not required
                     required: false,
                     message:
                       "Please search for next message this reply will direct to.",
                   },
                 ]}
               >
+                {/* search and select the next message */}
                 <Select
                   showSearch
                   // style={{ width: 300 }}
@@ -150,6 +157,7 @@ class EditReplyDrawer extends React.Component {
             </Col>
 
             <Space style={{ marginTop: "20px" }}>
+              {/* cancel and submit button */}
               <Button onClick={this.onClose}>Cancel</Button>
               <Button
                 type="primary"

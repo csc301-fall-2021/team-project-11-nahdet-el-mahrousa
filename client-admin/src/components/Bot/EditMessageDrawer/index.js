@@ -36,6 +36,7 @@ class EditMessageDrawer extends React.Component {
         this.setState({ loading: true })
         try {
             const id = this.props.target.msg._id
+            // call sendMessageToBackend action
             sendMessageToBackend(id, values.content, values.label || '');
             message.success(`Edited message ${id}`)
             this.onClose()
@@ -48,6 +49,7 @@ class EditMessageDrawer extends React.Component {
     render() {
         return (
             <>
+                {/* show drawer when button is clicked */}
                 <Button onClick={this.showDrawer}>
                     Edit
                 </Button>
@@ -58,7 +60,9 @@ class EditMessageDrawer extends React.Component {
                     onClose={this.onClose}
                     visible={this.state.visible}
                 >
+                    {/* form inside the drawer */}
                     <Form
+                        // fill in current values of content and label
                         initialValues={{ content: this.props.target.msg.content, label: this.props.target.msg.label}}
                         layout="vertical"
                         hideRequiredMark
@@ -70,6 +74,7 @@ class EditMessageDrawer extends React.Component {
                                 name="content"
                                 label="Content"
                                 rules={[
+                                    // content is required
                                     { required: true, message: 'Please enter the content of message.' },
                                     { type: 'string', min: 1 }
                                 ]}
@@ -79,6 +84,7 @@ class EditMessageDrawer extends React.Component {
                             <Form.Item
                                 name="label"
                                 label="Label"
+                                // label is not required
                                 rules={[
                                     { required: false, message: 'Please enter label of the message for admin.' },
                                     { type: 'string', min: 0 }
@@ -90,8 +96,8 @@ class EditMessageDrawer extends React.Component {
                             </Form.Item>
                         </Col>
 
-
                         <Space style={{ marginTop: "20px" }}>
+                            {/* cancel and submit button */}
                             <Button onClick={this.onClose}>Cancel</Button>
                             <Button type="primary" htmlType="submit" loading={this.state.loading}>
                                 Submit Edit

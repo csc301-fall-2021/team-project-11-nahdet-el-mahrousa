@@ -1,4 +1,4 @@
-const logger = { log: console.log }
+const logger = require('../../logger')
 
 const { User } = require('../../models/models.mongoose')
 
@@ -14,13 +14,14 @@ class MongooseUserDao {
      */
     async create({ username, password, name }) {
         try {
+            logger.info(`MONGOOSE CREATING USER`)
             const newUser = new User({ username, password, name })
             const createdUser = await newUser.save()
             await User.findByIdAndUpdate(createdUser._id, { convertedId: createdUser._id.toString() })
-            logger.log(`MONGOOSE CREATED User ${createdUser._id}`)
+            logger.info(`MONGOOSE CREATED User ${createdUser._id}`)
             return newUser
         } catch (err) {
-            logger.log(err)
+            logger.error(err)
             return null
         }
     }
@@ -31,8 +32,9 @@ class MongooseUserDao {
      * @returns Reply; undefined if not found.
      */
     async get(uid) {
+        logger.info(`MONGOOSE GETTING User ${uid}`)
         const user = await User.findById(uid).exec()
-        logger.log(`MONGOOSE GET User ${user}`)
+        logger.info(`MONGOOSE GET User ${user}`)
         return user
     }
 
@@ -41,7 +43,10 @@ class MongooseUserDao {
      * @returns Array of users
      */
     async getAll() {
-        return await User.find().exec()
+        logger.info(`MONGOOSE GETTING All Users`)
+        let users = await User.find().exec()
+        logger.info(`MONGOOSE GOT All Users`)
+        return users
     }
 
     /**
@@ -51,10 +56,14 @@ class MongooseUserDao {
      */
     async search(filter = null) {
         if (filter) {
+            logger.info(`MONGOOSE SEARCHING All Users with filter ${filter}`)
             const users = await User.find(filter).exec()
+            logger.info(`MONGOOSE SEARCHED All Users with filter ${filter}`)
             return users
         } else {
+            logger.info(`MONGOOSE SEARCHING All Users`)
             const users = await User.find().exec()
+            logger.info(`MONGOOSE SEARCHED All Users`)
             return users
         }
     }
@@ -65,11 +74,12 @@ class MongooseUserDao {
      * @returns Deleted user. If user not found, return null.
      */
     async delete(uid) {
+        logger.info(`MONGOOSE DELETING User ${uid}`)
         const deletedUser = await User.findByIdAndRemove(uid)
         if (deletedUser !== null) {
-            logger.log(`MONGOOSE DELETED User ${deletedUser._id}`)
+            logger.info(`MONGOOSE DELETED User ${deletedUser._id}`)
         } else {
-            logger.log(`MONGOOSE FAILED DELETE User ${uid}`)
+            logger.info(`MONGOOSE FAILED DELETE User ${uid}`)
         }
         return deletedUser
     }

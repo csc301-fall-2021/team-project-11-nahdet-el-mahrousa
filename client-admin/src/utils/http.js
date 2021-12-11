@@ -10,11 +10,28 @@ function getAuthorization() {
   return authorization;
 }
 
+
+const parameterizeQueryArray = (key, arr) => {
+  arr = arr.map(encodeURIComponent)
+  return '?'+key+'[]=' + arr.join('&'+key+'[]=')
+}
+
 async function get(route, params = {}) {
   const url = new URL(origin + route)
 
   // Append query params to url
-  Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
+  Object.keys(params).forEach(
+    key => {
+      if (typeof params[key] !== "object"){
+        url.searchParams.append(key, params[key])
+      } else {
+        for (let k in params[key]){
+          url.searchParams.append(`${key}[]`, params[key][k])
+        }
+      }
+    }
+  )
+
   console.log(url.href)
   const response = await fetch(url, {
     method: 'GET',

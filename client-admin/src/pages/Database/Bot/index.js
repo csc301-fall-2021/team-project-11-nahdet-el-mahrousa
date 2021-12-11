@@ -46,7 +46,6 @@ class BotPage extends React.Component {
             // ghost={false}
             title="Bot Workflow Management"
             extra={[
-              <Button key="3">Refresh</Button>,
               <NewMessageDrawer></NewMessageDrawer>,
             ]}
           >

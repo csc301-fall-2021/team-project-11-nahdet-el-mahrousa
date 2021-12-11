@@ -1,5 +1,4 @@
-// var logger = require('logger').createLogger()
-const logger = { log: console.log }
+const logger = require('../../logger')
 
 class BotService {
     /**
@@ -26,11 +25,13 @@ class BotService {
      * @returns A message object.
      */
     async getMessage(mid) {
+        logger.info(`Service: Getting Message with ${mid}`)
         const msg = await this.messageDao.get(mid)
         if (!msg) {
-            logger.log(`Message [${mid}] doesn't exist`)
+            logger.info(`Service: Message [${mid}] doesn't exist`)
             return msg
         }
+        logger.info(`Service: Got Message with ${mid}`)
         return msg
     }
 
@@ -40,11 +41,13 @@ class BotService {
      * @returns A reply object.
      */
     async getReply(rid) {
+        logger.info(`Service: Getting Reply with ${rid}`)
         const rpl = await this.replyDao.get(rid)
         if (!rpl) {
-            logger.log(`Reply [${rid}] doesn't exist`)
+            logger.info(`Service: Reply [${rid}] doesn't exist`)
             return rpl
         }
+        logger.info(`Service: Got Reply with ${rid}`)
         return rpl
     }
 
@@ -54,8 +57,9 @@ class BotService {
      * @returns A list of reply object.
      */
     async getRepliesByMessage(mid) {
-        logger.log(`Get replies by message ${mid}`)
+        logger.info(`Service: Getting replies by message ${mid}`)
         const replies = await this.replyDao.search({ fromMessage: String(mid) })
+        logger.info(`Service: Got replies by message ${mid}`)
         return replies
     }
 
@@ -65,16 +69,19 @@ class BotService {
      * @returns A message object.
      */
     async getNextMessage(rid) {
-        logger.log(`Get next message by reply ${rid}`)
+        logger.info(`Service: Getting Next Message by Reply ${rid}`)
         const rpl = await this.getReply(rid)
         if (!rpl) {
+            logger.info(`Service: Reply ${rid} doesn't exist`)
             return undefined
         }
         if (!("toMessage" in rpl) || !rpl.toMessage) {
+            logger.info(`Service: Message following Reply ${rid} doesn't exist`)
             return null
         }
 
         const nextMessage = await this.getMessage(rpl.toMessage)
+        logger.info(`Service: Got Next Message by Reply ${rid}`)
         return nextMessage
     }
 
@@ -84,21 +91,24 @@ class BotService {
      * @returns An integer repersent the next message's id.
      */
     async getNextMessageId(rid) {
+        logger.info(`Service: Getting Next Message Id by Reply ${rid}`)
         const rpl = await this.getReply(rid)
         if (!rpl) {
+            logger.info(`Service: Reply ${rid} doesn't exist`)
             return undefined
         }
-
+        logger.info(`Service: Got Next Message Id by Reply ${rid}`)
         return rpl.toMessage
     }
 
     async getInitMessage() {
+        logger.info(`Service: Getting Initial Message`)
         const rpl = await this.messageDao.search({ label: "__init__" })
-        if (!rpl) {
-            logger.log("Error: can't find initial message")
+        if (rpl.length === 0) {
+            logger.info("Service: Can't find initial message")
             return null
         }
-
+        logger.info(`Service: Got Initial Message`)
         return rpl[0]
     }
 
@@ -114,7 +124,9 @@ class BotService {
      * @returns Response of Messages that satisfy the constraints.
      */
     async getMessages(query) {
+        logger.info(`Service: Getting Messages with contraints ${query}`)
         const messages = await this.messageDao.search(query)
+        logger.info(`Service: Got Messages with constraints ${query}`)
         return messages
     }
 
@@ -123,7 +135,9 @@ class BotService {
      * @returns Response of all Replies.
      */
     async getReplies() {
+        logger.info(`Service: Getting All Replies`)
         const replies = await this.replyDao.getAll()
+        logger.info(`Service: Got All Replies`)
         return replies
     }
 
@@ -134,13 +148,14 @@ class BotService {
      * @returns New Message. If user does not have privilege, return null.
      */
     async createMessage(content, label) {
+        logger.info(`Service: Creating Message`)
         const newMessage = await this.messageDao.create({ content, label })
 
         if (newMessage !== null) {
-            logger.log(`CREATED Message ${newMessage._id} \'${label}\'`)
+            logger.info(`Service: Created Message ${newMessage._id} \'${label}\'`)
             return newMessage
         } else {
-            logger.log(`FAILED CREATE Message \'${label}\'`)
+            logger.info(`Service: Failed Create Message \'${label}\'`)
             return newMessage
         }
     }
@@ -154,13 +169,14 @@ class BotService {
      * @returns New Reply. If user does not have privilege, return null.
      */
     async createReply(content, label, fromMessage, toMessage) {
+        logger.info(`Service: Creating Reply`)
         const newReply = await this.replyDao.create({ content, label, fromMessage, toMessage })
 
         if (newReply !== null) {
-            logger.log(`CREATED Reply \'${newReply._id}\'`)
+            logger.info(`Service: Created Reply \'${newReply._id}\'`)
             return newReply
         } else {
-            logger.log(`FAILED CREATE Reply \'${label}\'`)
+            logger.info(`Service: Failed Create Reply \'${label}\'`)
             return undefined
         }
     }
@@ -171,13 +187,14 @@ class BotService {
      * @returns The Message deleted. If user does not have privilege, return null.
      */
     async deleteMessage(mid) {
+        logger.info(`Service: Deleting Message`)
         const delMessage = await this.messageDao.delete(mid)
 
         if (delMessage !== null) {
-            logger.log(`DELETED Message \'${mid}\'`)
+            logger.info(`Service: Deleted Message \'${mid}\'`)
             return delMessage
         } else {
-            logger.log(`FAILED DELETE Message \'${mid}\'`)
+            logger.info(`Service: Failed Delete Message \'${mid}\'`)
             return undefined
         }
     }
@@ -188,18 +205,14 @@ class BotService {
      * @returns The Reply deleted. If user does not have privilege, return null.
      */
     async deleteReply(rid) {
-        // Validate modifier's privilege
-        if (!user.privilege.modifyBot) {
-            return null
-        }
-
+        logger.info(`Service: Deleting Reply`)
         const delReply = await this.replyDao.delete(rid)
 
         if (delReply !== null) {
-            logger.log(`[${user.username}] DELETED Reply \'${rid}\'`)
+            logger.info(`Service: Deleted Reply \'${rid}\'`)
             return delReply
         } else {
-            logger.log(`[${user.username}] FAILED DELETE Reply \'${rid}\'`)
+            logger.info(`Service: Failed Delete Reply \'${rid}\'`)
             return undefined
         }
     }
@@ -211,13 +224,14 @@ class BotService {
      * @returns Updated Message. If user does not have privilege, return null.
      */
     async updateMessage(mid, data) {
+        logger.info(`Service: Updating Message`)
         const newMessage = await this.messageDao.update(mid, data)
 
         if (newMessage !== null) {
-            logger.log(`UPDATED Message \'${mid}\'`)
+            logger.info(`Service: Updated Message \'${mid}\'`)
             return newMessage
         } else {
-            logger.log(`FAILED UPDATED Message \'${mid}\'`)
+            logger.info(`Service: Failed Update Message \'${mid}\'`)
             return undefined
         }
     }
@@ -229,13 +243,14 @@ class BotService {
      * @returns Updated Reply. If user does not have privilege, return null.
      */
     async updateReply(rid, data) {
+        logger.info(`Service: Updating Reply`)
         const newReply = await this.replyDao.update(rid, data)
 
         if (newReply !== null) {
-            logger.log(`UPDATED Reply \'${rid}\'`)
+            logger.info(`Service: Updated Reply \'${rid}\'`)
             return newReply
         } else {
-            logger.log(`FAILED UPDATE Reply \'${rid}\'`)
+            logger.info(`Service: Failed Updated Reply \'${rid}\'`)
             return undefined
         }
     }
@@ -278,6 +293,7 @@ class BotService {
      * @returns A well formatted object containing all the messages and replies: [ { message, replies } ]
      */
     async getBot(messageQuery, replyQuery) {
+        logger.info(`Service: Getting Bot with message query ${messageQuery} and reply query ${replyQuery}`)
         let messages = await this.messageDao.search(messageQuery)
         let addOnReplies = await this.replyDao.search(replyQuery)
 
@@ -309,6 +325,7 @@ class BotService {
 
         const allReplies = await this.replyDao.getAll()
         const bot = this._buildBotList({ messages, replies: allReplies })
+        logger.info(`Service: Got Bot with message query ${messageQuery} and reply query ${replyQuery}`)
         return bot
     }
 
@@ -390,9 +407,12 @@ class BotService {
      * @returns A workflow that in format { nodes, edges } where nodes and edges are array
      */
     async getWorkflow(query) {
+        logger.info(`Service: Getting Workflow`)
+
         const messages = await this.messageDao.search(query)
         const replies = await this.replyDao.search()
         const workflow = this._buildWorkFlow({ messages, replies })
+        logger.info(`Service: Got Workflow`)
         return workflow
     }
 

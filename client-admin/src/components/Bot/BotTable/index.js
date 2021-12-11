@@ -13,6 +13,7 @@ class BotTable extends React.Component {
       return <BotSubTable data={data} msgList={msgList} />;
     };
 
+    // display reply ID, Reply, Label, Next Message, and Actions
     const columns = [
       {
         title: "Message ID",
@@ -37,8 +38,10 @@ class BotTable extends React.Component {
         sortDirections: ['ascend', 'descend'],
       },
       {
+        // display actions that can be made
         title: "Actions",
         key: "operation",
+        // use MessageOptionMenu component
         render: (data) => (
           <MessageOptionMenu
             msg={data.message}

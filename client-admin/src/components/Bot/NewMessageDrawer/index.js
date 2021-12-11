@@ -34,9 +34,11 @@ class NewMessageDrawer extends React.Component {
     submitForm = async (values) => {
         this.setState({ loading: true })
         try {
+            // call sendMessageToBackend action
             sendMessageToBackend(null, values.content, values.label || '');
             message.success(`Created new message`)
             this.onClose()
+            // handle error
         } catch (error) {
             message.error(String(error))
             this.setState({ loading: false })
@@ -46,6 +48,7 @@ class NewMessageDrawer extends React.Component {
     render() {
         return (
             <>
+                {/* show drawer when button is clicked */}
                 <Button type="primary" onClick={this.showDrawer} icon={<PlusOutlined />}>
                     Create new message
                 </Button>
@@ -56,6 +59,7 @@ class NewMessageDrawer extends React.Component {
                     onClose={this.onClose}
                     visible={this.state.visible}
                 >
+                    {/* form inside the drawer */}
                     <Form
                         layout="vertical"
                         onFinish={this.submitForm}
@@ -65,6 +69,7 @@ class NewMessageDrawer extends React.Component {
                             <Form.Item
                                 name="content"
                                 label="Content"
+                                // content is required
                                 rules={[
                                     { required: true, message: 'Please enter message content' },
                                     { type: 'string', min: 1 }
@@ -75,6 +80,7 @@ class NewMessageDrawer extends React.Component {
                             <Form.Item
                                 name="label"
                                 label="Label"
+                                // label is not required
                                 rules={[
                                     { required: false, message: 'Please enter label of the message for admin.' },
                                     { type: 'string', min: 0 }
@@ -86,7 +92,7 @@ class NewMessageDrawer extends React.Component {
                             </Form.Item>
                         </Col>
 
-
+                        {/* cancel and submit button */}
                         <Space style={{ marginTop: "20px" }}>
                             <Button onClick={this.onClose}>Cancel</Button>
                             <Button type="primary" htmlType="submit" loading={this.state.loading}>

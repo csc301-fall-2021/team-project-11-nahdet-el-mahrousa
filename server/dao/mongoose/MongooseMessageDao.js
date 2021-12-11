@@ -1,4 +1,4 @@
-const logger = { log: console.log }
+const logger = require('../../logger')
 
 const { Message } = require('../../models/models.mongoose')
 
@@ -16,13 +16,14 @@ class MongooseMessageDao {
      */
     async create({ content, label }) {
         try {
+            logger.info(`MONGOOSE CREATING Message`)
             const newMessage = new Message({ content, label })
             const createdMessage = await newMessage.save()
             await Message.findByIdAndUpdate(createdMessage._id, { convertedId: createdMessage._id.toString() })
-            logger.log(`MONGOOSE CREATED Message ${createdMessage._id}`)
+            logger.info(`MONGOOSE CREATED Message ${createdMessage._id}`)
             return newMessage
         } catch (err) {
-            logger.log(err)
+            logger.error(err)
             return null
         }
     }
@@ -33,8 +34,9 @@ class MongooseMessageDao {
      * @returns Message; If message not found, return null.
      */
     async get(mid) {
+        logger.info(`MONGOOSE GETTING Message`)
         const message = await Message.findById(mid).exec()
-        logger.log(`MONGOOSE GET Message ${message}`)
+        logger.info(`MONGOOSE GOT Message ${message}`)
         return message
     }
 
@@ -43,7 +45,10 @@ class MongooseMessageDao {
      * @returns Array of Messages
      */
     async getAll() {
-        return await Message.find().exec()
+        logger.info(`MONGOOSE GETTING All Messages`)
+        let messages = await Message.find().exec()
+        logger.info(`MONGOOSE GOT All Messages`)
+        return messages
     }
 
     /**
@@ -54,12 +59,14 @@ class MongooseMessageDao {
     async search(filter = null) {
         if (filter) {
             // TODO: apply filter check.
+            logger.info(`MONGOOSE SEARCHING Messages with filter ${filter}`)
             const messages = await Message.find(filter).exec()
-            logger.log(`MONGOOSE SEARCH Messages with filter ${filter}`)
+            logger.info(`MONGOOSE SEARCHED Messages with filter ${filter}`)
             return messages
         } else {
+            logger.info(`MONGOOSE SEARCHING ALL Messages`)
             const messages = await Message.find().exec()
-            logger.log(`MONGOOSE SEARCH All Messages`)
+            logger.info(`MONGOOSE SEARCHED All Messages`)
             return messages
         }
     }
@@ -70,11 +77,12 @@ class MongooseMessageDao {
      * @returns Deleted Message； If message not found, return null.
      */
     async delete(mid) {
+        logger.info(`MONGOOSE DELETING Message ${mid}`)
         const deletedMessage = await Message.findByIdAndRemove(mid)
         if (deletedMessage !== null) {
-            logger.log(`MONGOOSE DELETED Message ${deletedMessage._id}`)
+            logger.info(`MONGOOSE DELETED Message ${deletedMessage._id}`)
         } else {
-            logger.log(`MONGOOSE FAILED DELETE Message ${mid}`)
+            logger.info(`MONGOOSE FAILED DELETE Message ${mid}`)
         }
         return deletedMessage
     }
@@ -86,11 +94,12 @@ class MongooseMessageDao {
      * @returns Updated message; If message not found, return null.
      */
     async update(mid, data) {
+        logger.info(`MONGOOSE UPDATING Message ${mid}`)
         const updatedMessage = await Message.findByIdAndUpdate(mid, data, { new: true })
         if (updatedMessage !== null) {
-            logger.log(`MONGOOSE UPDATED Message ${updatedMessage._id}`)
+            logger.info(`MONGOOSE UPDATED Message ${updatedMessage._id}`)
         } else {
-            logger.log(`MONGOOSE FAILED UPDATE Message ${mid}`)
+            logger.info(`MONGOOSE FAILED UPDATE Message ${mid}`)
         }
         return updatedMessage
     }
