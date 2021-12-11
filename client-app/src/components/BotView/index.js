@@ -77,9 +77,8 @@ class BotView extends React.Component {
                     { // Clear the chat history when the refresh button is clicked
                         <RefreshButton clearChatHistory={() => clearChatHistory(this)} /> 
                     }
-                    { // Initialize the first message when the start button is clicked
-                        <StartButton initChat={() => initChat(this)} />
-                    }     
+                    {/* Initialize the first message when the start button is clicked */}
+                    <StartButton initChat={() => initChat(this)} />
                     {
                         // Chat items are retrieved from server
                         // It can either be { message, replies } for a message,

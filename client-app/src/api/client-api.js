@@ -19,7 +19,7 @@ export async function getFirstMessage() {
          throw new Error(response.msg);
       }
    } catch (error) { // API error occurs
-      console.log("API", error);
+      console.error("API", error);
       throw new Error(error);
    }
 }
@@ -41,7 +41,7 @@ export async function getNextMessage(data) {
          throw new Error(response.msg);
       }
    } catch (error) { // API error occurs
-      console.log("API", error);
+      console.error("API", error);
       throw new Error(error);
    }
 }

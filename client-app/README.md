@@ -61,5 +61,5 @@ Yuxuan Liu:
 - Client App UI
 - Components and Action Functions
 
-Tianyang Hu:
+Siyang Liu:
 - Google Analytics Creation and Integration

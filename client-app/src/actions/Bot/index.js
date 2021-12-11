@@ -40,17 +40,7 @@ export async function initChat(msgQueue) {
             chat: newQueue
         }, () => msgQueue.scrollToMyRef());
     } catch (error) {
-        const err = `${String(error)}. Please contact the staff.`
-        console.log(err);
-        newQueue.push({
-            message: {
-                content: err
-            },
-            replies: []
-        })
-        msgQueue.setState({
-            chat: newQueue
-        }, () => msgQueue.scrollToMyRef());
+        console.error(error);
     }
 }
 
@@ -85,17 +75,7 @@ export async function makeReply(msgQueue, reply) {
         // set today the respond date in local storage
         localStorage.setItem("chatTime", (new Date()).getDate());
     } catch (error) {
-        const err = `${String(error)}. Please contact the staff.`
-        console.log(err);
-        newQueue.push({
-            message: {
-                content: err
-            },
-            replies: []
-        })
-        msgQueue.setState({
-            chat: newQueue
-        }, () => msgQueue.scrollToMyRef());
+        console.log(error);
     }
 }
 
