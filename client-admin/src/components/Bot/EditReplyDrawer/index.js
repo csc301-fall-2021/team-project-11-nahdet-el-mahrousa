@@ -55,7 +55,7 @@ class EditReplyDrawer extends React.Component {
         this.props.target.data.fromMessage,
         values.toMessage
       );
-      message.success(`Created new reply`);
+      message.success(`Edited new reply`);
       this.onClose();
     } catch (error) {
       message.error(String(error));

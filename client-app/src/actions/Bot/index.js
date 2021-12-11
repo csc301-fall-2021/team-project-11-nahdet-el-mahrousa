@@ -95,3 +95,32 @@ export async function makeReply(msgQueue, reply) {
         }, () => msgQueue.scrollToMyRef());
     }
 }
+
+export function exportConversation() {
+
+    // Reference: https://stackoverflow.com/questions/22347756/how-to-export-a-string-to-a-file-in-html-phonegap
+    function download(filename, content) {
+        var pom = document.createElement('a');
+        pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(content));
+        pom.setAttribute('download', filename);
+        pom.click();
+    }
+
+    let output = `Date: ${new Date().toUTCString()}`
+
+    // Output each item in the localHistory to a string
+    const chatHistory = localStorage.getItem("chatHistory")
+    if (chatHistory) {
+        const conversation = JSON.parse(chatHistory)
+        conversation.forEach((item, i) => {
+            if ("message" in item) {
+                output += `\nNM Bot: \n${item.message.content}`
+            } else if ("reply" in item) {
+                output += `\nYou: \n${item.reply.content}`
+            }
+            output += "\n---------------------"
+        })
+    }
+
+    download("NM Bot Conversation.txt", output)
+}

@@ -6,7 +6,7 @@ import { loadChatHistory, initChat, makeReply, clearChatHistory } from "actions/
 
 import "./BotView.scss"
 import StartButton from 'components/StartButton';
-// import RefreshButton from 'components/RefreshButton';
+import RefreshButton from 'components/RefreshButton';
 
 /**
  * Display a message to multiple paragraphs.
@@ -67,7 +67,7 @@ class BotView extends React.Component {
         return (
             <div ref={this.chatContainer} className="bot-view">
                 <div className="bot-chat-container">
-                    {/* <RefreshButton clearChatHistory={() => clearChatHistory(this)} /> */}
+                    { <RefreshButton clearChatHistory={() => clearChatHistory(this)} /> }
 
                     <StartButton initChat={() => initChat(this)} />
                     {
