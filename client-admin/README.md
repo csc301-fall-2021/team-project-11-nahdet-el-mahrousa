@@ -20,7 +20,7 @@ This Page is used to manage the bot workflow.
 - Create, Edit, Delete Messages.
 - Create, Edit, Delete Replies.
 - Search for a specific message by Content, Message id, or Label.
-- - Search for a specific reply by Content, reply id, or Label.
+- Search for a specific reply by Content, reply id, or Label.
 
 ### Admin Account Management Page:
 This Page is used to manage admin accounts that can access the Admin Dashboard.
