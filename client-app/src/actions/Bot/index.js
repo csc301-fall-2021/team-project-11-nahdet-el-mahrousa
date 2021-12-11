@@ -2,10 +2,14 @@ import { getFirstMessage, getNextMessage } from 'api/client-api';
 
 // Methods in this file modifies the Message component state
 
+// Load the chat history that is stored in local when the page is refreshed
+// or re-start the program. Only the data that is stored in the last 7 days will be loaded.
 export function loadChatHistory(msgQueue) {
+    // If there is a chat history in local storage
     if (localStorage.getItem("chatHistory")) {
+        // Date a week ago from the current date
         const dateThreshold = (new Date()).getDate() - 7;
-        // only restore the page with data stored in the last 7 days
+        // Only restore the page with data stored in the last 7 days
         if (localStorage.getItem("chatTime") >= dateThreshold) {
             const restoredData = localStorage.getItem("chatHistory");
             msgQueue.setState({
@@ -15,6 +19,7 @@ export function loadChatHistory(msgQueue) {
     }
 }
 
+// Clear the chat history that is stored in local
 export function clearChatHistory(msgQueue) {
     localStorage.removeItem("chatHistory")
     localStorage.removeItem("chatTime")
@@ -23,36 +28,24 @@ export function clearChatHistory(msgQueue) {
     }, () => msgQueue.scrollToMyRef());
 }
 
+// Initialize the first chat message when the chat starts
 export async function initChat(msgQueue) {
     const newQueue = [...msgQueue.state.chat];
 
     // get first msg from API
     try {
         const entity = await getFirstMessage();
-        // console.log(entity);
         newQueue.push(entity);
         msgQueue.setState({
             chat: newQueue
         }, () => msgQueue.scrollToMyRef());
     } catch (error) {
-        const err = `${String(error)}. Please contact the staff.`
-        console.error(err);
-        newQueue.push({
-            message: {
-                content: err
-            },
-            replies: []
-        })
-        msgQueue.setState({
-            chat: newQueue
-        }, () => msgQueue.scrollToMyRef());
+        console.error(error);
     }
 }
 
 // Function to add a reply, needs to be exported
-export async function makeReply(msgQueue, reply) {
-    // log(msgQueue.state.chat, reply);
-
+export async function makeReply(msgQueue, reply) { 
     const newQueue = [...msgQueue.state.chat];
     const replyInChat = { reply };
     newQueue.push(replyInChat);
@@ -70,8 +63,8 @@ export async function makeReply(msgQueue, reply) {
             action: 'click',
             label: String(reply._id)
         })
+        // make the next bot message depends on the response
         const entity = await getNextMessage(reply);
-        // console.log(entity);
         newQueue.push(entity);
         msgQueue.setState({
             chat: newQueue
@@ -82,20 +75,11 @@ export async function makeReply(msgQueue, reply) {
         // set today the respond date in local storage
         localStorage.setItem("chatTime", (new Date()).getDate());
     } catch (error) {
-        const err = `${String(error)}. Please contact the staff.`
-        console.error(err);
-        newQueue.push({
-            message: {
-                content: err
-            },
-            replies: []
-        })
-        msgQueue.setState({
-            chat: newQueue
-        }, () => msgQueue.scrollToMyRef());
+        console.log(error);
     }
 }
 
+// Export the conversation as a text file
 export function exportConversation() {
 
     // Reference: https://stackoverflow.com/questions/22347756/how-to-export-a-string-to-a-file-in-html-phonegap
@@ -106,6 +90,7 @@ export function exportConversation() {
         pom.click();
     }
 
+    // Add the chat date stored in the local storage
     let output = `Date: ${new Date().toUTCString()}`
 
     // Output each item in the localHistory to a string
@@ -122,5 +107,6 @@ export function exportConversation() {
         })
     }
 
+    // Download file "NM Bot Conversation.txt" with text <output>
     download("NM Bot Conversation.txt", output)
 }

@@ -24,7 +24,6 @@ async function loginAdmin({ username, password }) {
 }
 
 function logoutAdmin() {
-    // store.dispatch(logoutAuth());
     localStorage.removeItem('token')
 }
 

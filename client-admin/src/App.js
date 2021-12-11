@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter } from 'react-router-dom';
 import RenderRoutes from "./router";
-import 'antd/dist/antd.css'; // or 'antd/dist/antd.less'
+import 'antd/dist/antd.css'; 
 
 
 class App extends React.Component {

@@ -1,6 +1,7 @@
 import React from 'react';
 import "./Message.scss";
 
+// Bot message that contains the avatar, message, and options
 class Message extends React.Component {
 
     render() {
@@ -17,7 +18,7 @@ class Message extends React.Component {
                         <div className="replies-container">
                             {
                                 replies.map((reply) => {
-                                    return (
+                                    return ( // Make the reply if the specific option is pressed
                                         <div className="reply-option">
                                             <button
                                                 className="reply-option-btn"

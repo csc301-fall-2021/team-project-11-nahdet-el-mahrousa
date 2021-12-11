@@ -21,10 +21,9 @@ class AdminBotController {
     /**
      * Get a well formatted bot that combines all questions and replies.
      * @param {Object} req Request.
-     * @param {User} user The user doing this operation.
      * @returns Response object.
      */
-    async getBot(req, user) {
+    async getBot(req) {
         // TODO: How to do query.
         const messageQuery = {}
         const replyQuery = {}
@@ -43,7 +42,7 @@ class AdminBotController {
                 messageQuery[key] = value
             }
         }
-        const result = await this.botService.getBot(user, messageQuery, replyQuery)
+        const result = await this.botService.getBot(messageQuery, replyQuery)
         if (result === null) {
             return response.FORBIDDEN
         } else {
@@ -54,10 +53,9 @@ class AdminBotController {
     /**
      * Create a well formatted workflow.
      * @param {Object} req Request.
-     * @param {User} user The user doing this operation.
      * @returns Response object.
      */
-     async getWorkflow(req, user) {
+     async getWorkflow(req) {
         const query = {}
         for(let key of Object.keys(req.query)){
             let value = new RegExp(".*" + req.query[key] + ".*", "i")
@@ -67,7 +65,7 @@ class AdminBotController {
                 query[key] = value
             }
         }
-        const result = await this.botService.getWorkflow(user, query)
+        const result = await this.botService.getWorkflow(query)
         if (result === null) {
             return response.FORBIDDEN
         } else {
@@ -78,10 +76,9 @@ class AdminBotController {
     /**
      * Get messages from query.
      * @param {Object} req Request.
-     * @param {User} user The user doing this operation.
      * @returns Response object.
      */
-    async getMessages(req, user) {
+    async getMessages(req) {
         // TODO: How to do query.
         // Get user input
         const query = {}
@@ -93,7 +90,7 @@ class AdminBotController {
                 query[key] = value
             }
         }
-        const result = await this.botService.getMessages(user, query)
+        const result = await this.botService.getMessages(query)
         if (result === null) {
             return response.FORBIDDEN
         } else {
@@ -104,10 +101,9 @@ class AdminBotController {
     /**
      * Get user's input to create a message.
      * @param {Object} req Request.
-     * @param {User} user The user doing this operation.
      * @returns Response object.
      */
-    async createMessage(req, user) {
+    async createMessage(req) {
         // Get user input
         const uin = getInput(req, {
             mandatory: ['content'],
@@ -123,7 +119,7 @@ class AdminBotController {
             return response.FORBIDDEN
         } else {
             // Create the message
-            const result = await this.botService.createMessage(user, uin.content, uin.label)
+            const result = await this.botService.createMessage(uin.content, uin.label)
             if (result === null) {
                 return response.FORBIDDEN
             } else {
@@ -135,10 +131,9 @@ class AdminBotController {
     /**
      * Get user's input to delete a message.
      * @param {Object} req Request.
-     * @param {User} user The user doing this operation.
      * @returns Response object.
      */
-    async deleteMessage(req, user) {
+    async deleteMessage(req) {
         // Get user input
         const uin = getInput(req, {
             mandatory: ['_id'],
@@ -153,7 +148,7 @@ class AdminBotController {
             return response.FORBIDDEN
         } else {
             // Delete the message
-            const result = await this.botService.deleteMessage(user, uin._id)
+            const result = await this.botService.deleteMessage(uin._id)
             if (result === null) {
                 return response.FORBIDDEN
             } else if (result === undefined) {
@@ -167,10 +162,9 @@ class AdminBotController {
     /**
      * Get user's input to update a message.
      * @param {Object} req Request.
-     * @param {User} user The user doing this operation.
      * @returns Response object.
      */
-    async updateMessage(req, user) {
+    async updateMessage(req) {
         // Get user input
         const uin = getInput(req, {
             mandatory: ['_id'],
@@ -184,7 +178,7 @@ class AdminBotController {
         } else {
             // Update the message
             const { _id, ...updateBody } = uin  // This filters out id from uin.
-            const result = await this.botService.updateMessage(user, _id, updateBody)
+            const result = await this.botService.updateMessage(_id, updateBody)
             if (result === null) {
                 return response.FORBIDDEN
             } else if (result === undefined) {
@@ -198,10 +192,9 @@ class AdminBotController {
     /**
      * Get user's input to create a reply.
      * @param {Object} req Request.
-     * @param {User} user The user doing this operation.
      * @returns Response object.
      */
-    async createReply(req, user) {
+    async createReply(req) {
         // Get user input
         const uin = getInput(req, {
             mandatory: ['content', 'fromMessage'],
@@ -215,7 +208,7 @@ class AdminBotController {
             return response.NOT_SATISFIED
         } else {
             // Create the reply
-            const result = await this.botService.createReply(user, uin.content, uin.label, uin.fromMessage, uin.toMessage)
+            const result = await this.botService.createReply(uin.content, uin.label, uin.fromMessage, uin.toMessage)
             if (result === null) {
                 return response.FORBIDDEN
             } else {
@@ -227,10 +220,9 @@ class AdminBotController {
     /**
      * Get user's input to delete a reply.
      * @param {Object} req Request.
-     * @param {User} user The user doing this operation.
      * @returns Response object.
      */
-    async deleteReply(req, user) {
+    async deleteReply(req) {
         // Get user input
         const uin = getInput(req, {
             mandatory: ['_id'],
@@ -243,7 +235,7 @@ class AdminBotController {
             return response.NOT_SATISFIED
         } else {
             // Delete the reply
-            const result = await this.botService.deleteReply(user, uin._id)
+            const result = await this.botService.deleteReply(uin._id)
             if (result === null) {
                 return response.FORBIDDEN
             } else if (result === undefined) {
@@ -257,10 +249,9 @@ class AdminBotController {
     /**
      * Get user's input to update a reply.
      * @param {Object} req Request.
-     * @param {User} user The user doing this operation.
      * @returns Response object.
      */
-    async updateReply(req, user) {
+    async updateReply(req) {
         // Get user input
         const uin = getInput(req, {
             mandatory: ['_id'],
@@ -281,7 +272,7 @@ class AdminBotController {
                 }
             }
             
-            const result = await this.botService.updateReply(user, _id, updateBody)
+            const result = await this.botService.updateReply(_id, updateBody)
             if (result === null) {
                 return response.FORBIDDEN
             } else if (result === undefined) {

@@ -1,7 +1,7 @@
 import React from 'react';
 import "./StartButton.scss";
 
-
+// Start button to initialize the first message of the chat
 class StartButton extends React.Component {
 
     render() {

@@ -41,18 +41,20 @@ class retrieveStatisticsController {
    * @returns The statistics object structured according to frontend rendering need.
    */
   async getVisit(req) {
+    // Get the input from request body
     const uin = getInput(req, {
       mandatory: ["startDate", "endDate"],
       optional: ["ridArr", "locationArr"],
       fromQuery: true,
     });
+    // Check for the valadity of the input
     if (uin === null) {
       logger.log(
         "start date or end date is not found in the request's parameter"
       );
       return response.NOT_SATISFIED;
     } else {
-      console.log(uin);
+      // Call corresponding service according to the input
       if (uin.hasOwnProperty("ridArr") && uin.hasOwnProperty("locationArr")) {
         return await this._getVisitNumberFromLocationAndReply(uin);
       } else if (uin.hasOwnProperty("ridArr")) {
@@ -72,12 +74,14 @@ class retrieveStatisticsController {
    * @returns the statistics object structured according to frontend required rendering need.
    */
   async _getVisitNumberFromLocationAndReply(uin) {
+    // Check the validity of the specific input
     if (!Array.isArray(uin.locationArr) || !Array.isArray(uin.ridArr)) {
       logger.log(
         "invalid type for locationArray or ridArray request parameter"
       );
       return response.NOT_SATISFIED;
     } else {
+      // Call the corresponding service to achieve the task
       let res =
         await this.retrieveStatisticsService.getVisitNumberFromLocationAndReply(
           uin.startDate,
@@ -98,10 +102,12 @@ class retrieveStatisticsController {
    * @returns the statistics object structured according to frontend required rendering need.
    */
   async _getVisitNumberFromReply(uin) {
+    // Check valadity of the specific input
     if (!Array.isArray(uin.ridArr)) {
       logger.log("invalid type for ridArray request parameter");
       return response.NOT_SATISFIED;
     } else {
+      // Call the corresponding service to achieve the task
       let res =
         await this.retrieveStatisticsService.getLocationVisitNumberFromReply(
           uin.startDate,
@@ -122,10 +128,12 @@ class retrieveStatisticsController {
    */
 
   async _getVisitNumberFromLocation(uin) {
+    // Check the validity of the specific input
     if (!Array.isArray(uin.locationArr)) {
       logger.log("invalid type for locationArray request parameter");
       return response.NOT_SATISFIED;
     } else {
+      // Call the corresponding service to achieve the task
       let res =
         await this.retrieveStatisticsService.getReplyVisitNumberFromLocation(
           uin.startDate,
@@ -144,6 +152,7 @@ class retrieveStatisticsController {
    * @returns the statistics object structured according to frontend required rendering need (statistics includes the date, location, and user visit number).
    */
   async _getVisitNumberFromLocationPerDay(uin) {
+    // Call the corresponding service to achieve the task (no input need to conduct validity check)
     let res =
       await this.retrieveStatisticsService.getVisitNumberAndSumFromLocationPerDay(
         uin.startDate,
@@ -161,18 +170,20 @@ class retrieveStatisticsController {
    * @returns The statistics object structured according to frontend rendering need.
    */
   async getAverageStayTime(req) {
+    // Get the input from request body
     const uin = getInput(req, {
       mandatory: ["startDate", "endDate", "from"],
       fromQuery: true,
     });
+    // Check for the valadity of the input
     if (uin === null) {
       logger.log(
         "start date or end date or from option is not found in the request"
       );
       return response.NOT_SATISFIED;
     } else {
+      // Call corresponding service according to the input
       let fromType = ["location", "reply"];
-      console.log(fromType.includes(uin.from));
       if (!fromType.includes(uin.from)) {
         logger.log("type not supported");
         return response.NOT_SATISFIED;
@@ -190,6 +201,7 @@ class retrieveStatisticsController {
    * @returns the statistics object structured according to frontend required rendering need (statistics includes the location, average page duration, average session duration).
    */
   async _getAverageStayTimeFromLocation(uin) {
+    // Call the corresponding service to achieve the task
     let res =
       await this.retrieveStatisticsService.getAverageStayTimeFromLocation(
         uin.startDate,
@@ -207,6 +219,7 @@ class retrieveStatisticsController {
    * @returns the statistics object structured according to frontend required rendering need (statistics includes the reply, average page duration, average session duration).
    */
   async _getAverageStayTimeFromReply(uin) {
+    // Call the corresponding service to achieve the task
     let res = await this.retrieveStatisticsService.getAverageStayTimeFromReply(
       uin.startDate,
       uin.endDate
@@ -223,17 +236,20 @@ class retrieveStatisticsController {
    * @returns The statistics object structured according to frontend rendering need.
    */
   async getPlatform(req) {
+    // Get the input from request body
     const uin = getInput(req, {
       mandatory: ["startDate", "endDate"],
       optional: ["from"],
       fromQuery: true,
     });
+    // Check for the validity of the input
     if (uin === null) {
       logger.log(
         "start date or end date or from option is not found in the request"
       );
       return response.NOT_SATISFIED;
     } else {
+      // Call corresponding service according to the input
       if (!uin.hasOwnProperty("from")) {
         return await this._getPlatformGeneral(uin);
       }
@@ -255,6 +271,7 @@ class retrieveStatisticsController {
    * @returns the statistics object structured according to frontend required rendering need (statistics includes the platform name and the number of clients using this platform to visit the website).
    */
   async _getPlatformGeneral(uin) {
+    // Call the corresponding service to achieve the task
     let res = await this.retrieveStatisticsService.getPlatformGeneral(
       uin.startDate,
       uin.endDate
@@ -270,6 +287,7 @@ class retrieveStatisticsController {
    * @returns the statistics object structured according to frontend required rendering need (statistics includes location, the platform name and the number of clients using this platform to visit the website).
    */
   async _getPlatformFromLocation(uin) {
+    // Call the corresponding service to achieve the task
     let res = await this.retrieveStatisticsService.getPlatformFromLocation(
       uin.startDate,
       uin.endDate
@@ -285,6 +303,7 @@ class retrieveStatisticsController {
    * @returns the statistics object structured according to frontend required rendering need (statistics includes reply, the platform name and the number of clients using this platform to visit the website).
    */
   async _getPlatformFromReply(uin) {
+    // Call te corresponding service to achieve the task
     let res = await this.retrieveStatisticsService.getPlatformFromReply(
       uin.startDate,
       uin.endDate

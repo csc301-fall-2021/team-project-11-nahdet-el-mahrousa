@@ -11,22 +11,22 @@ import {
   createMessage,
 } from "../../api/bot-api";
 
+// used to dispatch message for redux
 function dispatchMessage(message) {
   store.dispatch(replaceMessages(message));
 }
 
+// get the messages and replies from backend 
 export function getMessageFromBackend() {
   getBot(dispatchMessage);
-  // const dispatch = useDispatch()
-  // store.dispatch(replaceMessages(data))
 }
 
+// get query messages and replies
 export function getQueryMessage(query) {
   getQueryBot(query, dispatchMessage);
-  // const dispatch = useDispatch()
-  // store.dispatch(replaceMessages(data))
 }
 
+// send a new/revised reply to backend to verify
 export function sendReplyToBackend(
   _id,
   content,
@@ -34,15 +34,19 @@ export function sendReplyToBackend(
   fromMessage,
   toMessage
 ) {
+  // if label does not exist then set label to ""
   label = label ? label : "";
+  // if toMessage does not exist then set toMessage to null
   toMessage = toMessage ? toMessage : null;
 
   if (!_id) {
+    // create a new reply if no id
     return createReply(
       { content, label, fromMessage, toMessage },
       dispatchMessage
     );
   } else {
+    // edit existing reply if id exists
     return editReply(
       { _id, content, label, fromMessage, toMessage },
       dispatchMessage
@@ -50,11 +54,14 @@ export function sendReplyToBackend(
   }
 }
 
+// send revised/new message to backend to verify
 export function sendMessageToBackend(_id, content, label) {
   label = label ? label : "";
   if (!_id) {
+    // create a new message if no id
     return createMessage({ content, label }, dispatchMessage);
   } else {
+    // edit existing message if id exists
     return editMessage({ _id, content, label }, dispatchMessage);
   }
 }
