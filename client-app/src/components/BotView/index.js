@@ -56,7 +56,7 @@ class BotView extends React.Component {
         }
     }
 
-    // Load the history chat when the component mounts
+    // Load the chat history when the component mounts
     componentDidMount() {
         loadChatHistory(this);
     }
@@ -74,7 +74,7 @@ class BotView extends React.Component {
         return (
             <div ref={this.chatContainer} className="bot-view">
                 <div className="bot-chat-container">
-                    { // Clear the history chat when the refresh button is clicked
+                    { // Clear the chat history when the refresh button is clicked
                         <RefreshButton clearChatHistory={() => clearChatHistory(this)} /> 
                     }
                     { // Initialize the first message when the start button is clicked

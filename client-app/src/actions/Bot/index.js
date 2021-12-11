@@ -2,7 +2,7 @@ import { getFirstMessage, getNextMessage } from 'api/client-api';
 
 // Methods in this file modifies the Message component state
 
-// Load the history chat that is stored in local when the page is refreshed
+// Load the chat history that is stored in local when the page is refreshed
 // or re-start the program. Only the data that is stored in the last 7 days will be loaded.
 export function loadChatHistory(msgQueue) {
     // If there is a chat history in local storage
@@ -19,7 +19,7 @@ export function loadChatHistory(msgQueue) {
     }
 }
 
-// Clear the history chat that is stored in local
+// Clear the chat history that is stored in local
 export function clearChatHistory(msgQueue) {
     localStorage.removeItem("chatHistory")
     localStorage.removeItem("chatTime")
