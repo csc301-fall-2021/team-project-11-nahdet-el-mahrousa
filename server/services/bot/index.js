@@ -206,7 +206,6 @@ class BotService {
      * @returns The Reply deleted. If user does not have privilege, return null.
      */
     async deleteReply(rid) {
-
         logger.info(`Service: Deleting Reply`)
         const delReply = await this.replyDao.delete(rid)
 
@@ -410,6 +409,7 @@ class BotService {
      */
     async getWorkflow(query) {
         logger.info(`Service: Getting Workflow`)
+
         const messages = await this.messageDao.search(query)
         const replies = await this.replyDao.search()
         const workflow = this._buildWorkFlow({ messages, replies })

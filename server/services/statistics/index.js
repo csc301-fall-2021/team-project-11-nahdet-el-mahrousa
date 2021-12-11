@@ -1,5 +1,6 @@
 const logger = require("../../logger");
 
+
 class RetrieveDataService {
   constructor(analyticsGateway, replyDao) {
     this.analyticsGateway = analyticsGateway;
