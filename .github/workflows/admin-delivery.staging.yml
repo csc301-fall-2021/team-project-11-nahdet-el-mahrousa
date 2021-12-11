@@ -38,12 +38,9 @@ jobs:
         
     - name: INSTALL PROJECT DEPENDENCIES (NPM CI)
       run: npm ci
-
-    - name: BUILD ENV VARIABLES TO ./.env
-      run: echo $'${{ secrets.ADMIN_ENV_STAGING}}' > ./.env
       
-    # - name: SETUP ENV VARS
-    #   run: NODE_ENV='development'
+    - name: SETUP ENV VARS
+      run: NODE_ENV='development'
       
     - name: RUN BUILD
       run: npm run build --if-present
@@ -64,12 +61,6 @@ jobs:
       - name: CHECK-OUT GIT REPOSITORY
         uses: actions/checkout@v2
 
-      - name: BUILD ENV VARIABLES TO .env
-        run: echo $'${{ secrets.ADMIN_ENV_STAGING}}' > .env
-
-      - name: CHECK ENV VARIABLES IN .env
-        run: cat .env
-
       - name: HEROKU DEPLOY
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
@@ -77,4 +68,4 @@ jobs:
           heroku_app_name: ${{secrets.HEROKU_STAGING_ADMIN_APP_NAME}}
           heroku_email: ${{secrets.HEROKU_STAGING_SERVER_EMAIL}}
           appdir: "./client-admin"
-          env_file: ".env"
+          env_file: ".env.development"

@@ -61,11 +61,14 @@ class BotPage extends React.Component {
               {/* The option keys the user can search from */}
               <Select defaultValue="content" onChange={this.onSelectSearchKey}>
                 <Option value="_id">Message ID</Option>
-                <Option value="content">Content</Option>
-                <Option value="label">Label</Option>
+                <Option value="content">Message Content</Option>
+                <Option value="label">Message Label</Option>
+                <Option value="replyId">Reply ID</Option>
+                <Option value="replyContent">Reply Content</Option>
+                <Option value="replyLabel">Reply Label</Option>
               </Select>
               <Input.Search
-                placeholder="Search for a message"
+                placeholder="Search for messages"
                 allowClear
                 style={{ width: "50%", marginBottom: "1rem" }}
                 onSearch={this.onSearch}
