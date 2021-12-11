@@ -10,7 +10,11 @@ A [MVP](https://en.wikipedia.org/wiki/Minimum_viable_product) web app project th
 
 NM Bot is a web app that provide inquiry services in an automated fashion. End-users can "chat" with the bot by choosing answer options that describe their situation. With a series of designed questions, the bot, with a designed workflow provided by Nahdet El Mahrousa, will locate their current concern and receive advice and guidance from the organization. In the admin dashboard, NM admins can manage the bot workflow and get statistics about the behaviors of the clients, including city, their responses, and stay time.
 
-## [Demo](http://nm-bot-prod.herokuapp.com/)
+## Demo
+
+### [Bot-App Demo](http://nm-bot-prod.herokuapp.com/)
+
+### [Admin-Dashboard Demo](http://nm-admin-prod.herokuapp.com/)
 
 ## Features and Screenshots
 
@@ -70,7 +74,7 @@ Detailed instruction for each component is documented in the sub-directory of ea
 ### server
 
 - Node.js (Express.js)
-- googleapis
+- googleapis for Google Analytics
 - JSON-web-token Authentication
 - [Mongoose for MongoDB](https://mongoosejs.com/)
 
@@ -91,17 +95,19 @@ Detailed instruction for each component is documented in the sub-directory of ea
 
 ## Deployment
 
-The app is developed in two environments: *Staging/Testing* for development and testing in a running mock environment, in `staging` branch; *Production* is the production version for users, in `main` branch. Environment variables are loaded from `.env` files.
+The app is developed in two environments: *Staging/Testing* for development and testing in a running mock environment, in `staging` branch; *Production* is the production version for the users, in `main` branch. Environment variables are loaded from `.env` files.
 
-Deployment is automated by GitHub Actions, which is triggered when pushing to `staging` and `main` branches.
+Deployment is automated by GitHub Actions, which is triggered when pushing to `staging` and `main` branches. Pushing to these two branches should be done by a Pull-Request, and approved by other team members.
 
-During deployment, environment variables for server will be loaded from GitHub Secrets. Currently, a env secret is in the following format:
+During deployment, environment variables for the `server` will be loaded from GitHub Secrets. Currently, a env secret is in the following format:
 
 ```sh
 KEY_1=\"VALUE_1\"\nKEY_2=\"VALUE_2\"\n.....
 ```
 
-This does have some constraints and need improvements. **It is recommended that the environment variables should be configured directly in Heroku.**
+The required environment variables are specified in the sub-directory of each component.
+
+This does have some constraints and need improvements. **It is recommended that the environment variables should be configured [directly in Heroku](https://devcenter.heroku.com/articles/config-vars).**
 
 ## Future Improvements
 
@@ -134,6 +140,7 @@ The development team:
   - Server: Bot admin APIs
   - Admin-dashboard: Statistics graphs, Workflow graph, Admin Account management
   - CI/CD
+  - Documentations
 - Tianyang Hu
   - User and Authentication
   - Server: Client Bot API, Backend Search API
