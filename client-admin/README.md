@@ -73,7 +73,9 @@ This is hosted by Heroku. Continuous Delivery is setup with GitHub Actions, whic
 
 ## **API**
 
-Please check the wiki for this repository.
+Please check the wiki for:
+- Admin Bot API
+- User and Authenticatiion API
 
 ## **Contribution**
 
