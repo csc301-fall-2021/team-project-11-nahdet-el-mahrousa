@@ -77,5 +77,7 @@ Yuxuan Liu:
  - Admin Bot Management
  - Database
 
-Siyang LiU:
+Siyang Liu:
  - Statistic
+ - Google Analytics Creation and Integration
+ - Logger
