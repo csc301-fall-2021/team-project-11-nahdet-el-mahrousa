@@ -1,6 +1,3 @@
-// var logger = require('logger').createLogger()
-const { ReasonPhrases, StatusCodes } = require("http-status-codes");
-const { respond, response } = require("../../utils/response");
 const logger = require("../../logger");
 
 class RetrieveDataService {

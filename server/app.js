@@ -21,7 +21,6 @@ class AppFactory {
     const app = express();
     this.configApp(app)
     this.registerExtensions(app);
-    this.registerErrorHandler(app);
     this.registerGateways(app)
     this.registerRoutes(app);
 
@@ -34,15 +33,8 @@ class AppFactory {
    */
   configApp(app) {
     const envFile = `.env`
-    // if (process.env.NODE_ENV) {
-    //   envFile = `.env.${process.env.NODE_ENV}`
-    // } else {
-      
-    // }
-    
     dotenv.config({ path: `./config/${envFile}` })
   }
-
 
 
   /**
@@ -90,28 +82,6 @@ class AppFactory {
     app.use(cookieParser());
     // app.use(express.static(path.join(__dirname, 'public')));
     app.use(cors());
-  }
-
-  /**
-   * App uses error handlers.
-   * @param {*} app Express app
-   */
-  registerErrorHandler(app) {
-    // catch 404 and forward to error handler
-    // app.use(function (req, res, next) {
-    //   next(createError(404));
-    // });
-
-    // // error handler
-    // app.use(function (err, req, res) {
-    //   // set locals, only providing error in development
-    //   res.locals.message = err.message;
-    //   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-    //   // render the error page
-    //   res.status(err.status || 500);
-    //   res.send(err);
-    // });
   }
 }
 

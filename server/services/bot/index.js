@@ -1,6 +1,3 @@
-// var logger = require('logger').createLogger()
-const { ReasonPhrases, StatusCodes } = require('http-status-codes')
-const { respond, response } = require('../../utils/response')
 const logger = require('../../logger')
 
 class BotService {
@@ -123,25 +120,19 @@ class BotService {
     /************************************************************************************************/
 
     /**
-     * 
-     * @param {User} user User that makes this operation.
+     * Get all messages with query
      * @param {Object} query Query constraints.
      * @returns Response of Messages that satisfy the constraints.
      */
-    async getMessages(user, query) {
+    async getMessages(query) {
         logger.info(`Service: Getting Messages with contraints ${query}`)
-        if (!user.privilege.accessBot) {
-            logger.info(`Service: User [${user.username}] does not have priviledge to access bot`)
-            return null
-        }
-
         const messages = await this.messageDao.search(query)
         logger.info(`Service: Got Messages with constraints ${query}`)
         return messages
     }
 
     /**
-     * 
+     * Get all replies
      * @returns Response of all Replies.
      */
     async getReplies() {
@@ -153,150 +144,115 @@ class BotService {
 
     /**
      * Create a message. If the user does not have privilege, then the action is forbidden.
-     * @param {User} user User that makes this operation.
      * @param {String} content Content of the message for client to read.
      * @param {String} label Label of the message for admin to read.
      * @returns New Message. If user does not have privilege, return null.
      */
-    async createMessage(user, content, label) {
-        // Validate modifier's privilege
-        if (!user.privilege.modifyBot) {
-            logger.info(`Service: User [${user.username}] does not have priviledge to modify bot`)
-            return null
-        }
+    async createMessage(content, label) {
         logger.info(`Service: Creating Message`)
         const newMessage = await this.messageDao.create({ content, label })
 
         if (newMessage !== null) {
-            logger.info(`Service: User [${user.username}] Created Message ${newMessage._id} \'${label}\'`)
+            logger.info(`Service: Created Message ${newMessage._id} \'${label}\'`)
             return newMessage
         } else {
-            logger.info(`Service: User [${user.username}] Failed Create Message \'${label}\'`)
+            logger.info(`Service: Failed Create Message \'${label}\'`)
             return newMessage
         }
     }
 
     /**
      * Create a reply. If the user does not have privilege, then the action is forbidden.
-     * @param {User} user User that makes this operation.
      * @param {String} content Content of the reply for client to read.
      * @param {String} label Label of the reply for admin to read.
      * @param {ObjectId} fromMessage The message id that this replies/option belongs to.
      * @param {ObjectId} toMessage The message id that this replies redirects to.
      * @returns New Reply. If user does not have privilege, return null.
      */
-    async createReply(user, content, label, fromMessage, toMessage) {
-        // Validate modifier's privilege
-        if (!user.privilege.modifyBot) {
-            logger.info(`Service: User [${user.username}] does not have priviledge to modify bot`)
-            return null
-        }
+    async createReply(content, label, fromMessage, toMessage) {
         logger.info(`Service: Creating Reply`)
         const newReply = await this.replyDao.create({ content, label, fromMessage, toMessage })
 
         if (newReply !== null) {
-            logger.info(`User: [${user.username}] Created Reply \'${newReply._id}\'`)
+            logger.info(`Service: Created Reply \'${newReply._id}\'`)
             return newReply
         } else {
-            logger.info(`User: [${user.username}] Failed Create Reply \'${label}\'`)
+            logger.info(`Service: Failed Create Reply \'${label}\'`)
             return undefined
         }
     }
 
     /**
      * Delete a message. If the user does not have privilege, then the action is forbidden.
-     * @param {User} user User that makes this operation.
      * @param {ObjectId} mid id of the message to delete.
      * @returns The Message deleted. If user does not have privilege, return null.
      */
-    async deleteMessage(user, mid) {
-        // Validate modifier's privilege
-        if (!user.privilege.modifyBot) {
-            logger.info(`Service: User [${user.username}] does not have priviledge to modify bot`)
-            return null
-        }
+    async deleteMessage(mid) {
         logger.info(`Service: Deleting Message`)
         const delMessage = await this.messageDao.delete(mid)
 
         if (delMessage !== null) {
-            logger.info(`Service: User [${user.username}] Deleted Message \'${mid}\'`)
+            logger.info(`Service: Deleted Message \'${mid}\'`)
             return delMessage
         } else {
-            logger.info(`Service: User [${user.username}] Failed Delete Message \'${mid}\'`)
+            logger.info(`Service: Failed Delete Message \'${mid}\'`)
             return undefined
         }
     }
 
     /**
      * Delete a reply. If the user does not have privilege, then the action is forbidden.
-     * @param {User} user User that makes this operation.
      * @param {ObjectId} rid id of the reply to delete.
      * @returns The Reply deleted. If user does not have privilege, return null.
      */
-    async deleteReply(user, rid) {
-        // Validate modifier's privilege
-        if (!user.privilege.modifyBot) {
-            logger.info(`Service: User [${user.username}] does not have priviledge to modify bot`)
-            return null
-        }
+    async deleteReply(rid) {
+
         logger.info(`Service: Deleting Reply`)
         const delReply = await this.replyDao.delete(rid)
 
         if (delReply !== null) {
-            logger.info(`Service: User [${user.username}] DELETED Reply \'${rid}\'`)
+            logger.info(`Service: Deleted Reply \'${rid}\'`)
             return delReply
         } else {
-            logger.info(`Service: User [${user.username}] FAILED DELETE Reply \'${rid}\'`)
+            logger.info(`Service: Failed Delete Reply \'${rid}\'`)
             return undefined
         }
     }
 
     /**
      * Update a message. If the user does not have privilege, then the action is forbidden.
-     * @param {User} user User that makes this operation.
      * @param {ObjectId} mid id of the message to update.
      * @param {Object} data Data to be updated.
      * @returns Updated Message. If user does not have privilege, return null.
      */
-    async updateMessage(user, mid, data) {
-        // Validate modifier's privilege
-        if (!user.privilege.modifyBot) {
-            logger.info(`Service: User [${user.username}] does not have priviledge to modify bot`)
-            return null
-        }
+    async updateMessage(mid, data) {
         logger.info(`Service: Updating Message`)
         const newMessage = await this.messageDao.update(mid, data)
 
         if (newMessage !== null) {
-            logger.info(`Service: User [${user.username}] Updated Message \'${mid}\'`)
+            logger.info(`Service: Updated Message \'${mid}\'`)
             return newMessage
         } else {
-            logger.info(`Service: User [${user.username}] Failed Updating Message \'${mid}\'`)
+            logger.info(`Service: Failed Update Message \'${mid}\'`)
             return undefined
         }
     }
 
     /**
      * Update a reply. If the user does not have privilege, then the action is forbidden.
-     * @param {User} user User that makes this operation.
      * @param {ObjectId} rid id of the reply to update.
      * @param {Object} data Data to be updated.
      * @returns Updated Reply. If user does not have privilege, return null.
      */
-    async updateReply(user, rid, data) {
-        // Validate modifier's privilege
-        if (!user.privilege.modifyBot) {
-            logger.info(`Service: User [${user.username}] does not have priviledge to modify bot`)
-            return null
-        }
+    async updateReply(rid, data) {
         logger.info(`Service: Updating Reply`)
         const newReply = await this.replyDao.update(rid, data)
 
         if (newReply !== null) {
-            logger.info(`Service: User [${user.username}] UPDATED Reply \'${rid}\'`)
+            logger.info(`Service: Updated Reply \'${rid}\'`)
             return newReply
         } else {
-            logger.info(`Service: User [${user.username}] FAILED UPDATE Reply \'${rid}\'`)
+            logger.info(`Service: Failed Updated Reply \'${rid}\'`)
             return undefined
         }
     }
@@ -309,11 +265,20 @@ class BotService {
      * @returns [ { message, replies } ]
      */
     _buildBotList({ messages, replies }) {
-        // TODO: Improve this
         const bot = []
 
+        // Build a dictionary of mid:[reply]
+        const repliesDictionary = {}
+        replies.forEach(reply => {
+            let fromMessage = reply.fromMessage.toString()
+            if (!(fromMessage in repliesDictionary)) {
+                repliesDictionary[fromMessage] = []
+            }
+            repliesDictionary[fromMessage].push(reply)
+        })
+
         for (let msg of messages) {
-            const repliesOfMessage = replies.filter(r => r.fromMessage.toString() === msg._id.toString())
+            const repliesOfMessage = repliesDictionary[msg._id.toString()]
             bot.push({
                 message: msg,
                 replies: repliesOfMessage
@@ -325,41 +290,36 @@ class BotService {
 
     /**
      * Create a well formatted bot.
-     * @param {User} user User that makes this operation.
      * @param {*} messageQuery Query constraints on Messages.
      * @param {*} replyQuery Query constraints on Replies.
      * @returns A well formatted object containing all the messages and replies: [ { message, replies } ]
      */
-    async getBot(user, messageQuery, replyQuery) {
-        if (!user.privilege.accessBot) {
-            logger.info(`Service: User [${user.username}] does not have priviledge to access bot`)
-            return null
-        }
+    async getBot(messageQuery, replyQuery) {
         logger.info(`Service: Getting Bot with message query ${messageQuery} and reply query ${replyQuery}`)
         let messages = await this.messageDao.search(messageQuery)
         let addOnReplies = await this.replyDao.search(replyQuery)
 
-        if(Object.keys(replyQuery).length !== 0 && Object.keys(messageQuery).length === 0){
+        if (Object.keys(replyQuery).length !== 0 && Object.keys(messageQuery).length === 0) {
             messages = []
         }
 
-        if(Object.keys(replyQuery).length === 0){
+        if (Object.keys(replyQuery).length === 0) {
             addOnReplies = []
         }
 
         const messageIds = []
 
-        for(let message of messages){
+        for (let message of messages) {
             messageIds.push(message.convertedId)
         }
 
-        for(let reply of addOnReplies){
-            let addOnMessage = await this.messageDao.search({convertedId: reply.fromMessage})
-            if(addOnMessage.length <= 0){
+        for (let reply of addOnReplies) {
+            let addOnMessage = await this.messageDao.search({ convertedId: reply.fromMessage })
+            if (addOnMessage.length <= 0) {
                 continue
             }
             addOnMessage = addOnMessage[0]
-            if (messageIds.indexOf(addOnMessage.convertedId) < 0){
+            if (messageIds.indexOf(addOnMessage.convertedId) < 0) {
                 messages.push(addOnMessage)
                 messageIds.push(addOnMessage.convertedId)
             }
@@ -407,11 +367,11 @@ class BotService {
      * @param {Array} replies Replies from one message. 
      * @returns an array of edge objects for workflow
      */
-     _generateEdges(replies) {
+    _generateEdges(replies) {
         const edges = []
-        for(let reply of replies){
+        for (let reply of replies) {
             let value = reply.label
-            if(!value || value === ""){
+            if (!value || value === "") {
                 value = reply.content
             }
             edges.push({
@@ -448,11 +408,7 @@ class BotService {
      * @param {*} query Query constraints on Messages.
      * @returns A workflow that in format { nodes, edges } where nodes and edges are array
      */
-    async getWorkflow(user, query) {
-        if (!user.privilege.accessBot) {
-            logger.info(`Service: User [${user.username}] does not have priviledge to access bot`)
-            return null
-        }
+    async getWorkflow(query) {
         logger.info(`Service: Getting Workflow`)
         const messages = await this.messageDao.search(query)
         const replies = await this.replyDao.search()
