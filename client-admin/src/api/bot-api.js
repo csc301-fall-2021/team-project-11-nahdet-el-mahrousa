@@ -1,13 +1,17 @@
 import * as http from "../utils/http";
 const origin = process.env.REACT_APP_ORIGIN
 
+/**
+ * get all message and reply data
+ * @param {*} dispatchMessage to dispatch data to store
+ */
 export function getBot(dispatchMessage) {
   let msg = [];
   http.get("/admin/bot")
     .then((response) => {
       if (response.statusCode === 200) {
         msg = response.entity;
-        console.log(response.entity);
+        // dispatch msg to store
         dispatchMessage(msg);
       } else {
         console.log(response.msg);
@@ -18,6 +22,11 @@ export function getBot(dispatchMessage) {
     });
 }
 
+/**
+ * get all message and reply data with query
+ * @param {*} query to query the messages
+ * @param {*} dispatchMessage to dispatch data to store
+ */
 export function getQueryBot(query, dispatchMessage) {
   let msg = [];
   const url = new URL(origin + "/admin/bot")
@@ -27,7 +36,7 @@ export function getQueryBot(query, dispatchMessage) {
     .then((response) => {
       if (response.statusCode === 200) {
         msg = response.entity;
-        console.log(response.entity);
+        // dispatch msg to store
         dispatchMessage(msg);
       } else {
         console.log(response.msg);
@@ -38,12 +47,16 @@ export function getQueryBot(query, dispatchMessage) {
     });
 }
 
+/**
+ * sent create message request to backend
+ * @param {*} data the message data
+ * @param {*} dispatchMessage to dispatch data to store
+ */
 export function createMessage(data, dispatchMessage) {
   console.log(data);
   http.post("/admin/bot/message", data)
     .then((response) => {
       if (response.statusCode === 200) {
-        console.log(response.msg);
         getBot(dispatchMessage);
       } else {
         console.log(response.msg);
@@ -54,12 +67,16 @@ export function createMessage(data, dispatchMessage) {
     });
 }
 
+/**
+ * delete message request to backend
+ * @param {*} data the message data needed to delete
+ * @param {*} dispatchMessage to dispatch data to store
+ */
 export function deleteMessage(data, dispatchMessage) {
   console.log(data);
   http.del("/admin/bot/message", data)
     .then((response) => {
       if (response.statusCode === 200) {
-        console.log(response.msg);
         getBot(dispatchMessage);
       } else {
         console.log(response.msg);
@@ -70,12 +87,16 @@ export function deleteMessage(data, dispatchMessage) {
     });
 }
 
+/**
+ * sent edit message request to backend
+ * @param {*} data the message data needed to change message
+ * @param {*} dispatchMessage to dispatch data to store
+ */
 export function editMessage(data, dispatchMessage) {
   console.log(data);
   http.put("/admin/bot/message", data)
     .then((response) => {
       if (response.statusCode === 200) {
-        console.log(response.msg);
         getBot(dispatchMessage);
       } else {
         console.log(response.msg);
@@ -85,13 +106,18 @@ export function editMessage(data, dispatchMessage) {
       console.log(error);
     });
 }
+
+/**
+ * send delete reply request to backend
+ * @param {*} data the reply data needed to delete reply
+ * @param {*} dispatchMessage to dispatch data to store
+ */
 export function deleteReply(data, dispatchMessage) {
   let msg = [];
   console.log(data);
   http.del("/admin/bot/reply", data)
     .then((response) => {
       if (response.statusCode === 200) {
-        console.log(response.msg);
         getBot(dispatchMessage);
       } else {
         console.log(response.msg);
@@ -102,13 +128,17 @@ export function deleteReply(data, dispatchMessage) {
     });
 }
 
+/**
+ * send sent create reply request to backend
+ * @param {*} data the reply data
+ * @param {*} dispatchMessage to dispatch data to store
+ */
 export function createReply(data, dispatchMessage) {
   let msg = [];
   console.log(data);
   http.post("/admin/bot/reply", data)
     .then((response) => {
       if (response.statusCode === 200) {
-        console.log(response.msg);
         getBot(dispatchMessage);
       } else {
         console.log(response.msg);
@@ -119,13 +149,17 @@ export function createReply(data, dispatchMessage) {
     });
 }
 
+/**
+ * send edit reply request to backend
+ * @param {*} data the reply data needed to change the previous reply datas
+ * @param {*} dispatchMessage to dispatch data to store
+ */
 export function editReply(data, dispatchMessage) {
   let msg = [];
   console.log(data);
   http.put("/admin/bot/reply", data)
     .then((response) => {
       if (response.statusCode === 200) {
-        console.log(response.msg);
         getBot(dispatchMessage);
       } else {
         console.log(response.msg);
@@ -135,15 +169,3 @@ export function editReply(data, dispatchMessage) {
       console.log(error);
     });
 }
-
-// export function deleteReply() {
-//    axios({
-//       method: 'delete',
-//       url: "https://nm-bot-server.herokuapp.com/admin/bot/reply",
-//       data: []
-//    })
-//    .then((response) => {
-//    }, (error) => {
-//       console.log(error);
-//    });
-// }
