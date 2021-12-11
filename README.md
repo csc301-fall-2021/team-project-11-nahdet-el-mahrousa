@@ -63,7 +63,7 @@ npm start
 
 The frontend apps are communicating with the server through RESTful APIs, which are documented in the GitHub Wiki. The architecture of the server is multi-layer: API layer receives requests, lets the controller layer process the user input and catch errors; the service layer manipulates DAOs and Google API to manage data; the DAO layer provides basic interfaces to communicate with the Database.
 
-Detailed instruction for each component is documented in the sub-directory of each component.
+Detailed instruction for each component is documented in the sub-directory of each component. Notice that you need to setup the `.env` files in each sub-directory.
 
 ## Tech Stack
 
@@ -95,7 +95,7 @@ The app is developed in two environments: *Staging/Testing* for development and 
 
 Deployment is automated by GitHub Actions, which is triggered when pushing to `staging` and `main` branches.
 
-During deployment, environment variables will be loaded from GitHub Secrets. Currently, a env secret is in the format of:
+During deployment, environment variables for server will be loaded from GitHub Secrets. Currently, a env secret is in the following format:
 
 ```sh
 KEY_1=\"VALUE_1\"\nKEY_2=\"VALUE_2\"\n.....
@@ -109,13 +109,13 @@ This does have some constraints and need improvements. **It is recommended that 
 
 - Multimedia in Bot (display images or videos)
 - Allow end-users to write comments after chatting
-- More mature admin dashboard system
+- More mature admin dashboard system, including admin privilege restrictions and more user features
 
 ### Infrastructure
 
 - Improve logging system
 - More integrated frontend and backend
-- Error Handling
+- Error handling
 
 ## License
 
