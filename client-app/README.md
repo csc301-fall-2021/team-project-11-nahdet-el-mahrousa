@@ -11,6 +11,12 @@ The page contains functions to send responses depend on user's replies.
 - Get the response message from the bot
 - Repeat the above two steps until you get the final result
 
+Other features include:
+- Export the conversation to a text file
+- Restore the history chat
+- Click on the refresh button at the bottom right to clean the history chat
+- Responsive
+
 ## Set-up Instructions
 
 ```shell
@@ -30,13 +36,14 @@ npm run dev
 
 ## Configuration
 
-The app requires configuration of REACT APP to be stored in `/client-app` as `.env.development` file.
+The app requires configurations of REACT APP to be stored in `/client-app` as `.env.development` and `.env.production` files.
 
 ```shell
 # Example
-# In /client-app/.env.development you will need the following fields
-- REACT_APP_ORIGIN
+# For both /client-app/.env.development and  /client-app/.env.production you will need the following fields
 - REACT_APP_NAME
+- REACT_APP_ORIGIN
+- REACT_GOOGLE_ANALYTICS_TRACKING_ID
 ```
 
 ## Deployment
