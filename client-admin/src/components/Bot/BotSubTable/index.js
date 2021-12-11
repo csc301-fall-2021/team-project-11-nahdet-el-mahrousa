@@ -4,6 +4,7 @@ import ReplyOptionMenu from "../BotReplyOptionMenu";
 
 class BotSubTable extends React.Component {
   render() {
+    // display reply ID, Reply, Label, Next Message, and Actions
     const columns = [
       {
         title: "Reply ID",
@@ -28,6 +29,7 @@ class BotSubTable extends React.Component {
         title: "Actions",
         key: "_id",
         render: (data) => (
+          // call ReplyOptionMenu component
           <ReplyOptionMenu
             data={data}
             msgList={this.props.msgList}
@@ -36,6 +38,7 @@ class BotSubTable extends React.Component {
       },
     ];
     return (
+      // use Table component to display replies
       <Table
         rowKey={(record) => record._id}
         columns={columns}
