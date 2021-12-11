@@ -1,4 +1,4 @@
-const logger = { log: console.log }
+const logger = require('../../logger')
 const { Reply } = require('../../models/models.mongoose')
 const OnjectId = require("mongodb").ObjectId
 
@@ -18,23 +18,16 @@ class MongooseReplyDao {
      */
     async create({ content, label, fromMessage, toMessage }) {
         try {
+            logger.info(`MONGOOSE CREATING Reply`)
             const newReply = new Reply({ content, label, fromMessage, toMessage })
             const createdReply = await newReply.save()
             await Reply.findByIdAndUpdate(createdReply._id, { convertedId: createdReply._id.toString() })
-            logger.log(`MONGOOSE CREATED Reply ${createdReply._id}`)
+            logger.info(`MONGOOSE CREATED Reply ${createdReply._id}`)
             return newReply
         } catch (err) {
-            logger.log(err)
+            logger.error(err)
             return null
         }
-    }
-    //TODO: Decide on if we need it
-    async getMultiple(rid){
-        let ridInput = rid.map(function(val){
-            return ObjectId(val);
-        })
-        const reply = await Reply.find({"_id" : {"$in" : ridInput }});
-        return reply
     }
 
     /**
@@ -43,8 +36,9 @@ class MongooseReplyDao {
      * @returns Reply; If reply not found, return null.
      */
     async get(rid) {
+        logger.info(`MONGOOSE GETTING Reply with id of ${rid}`)
         const reply = await Reply.findById(rid).exec()
-        logger.log(`MONGOOSE GET Reply ${reply}`)
+        logger.info(`MONGOOSE GOT Reply ${reply}`)
         return reply
     }
 
@@ -53,7 +47,9 @@ class MongooseReplyDao {
      * @returns Array of Replies
      */
     async getAll() {
+        logger.info(`MONGOOSE GETTING All Reply`)
         let replies = await Reply.find().exec()
+        logger.info(`MONGOOSE GOT All Reply`)
         return replies
     }
 
@@ -65,10 +61,14 @@ class MongooseReplyDao {
     async search(filter = null) {
         if (filter) {
             // TODO: apply filter check.
+            logger.info(`MONGOOSE SEARCHING All Replies with filter ${filter}`)
             const replies = await Reply.find(filter).exec()
+            logger.info(`MONGOOSE SEARCHED All Replies with filter ${filter}`)
             return replies
         } else {
+            logger.info(`MONGOOSE SEARCHING All Replies`)
             const replies = await Reply.find().exec()
+            logger.info(`MONGOOSE SEARCHED All Replies`)
             return replies
         }
     }
@@ -79,11 +79,12 @@ class MongooseReplyDao {
      * @returns Deleted Reply. If reply not found, return null.
      */
     async delete(rid) {
+        logger.info(`MONGOOSE DELETING Replie ${rid}`)
         const deletedReply = await Reply.findByIdAndRemove(rid)
         if (deletedReply !== null) {
-            logger.log(`MONGOOSE DELETED Reply ${deletedReply._id}`)
+            logger.info(`MONGOOSE DELETED Reply ${deletedReply._id}`)
         } else {
-            logger.log(`MONGOOSE FAILED DELETE Reply ${rid}`)
+            logger.info(`MONGOOSE FAILED DELETE Reply ${rid}`)
         }
         return deletedReply
     }
@@ -95,11 +96,12 @@ class MongooseReplyDao {
      * @returns Updated reply. If reply not found, return null.
      */
     async update(rid, data) {
+        logger.info(`MONGOOSE UPDATING Reply ${rid}`)
         const updatedReply = await Reply.findByIdAndUpdate(rid, data, { new: true })
         if (updatedReply !== null) {
-            logger.log(`MONGOOSE UPDATED Reply ${updatedReply._id}`)
+            logger.info(`MONGOOSE UPDATED Reply ${updatedReply._id}`)
         } else {
-            logger.log(`MONGOOSE FAILED UPDATE Reply ${rid}`)
+            logger.info(`MONGOOSE FAILED UPDATE Reply ${rid}`)
         }
         return updatedReply
     }
