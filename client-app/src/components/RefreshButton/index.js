@@ -1,7 +1,7 @@
 import React from 'react';
 import "./RefreshButton.scss";
 
-
+// Refresh button that clears the history chat in local
 class RefreshButton extends React.Component {
 
     render() {

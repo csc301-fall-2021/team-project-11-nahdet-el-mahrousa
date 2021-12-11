@@ -4,6 +4,7 @@ import FaqView from 'components/FaqView';
 
 import "./LeftMenu.scss";
 
+// Left menu that contains the company title and logo
 class LeftMenu extends React.Component {
     render() {
         return (
