@@ -109,7 +109,6 @@ class BotService {
             return null
         }
         logger.info(`Service: Got Initial Message`)
-        console.log(rpl[0])
         return rpl[0]
     }
 

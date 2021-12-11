@@ -1,16 +1,10 @@
 const {createLogger, transports, format} = require('winston')
 require('winston-mongodb')
 
-
+const folder = "log/ProdLog/"
 class ProdLogger{
-    constructor(uri){
-        this.db = uri
-    }
-
     _getDateName(){
-        let today = new Date()
-        let folder = "log/ProdLog/"
-        return folder + today.getFullYear() + "." + (today.getMonth()+1) + "." + (today.getDate())
+        return folder + new Date().toISOString().substring(0, 10)
     }
 
     buildLogger(){
@@ -30,4 +24,6 @@ class ProdLogger{
         })
     }
 }
-module.exports = ProdLogger
+
+const logger = (new ProdLogger()).buildLogger()
+module.exports = logger
