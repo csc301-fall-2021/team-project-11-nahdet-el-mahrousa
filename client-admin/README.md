@@ -12,7 +12,32 @@ There are four pages in the Admin Bot Dashboard:
 - Account Management Page
 - Admin Dashboard Page
 
+### Bot Workflow Page:
+This page shows a visualization of the bot workflow.
+
+### Bot Workflow Management Page:
+This Page is used to manage the bot workflow. 
+- Create, Edit, Delete Messages.
+- Create, Edit, Delete Replies.
+- Search for a specific message by Content, Message id, or Label.
+- - Search for a specific reply by Content, reply id, or Label.
+
+### Admin Account Management Page:
+This Page is used to manage admin accounts that can access the Admin Dashboard.
+- Add a new admin account.
+- delete existing account.
+- search for an account by username, name, or User ID.
+
+### Admin Dashboard Page:
+Display the statistics collected.
+- Visitor trends
+- Count of reply by location
+- Weekly statistics
+- Average page stay time
+- Visitor platforms
+
 ## **Set-up Instructions**
+
 
 ```shell
 # Load environment variables
