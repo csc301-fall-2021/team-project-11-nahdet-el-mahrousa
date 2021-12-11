@@ -127,16 +127,10 @@ class BotService {
 
     /**
      * 
-     * @param {User} user User that makes this operation.
-     * @param {Object} query Query constraints.
-     * @returns Response of Replies that satisfy the constraints.
+     * @returns Response of all Replies.
      */
-    async getReplies(user, query) {
-        if (!user.privilege.accessBot) {
-            return null
-        }
-
-        const replies = await this.replyDao.search(query)
+    async getReplies() {
+        const replies = await this.replyDao.getAll()
         return replies
     }
 
@@ -309,17 +303,42 @@ class BotService {
     /**
      * Create a well formatted bot.
      * @param {User} user User that makes this operation.
-     * @param {*} query Query constraints on Messages.
+     * @param {*} messageQuery Query constraints on Messages.
+     * @param {*} replyQuery Query constraints on Replies.
      * @returns A well formatted object containing all the messages and replies: [ { message, replies } ]
      */
-    async getBot(user, query) {
+    async getBot(user, messageQuery, replyQuery) {
         if (!user.privilege.accessBot) {
             return null
         }
 
-        const messages = await this.messageDao.search(query)
-        const replies = await this.replyDao.search()
-        const bot = this._buildBotList({ messages, replies })
+        let messages = await this.messageDao.search(messageQuery)
+        const addOnReplies = await this.replyDao.search(replyQuery)
+
+        if(Object.keys(replyQuery).length !== 0 && Object.keys(messageQuery).length === 0){
+            messages = []
+        }
+
+        const messageIds = []
+
+        for(let message of messages){
+            messageIds.push(message.convertedId)
+        }
+
+        for(let reply of addOnReplies){
+            let addOnMessage = await this.messageDao.search({convertedId: reply.fromMessage})
+            if(addOnMessage.length <= 0){
+                continue
+            }
+            addOnMessage = addOnMessage[0]
+            if (messageIds.indexOf(addOnMessage.convertedId) < 0){
+                messages.push(addOnMessage)
+                messageIds.push(addOnMessage.convertedId)
+            }
+        }
+
+        const allReplies = await this.replyDao.getAll()
+        const bot = this._buildBotList({ messages, replies: allReplies })
         return bot
     }
 

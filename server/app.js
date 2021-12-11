@@ -43,6 +43,8 @@ class AppFactory {
     dotenv.config({ path: `./config/${envFile}` })
   }
 
+
+
   /**
    * App uses routers.
    * @param {*} app Express app
@@ -54,6 +56,7 @@ class AppFactory {
     const adminBotRouter = require('./api/admin/bot');
     const userRouter = require('./api/auth/user')
     const authRouter = require('./api/auth/auth')
+    const statisticsRouter = require('./api/statistics/retrieve')
 
     // Register Routers
     app.use('/', indexRouter);
@@ -61,6 +64,7 @@ class AppFactory {
     app.use('/admin', adminBotRouter);
     app.use('/user', userRouter)
     app.use('/auth', authRouter)
+    app.use('/statistics', statisticsRouter)
   }
 
   /**

@@ -10,7 +10,7 @@ export async function getFirstMessage() {
       const response = await httpGet("/bot/message");
       // Response get successfully
       if (response.statusCode === 200) {
-         console.log(response);
+         // console.log(response);
          if (!response.entity) {
             throw new Error("No Entity")
          }
@@ -32,7 +32,7 @@ export async function getNextMessage(data) {
       const response = await httpPost("/bot/message", data);
       // Response get successfully
       if (response.statusCode === 200) {
-         console.log(response);
+         // console.log(response);
          if (!response.entity) {
             throw new Error("No Entity")
          }

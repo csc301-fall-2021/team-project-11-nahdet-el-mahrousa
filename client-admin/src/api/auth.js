@@ -11,7 +11,7 @@ export async function authLogin(data) {
     const response = await http.post("/auth/login", data)
     return response
   } catch (err) {
-    console.log(err)
+    console.error(err)
     throw new Error("An API error has occurred")
   }
 }

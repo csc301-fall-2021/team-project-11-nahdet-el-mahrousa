@@ -26,16 +26,24 @@ class AdminBotController {
      */
     async getBot(req, user) {
         // TODO: How to do query.
-        const query = {}
+        const messageQuery = {}
+        const replyQuery = {}
         for(let key of Object.keys(req.query)){
             let value = new RegExp(".*" + req.query[key] + ".*", "i")
-            if(key === "_id"){
-                query.convertedId = value
-            } else {
-                query[key] = value
+
+            if(key === "replyId"){
+                replyQuery.convertedId = value
+            } else if(key === "replyContent"){
+                replyQuery.content = value
+            } else if(key === "replyLabel"){
+                replyQuery.label = value
+            } else if(key === "_id"){
+                messageQuery.convertedId = value
+            } else{
+                messageQuery[key] = value
             }
         }
-        const result = await this.botService.getBot(user, query)
+        const result = await this.botService.getBot(user, messageQuery, replyQuery)
         if (result === null) {
             return response.FORBIDDEN
         } else {
@@ -281,6 +289,21 @@ class AdminBotController {
             } else {
                 return respond({ entity: result })
             }
+        }
+    }
+
+
+    /**
+     * Get replies from query.
+     * @param {Object} req Request.
+     * @returns Response object.
+     */
+    async getReplies(req){
+        const result = await this.botService.getReplies()
+        if (result === null) {
+            return response.FORBIDDEN
+        } else {
+            return respond({ entity: result })
         }
     }
 }

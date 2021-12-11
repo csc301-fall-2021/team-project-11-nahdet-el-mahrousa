@@ -52,7 +52,6 @@ export function sendReplyToBackend(
 
 export function sendMessageToBackend(_id, content, label) {
   label = label ? label : "";
-  console.log(_id);
   if (!_id) {
     return createMessage({ content, label }, dispatchMessage);
   } else {

@@ -40,7 +40,21 @@ export async function initChat(msgQueue) {
             chat: newQueue
         }, () => msgQueue.scrollToMyRef());
     } catch (error) {
+<<<<<<< HEAD
         console.error(error);
+=======
+        const err = `${String(error)}. Please contact the staff.`
+        console.error(err);
+        newQueue.push({
+            message: {
+                content: err
+            },
+            replies: []
+        })
+        msgQueue.setState({
+            chat: newQueue
+        }, () => msgQueue.scrollToMyRef());
+>>>>>>> 9382a8683e5f89762d853a8c6ac4e6dd0d1f1e91
     }
 }
 
