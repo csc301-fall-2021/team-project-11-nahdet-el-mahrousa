@@ -31,8 +31,8 @@ This Page is used to manage admin accounts that can access the Admin Dashboard.
 ### Admin Dashboard Page:
 Display the statistics collected.
 - Visitor trends
-- Count of reply by location
 - Weekly statistics
+- Count of reply by location
 - Average page stay time
 - Visitor platforms
 
