@@ -3,6 +3,7 @@ import "./FaqView.scss";
 
 import {exportConversation} from "actions/Bot"
 
+// The FAQ view container that contains the downloading button
 class FaqView extends React.Component {
     render() {
         return (

@@ -6,7 +6,9 @@ import "./HomePage.scss";
 import ReactGA from "react-ga";
 ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS_TRACKING_ID || "UA-212303684-1");
 
+// Home page that contains the left manu and the chat view
 class HomePage extends React.Component {
+    // Use the Google Analysis in the page
     componentDidMount() {
         ReactGA.pageview(window.location.pathname + window.location.search)
     }
@@ -15,7 +17,6 @@ class HomePage extends React.Component {
         return (
             <div>
                 <div className="home-page">
-
                     <div className="left-menu-section">
                         <div className="top-decoration"></div>
                         <LeftMenu />

@@ -2,6 +2,7 @@ import React from 'react';
 
 import "./Reply.scss";
 
+// Message reply by the user's choice
 class Reply extends React.Component {
 
     render() {
