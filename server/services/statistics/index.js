@@ -1,7 +1,7 @@
 // var logger = require('logger').createLogger()
 const { ReasonPhrases, StatusCodes } = require("http-status-codes");
 const { respond, response } = require("../../utils/response");
-const logger = { log: console.log };
+const logger = require("../../logger");
 
 class RetrieveDataService {
   constructor(analyticsGateway, replyDao) {
@@ -16,20 +16,23 @@ class RetrieveDataService {
    * @returns a google analytics report object to respond to the request object; If the report is invalid, return null
    */
   async _getReports(requestBody) {
+    logger.info(`Service: Google Analytics Authorizing`)
     await this.analyticsGateway.authorize();
-
+    logger.info(`Service: Google Analytics Authorized`)
     let request = {
       headers: { "Content-Type": "application/json" },
       auth: await this.analyticsGateway.getGoogleJWT(),
       resource: requestBody,
     };
-
+    logger.info(`Service: Retrieving Data from Google Analytics`)
     let res = await (
       await this.analyticsGateway.getAnalytics()
     ).reports.batchGet(request);
     if (res.status !== 200) {
+      logger.info(`Service: Failed Retrieving Data from Google Analytics`)
       return null;
     }
+    logger.info(`Service: Retrieved Data from Google Analytics`)
     return res.data;
   }
 
@@ -230,7 +233,7 @@ class RetrieveDataService {
         }
         currObject["reply"] = replyLabel + "/" + replyContent;
       } catch (err) {
-        logger.log(err);
+        logger.error(err);
         return null
       }
     } else if (inputName === "location") {
@@ -295,7 +298,7 @@ class RetrieveDataService {
       }
       return res;
     } catch (err) {
-      logger.log(err);
+      logger.error(err);
       return null;
     }
   }
@@ -338,7 +341,7 @@ class RetrieveDataService {
       }
       return res;
     } catch (err) {
-      logger.log(err);
+      logger.error(err);
       return null;
     }
   }
@@ -370,7 +373,7 @@ class RetrieveDataService {
         name: "ga:city",
       },
     ];
-
+    logger.info(`Service: Retrieving Data from Google Analytics for General User Visit data`)
     let rawReport = await this._getRawReport(
       startDate,
       endDate,
@@ -378,8 +381,10 @@ class RetrieveDataService {
       dimensions
     );
     if (rawReport === null) {
+      logger.info(`Service: Failed Retrieving Data from Google Analytics for General User Visit data`)
       return rawReport;
     }
+    logger.info(`Service: Retrieved Data from Google Analytics for General User Visit data`)
     return await this._reformatVisitNumberAndSumFromLocationPerDay(rawReport);
   }
 
@@ -400,8 +405,7 @@ class RetrieveDataService {
         0
       );
     } catch (err) {
-      logger.log(err);
-      logger.log("Wrong raw data format input");
+      logger.error(err);
       return null;
     }
   }
@@ -442,7 +446,7 @@ class RetrieveDataService {
         ],
       },
     ];
-
+    logger.info(`Service: Retrieving Data from Google Analytics for User Visit data By Reply Input`)
     let rawReport = await this._getRawReport(
       startDate,
       endDate,
@@ -451,8 +455,10 @@ class RetrieveDataService {
       filter
     );
     if (rawReport === null) {
+      logger.info(`Service: Failed Retrieving Data from Google Analytics for User Visit data By Reply Input`)
       return rawReport;
     }
+    logger.info(`Service: Retrieved Data from Google Analytics for User Visit data By Reply Input`)
     return await this._reformatLocationVisitNumberFromReply(rawReport);
   }
 
@@ -537,6 +543,7 @@ class RetrieveDataService {
         ],
       },
     ];
+    logger.info(`Service: Retrieving Data from Google Analytics for User Visit data By Location Input`)
     let rawReport = await this._getRawReport(
       startDate,
       endDate,
@@ -545,8 +552,10 @@ class RetrieveDataService {
       filter
     );
     if (rawReport === null) {
+      logger.info(`Service: Failed Retrieving Data from Google Analytics for User Visit data By Reply Input`)
       return rawReport;
     }
+    logger.info(`Service: Retrieved Data from Google Analytics for User Visit data By Reply Input`)
     return await this._reformatReplyVisitNumberFromLocation(rawReport);
   }
 
@@ -621,7 +630,7 @@ class RetrieveDataService {
         name: "ga:city",
       },
     ];
-
+    logger.info(`Service: Retrieving Data from Google Analytics for User Visit data By Reply Input and Location Input`)
     let rawReport = await this._getRawReport(
       startDate,
       endDate,
@@ -630,8 +639,10 @@ class RetrieveDataService {
       filter
     );
     if (rawReport === null) {
+      logger.info(`Service: Failed Retrieving Data from Google Analytics for User Visit data By Reply Input`)
       return rawReport;
     }
+    logger.info(`Service: Retrieved Data from Google Analytics for User Visit data By Reply Input`)
     return await this._reformatVisitNumberFromLocationAndReply(rawReport);
   }
 
@@ -675,6 +686,7 @@ class RetrieveDataService {
         name: "ga:city",
       },
     ];
+    logger.info(`Service: Retrieving Data from Google Analytics for Average Stay Time data By Location Input`)
     let rawReport = await this._getRawReport(
       startDate,
       endDate,
@@ -682,8 +694,10 @@ class RetrieveDataService {
       dimensions
     );
     if (rawReport === null) {
+      logger.info(`Service: Failed Retrieving Data from Google Analytics for Average Stay Time data By Location Input`)
       return rawReport;
     }
+    logger.info(`Service: Retrieved Data from Google Analytics for Average Stay Time data By Location Input`)
     return await this._reformatAverageStayTimeFromLocation(rawReport);
   }
 
@@ -731,6 +745,7 @@ class RetrieveDataService {
         name: "ga:eventLabel",
       },
     ];
+    logger.info(`Service: Retrieving Data from Google Analytics for Average Stay Time data By Reply Input`)
     let rawReport = await this._getRawReport(
       startDate,
       endDate,
@@ -738,8 +753,10 @@ class RetrieveDataService {
       dimensions
     );
     if (rawReport === null) {
+      logger.info(`Service: Failed Retrieving Data from Google Analytics for Average Stay Time data By Reply Input`)
       return rawReport;
     }
+    logger.info(`Service: Retrieved Data from Google Analytics for Average Stay Time data By Reply Input`)
     return await this._reformatAverageStayTimeFromReply(rawReport);
   }
 
@@ -784,6 +801,7 @@ class RetrieveDataService {
         name: "ga:deviceCategory",
       },
     ];
+    logger.info(`Service: Retrieving Data from Google Analytics for General Platform usage data`)
     let rawReport = await this._getRawReport(
       startDate,
       endDate,
@@ -791,8 +809,10 @@ class RetrieveDataService {
       dimensions
     );
     if (rawReport === null) {
+      logger.info(`Service: Failed Retrieving Data from Google Analytics for General Platform usage data`)
       return rawReport;
     }
+    logger.info(`Service: Retrieved Data from Google Analytics for General Platform usage data`)
     return await this._reformatgetPlatformGeneral(rawReport);
   }
 
@@ -834,6 +854,7 @@ class RetrieveDataService {
         name: "ga:city",
       },
     ];
+    logger.info(`Service: Retrieving Data from Google Analytics for Platform usage data by Location Input`)
     let rawReport = await this._getRawReport(
       startDate,
       endDate,
@@ -841,8 +862,10 @@ class RetrieveDataService {
       dimensions
     );
     if (rawReport === null) {
+      logger.info(`Service: Failed Retrieving Data from Google Analytics for Platform usage data by Location Input`)
       return rawReport;
     }
+    logger.info(`Service: Retrieved Data from Google Analytics for Platform usage data by Location Input`)
     return await this._reformatgetPlatformFromLocation(rawReport);
   }
 
@@ -883,6 +906,7 @@ class RetrieveDataService {
         name: "ga:eventLabel",
       },
     ];
+    logger.info(`Service: Retrieving Data from Google Analytics for Platform usage data by Reply Input`)
     let rawReport = await this._getRawReport(
       startDate,
       endDate,
@@ -890,8 +914,10 @@ class RetrieveDataService {
       dimensions
     );
     if (rawReport === null) {
+      logger.info(`Service: Failed Retrieving Data from Google Analytics for Platform usage data by Reply Input`)
       return rawReport;
     }
+    logger.info(`Service: Retrieved Data from Google Analytics for Platform usage data by Reply Input`)
     return await this._reformatgetPlatformFromReply(rawReport);
   }
 

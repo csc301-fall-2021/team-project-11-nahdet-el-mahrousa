@@ -1,7 +1,7 @@
 // var logger = require('logger').createLogger()
 const { ReasonPhrases, StatusCodes } = require('http-status-codes')
 const { respond, response } = require('../../utils/response')
-const logger = { log: console.log }
+const logger = require('../../logger')
 
 class BotService {
     /**
@@ -28,11 +28,13 @@ class BotService {
      * @returns A message object.
      */
     async getMessage(mid) {
+        logger.info(`Service: Getting Message with ${mid}`)
         const msg = await this.messageDao.get(mid)
         if (!msg) {
-            logger.log(`Message [${mid}] doesn't exist`)
+            logger.info(`Service: Message [${mid}] doesn't exist`)
             return msg
         }
+        logger.info(`Service: Got Message with ${mid}`)
         return msg
     }
 
@@ -42,11 +44,13 @@ class BotService {
      * @returns A reply object.
      */
     async getReply(rid) {
+        logger.info(`Service: Getting Reply with ${rid}`)
         const rpl = await this.replyDao.get(rid)
         if (!rpl) {
-            logger.log(`Reply [${rid}] doesn't exist`)
+            logger.info(`Service: Reply [${rid}] doesn't exist`)
             return rpl
         }
+        logger.info(`Service: Got Reply with ${rid}`)
         return rpl
     }
 
@@ -56,8 +60,9 @@ class BotService {
      * @returns A list of reply object.
      */
     async getRepliesByMessage(mid) {
-        logger.log(`Get replies by message ${mid}`)
+        logger.info(`Service: Getting replies by message ${mid}`)
         const replies = await this.replyDao.search({ fromMessage: String(mid) })
+        logger.info(`Service: Got replies by message ${mid}`)
         return replies
     }
 
@@ -67,16 +72,19 @@ class BotService {
      * @returns A message object.
      */
     async getNextMessage(rid) {
-        logger.log(`Get next message by reply ${rid}`)
+        logger.info(`Service: Getting Next Message by Reply ${rid}`)
         const rpl = await this.getReply(rid)
         if (!rpl) {
+            logger.info(`Service: Reply ${rid} doesn't exist`)
             return undefined
         }
         if (!("toMessage" in rpl) || !rpl.toMessage) {
+            logger.info(`Service: Message following Reply ${rid} doesn't exist`)
             return null
         }
 
         const nextMessage = await this.getMessage(rpl.toMessage)
+        logger.info(`Service: Got Next Message by Reply ${rid}`)
         return nextMessage
     }
 
@@ -86,21 +94,25 @@ class BotService {
      * @returns An integer repersent the next message's id.
      */
     async getNextMessageId(rid) {
+        logger.info(`Service: Getting Next Message Id by Reply ${rid}`)
         const rpl = await this.getReply(rid)
         if (!rpl) {
+            logger.info(`Service: Reply ${rid} doesn't exist`)
             return undefined
         }
-
+        logger.info(`Service: Got Next Message Id by Reply ${rid}`)
         return rpl.toMessage
     }
 
     async getInitMessage() {
+        logger.info(`Service: Getting Initial Message`)
         const rpl = await this.messageDao.search({ label: "__init__" })
-        if (!rpl) {
-            logger.log("Error: can't find initial message")
+        if (rpl.length === 0) {
+            logger.info("Service: Can't find initial message")
             return null
         }
-
+        logger.info(`Service: Got Initial Message`)
+        console.log(rpl[0])
         return rpl[0]
     }
 
@@ -117,11 +129,14 @@ class BotService {
      * @returns Response of Messages that satisfy the constraints.
      */
     async getMessages(user, query) {
+        logger.info(`Service: Getting Messages with contraints ${query}`)
         if (!user.privilege.accessBot) {
+            logger.info(`Service: User [${user.username}] does not have priviledge to access bot`)
             return null
         }
 
         const messages = await this.messageDao.search(query)
+        logger.info(`Service: Got Messages with constraints ${query}`)
         return messages
     }
 
@@ -130,7 +145,9 @@ class BotService {
      * @returns Response of all Replies.
      */
     async getReplies() {
+        logger.info(`Service: Getting All Replies`)
         const replies = await this.replyDao.getAll()
+        logger.info(`Service: Got All Replies`)
         return replies
     }
 
@@ -144,16 +161,17 @@ class BotService {
     async createMessage(user, content, label) {
         // Validate modifier's privilege
         if (!user.privilege.modifyBot) {
+            logger.info(`Service: User [${user.username}] does not have priviledge to modify bot`)
             return null
         }
-
+        logger.info(`Service: Creating Message`)
         const newMessage = await this.messageDao.create({ content, label })
 
         if (newMessage !== null) {
-            logger.log(`[${user.username}] CREATED Message ${newMessage._id} \'${label}\'`)
+            logger.info(`Service: User [${user.username}] Created Message ${newMessage._id} \'${label}\'`)
             return newMessage
         } else {
-            logger.log(`[${user.username}] FAILED CREATE Message \'${label}\'`)
+            logger.info(`Service: User [${user.username}] Failed Create Message \'${label}\'`)
             return newMessage
         }
     }
@@ -170,16 +188,17 @@ class BotService {
     async createReply(user, content, label, fromMessage, toMessage) {
         // Validate modifier's privilege
         if (!user.privilege.modifyBot) {
+            logger.info(`Service: User [${user.username}] does not have priviledge to modify bot`)
             return null
         }
-
+        logger.info(`Service: Creating Reply`)
         const newReply = await this.replyDao.create({ content, label, fromMessage, toMessage })
 
         if (newReply !== null) {
-            logger.log(`[${user.username}] CREATED Reply \'${newReply._id}\'`)
+            logger.info(`User: [${user.username}] Created Reply \'${newReply._id}\'`)
             return newReply
         } else {
-            logger.log(`[${user.username}] FAILED CREATE Reply \'${label}\'`)
+            logger.info(`User: [${user.username}] Failed Create Reply \'${label}\'`)
             return undefined
         }
     }
@@ -193,16 +212,17 @@ class BotService {
     async deleteMessage(user, mid) {
         // Validate modifier's privilege
         if (!user.privilege.modifyBot) {
+            logger.info(`Service: User [${user.username}] does not have priviledge to modify bot`)
             return null
         }
-
+        logger.info(`Service: Deleting Message`)
         const delMessage = await this.messageDao.delete(mid)
 
         if (delMessage !== null) {
-            logger.log(`[${user.username}] DELETED Message \'${mid}\'`)
+            logger.info(`Service: User [${user.username}] Deleted Message \'${mid}\'`)
             return delMessage
         } else {
-            logger.log(`[${user.username}] FAILED DELETE Message \'${mid}\'`)
+            logger.info(`Service: User [${user.username}] Failed Delete Message \'${mid}\'`)
             return undefined
         }
     }
@@ -216,16 +236,17 @@ class BotService {
     async deleteReply(user, rid) {
         // Validate modifier's privilege
         if (!user.privilege.modifyBot) {
+            logger.info(`Service: User [${user.username}] does not have priviledge to modify bot`)
             return null
         }
-
+        logger.info(`Service: Deleting Reply`)
         const delReply = await this.replyDao.delete(rid)
 
         if (delReply !== null) {
-            logger.log(`[${user.username}] DELETED Reply \'${rid}\'`)
+            logger.info(`Service: User [${user.username}] DELETED Reply \'${rid}\'`)
             return delReply
         } else {
-            logger.log(`[${user.username}] FAILED DELETE Reply \'${rid}\'`)
+            logger.info(`Service: User [${user.username}] FAILED DELETE Reply \'${rid}\'`)
             return undefined
         }
     }
@@ -240,16 +261,17 @@ class BotService {
     async updateMessage(user, mid, data) {
         // Validate modifier's privilege
         if (!user.privilege.modifyBot) {
+            logger.info(`Service: User [${user.username}] does not have priviledge to modify bot`)
             return null
         }
-
+        logger.info(`Service: Updating Message`)
         const newMessage = await this.messageDao.update(mid, data)
 
         if (newMessage !== null) {
-            logger.log(`[${user.username}] UPDATED Message \'${mid}\'`)
+            logger.info(`Service: User [${user.username}] Updated Message \'${mid}\'`)
             return newMessage
         } else {
-            logger.log(`[${user.username}] FAILED UPDATED Message \'${mid}\'`)
+            logger.info(`Service: User [${user.username}] Failed Updating Message \'${mid}\'`)
             return undefined
         }
     }
@@ -264,16 +286,17 @@ class BotService {
     async updateReply(user, rid, data) {
         // Validate modifier's privilege
         if (!user.privilege.modifyBot) {
+            logger.info(`Service: User [${user.username}] does not have priviledge to modify bot`)
             return null
         }
-
+        logger.info(`Service: Updating Reply`)
         const newReply = await this.replyDao.update(rid, data)
 
         if (newReply !== null) {
-            logger.log(`[${user.username}] UPDATED Reply \'${rid}\'`)
+            logger.info(`Service: User [${user.username}] UPDATED Reply \'${rid}\'`)
             return newReply
         } else {
-            logger.log(`[${user.username}] FAILED UPDATE Reply \'${rid}\'`)
+            logger.info(`Service: User [${user.username}] FAILED UPDATE Reply \'${rid}\'`)
             return undefined
         }
     }
@@ -309,9 +332,10 @@ class BotService {
      */
     async getBot(user, messageQuery, replyQuery) {
         if (!user.privilege.accessBot) {
+            logger.info(`Service: User [${user.username}] does not have priviledge to access bot`)
             return null
         }
-
+        logger.info(`Service: Getting Bot with message query ${messageQuery} and reply query ${replyQuery}`)
         let messages = await this.messageDao.search(messageQuery)
         let addOnReplies = await this.replyDao.search(replyQuery)
 
@@ -343,6 +367,7 @@ class BotService {
 
         const allReplies = await this.replyDao.getAll()
         const bot = this._buildBotList({ messages, replies: allReplies })
+        logger.info(`Service: Got Bot with message query ${messageQuery} and reply query ${replyQuery}`)
         return bot
     }
 
@@ -425,12 +450,14 @@ class BotService {
      */
     async getWorkflow(user, query) {
         if (!user.privilege.accessBot) {
+            logger.info(`Service: User [${user.username}] does not have priviledge to access bot`)
             return null
         }
-
+        logger.info(`Service: Getting Workflow`)
         const messages = await this.messageDao.search(query)
         const replies = await this.replyDao.search()
         const workflow = this._buildWorkFlow({ messages, replies })
+        logger.info(`Service: Got Workflow`)
         return workflow
     }
 

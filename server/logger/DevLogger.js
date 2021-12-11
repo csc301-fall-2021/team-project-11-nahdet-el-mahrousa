@@ -6,20 +6,24 @@ class DevLogger{
         this.db = uri
     }
 
+    _getDateName(){
+        let today = new Date()
+        let folder = "log/DevLog/"
+        return folder + today.getFullYear() + "." + (today.getMonth()+1) + "." + (today.getDate())
+    }
+
     buildLogger(){
         return createLogger({
             transports: [
-                new transports.MongoDB({
-                    db:process.env.DATABASE_URI,
-                    collection: "log",
+                new transports.File({
+                    filename: this._getDateName(),
                     level: "info",
                     format: format.combine(
                         format.timestamp(), 
                         format.json(),
                         format.errors({ stack: true })),        
-        
-                    options: {useUnifiedTopology: true},
                     defaultMeta: { servce: 'user-service'}
+
                 })
             ]
         })
