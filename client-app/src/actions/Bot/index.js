@@ -41,7 +41,7 @@ export async function initChat(msgQueue) {
         }, () => msgQueue.scrollToMyRef());
     } catch (error) {
         const err = `${String(error)}. Please contact the staff.`
-        console.log(err);
+        console.error(err);
         newQueue.push({
             message: {
                 content: err
@@ -86,7 +86,7 @@ export async function makeReply(msgQueue, reply) {
         localStorage.setItem("chatTime", (new Date()).getDate());
     } catch (error) {
         const err = `${String(error)}. Please contact the staff.`
-        console.log(err);
+        console.error(err);
         newQueue.push({
             message: {
                 content: err

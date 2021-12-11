@@ -7,6 +7,7 @@ const ReplySchema = {
     content: String,
     fromMessage: String,
     toMessage: String,
+    convertedId: String
 }
 
 module.exports = ReplySchema;
