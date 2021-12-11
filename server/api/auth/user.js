@@ -10,10 +10,10 @@ router.get("/", authenticationToken, async (req, res) => {
     res.status(response.statusCode).send(response)
 })
 
-router.post("/initial", async (req, res) => {
-    let response = await authController.createUser(req, "initial")
-    res.status(response.statusCode).send(response)
-})
+// router.post("/initial", async (req, res) => {
+//     let response = await authController.createUser(req, "initial")
+//     res.status(response.statusCode).send(response)
+// })
 
 
 router.post("/", authenticationToken, async (req, res) => {

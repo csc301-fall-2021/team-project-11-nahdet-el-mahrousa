@@ -5,7 +5,6 @@ import {
 
 async function loginAdmin({ username, password }) {
     try {
-        console.log({ username, password })
         const response = await authLogin({ username, password });
         if (response.statusCode === 200) {
             // Login successfully
@@ -19,7 +18,7 @@ async function loginAdmin({ username, password }) {
             throw new Error(response.msg)
         }
     } catch (error) {
-        console.log(error)
+        console.error(error)
         throw error
     }
 }

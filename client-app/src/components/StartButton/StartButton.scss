@@ -11,8 +11,8 @@
 
     padding-top: 1rem;
     padding-bottom: 1rem;
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
     margin: 5px;
     margin-bottom: 3rem;
 
@@ -31,5 +31,17 @@
 
     &:active {
         background-color: #439d7dff;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .start-btn {
+        padding-top: 0.7rem;
+        padding-bottom: 0.7rem;
+        padding-left: 0.7rem;
+        padding-right: 0.7rem;
+        margin-bottom: 2rem;
+
+        font-size: small;
     }
 }

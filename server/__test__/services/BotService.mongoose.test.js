@@ -51,7 +51,7 @@ describe("BotService.Mongoose Integrated Test", () => {
         test("create: msg[0]", async () => {
             const baseMessage = testMessages[0]
 
-            const newMessage = await botService.createMessage(admin, baseMessage.content, baseMessage.label)
+            const newMessage = await botService.createMessage(baseMessage.content, baseMessage.label)
             expect(newMessage.content).toEqual(baseMessage.content)
             expect(newMessage.label).toEqual(baseMessage.label)
             createdMessages.push(newMessage)
@@ -63,7 +63,7 @@ describe("BotService.Mongoose Integrated Test", () => {
             const baseMessage = testMessages[1]
             const targetMessage = createdMessages[0]
 
-            const newMessage = await botService.updateMessage(admin, targetMessage._id, { content: baseMessage.content })
+            const newMessage = await botService.updateMessage(targetMessage._id, { content: baseMessage.content })
             expect(newMessage.content).toEqual(baseMessage.content)
             expect(newMessage.label).toEqual(targetMessage.label)
             // Update createdMessage
@@ -77,7 +77,7 @@ describe("BotService.Mongoose Integrated Test", () => {
         test("create: msg[1]", async () => {
             const baseMessage = testMessages[1]
 
-            const newMessage = await botService.createMessage(admin, baseMessage.content, baseMessage.label)
+            const newMessage = await botService.createMessage(baseMessage.content, baseMessage.label)
             expect(newMessage.content).toEqual(baseMessage.content)
             expect(newMessage.label).toEqual(baseMessage.label)
             createdMessages.push(newMessage)
@@ -92,7 +92,7 @@ describe("BotService.Mongoose Integrated Test", () => {
         test("delete: msg[0]", async () => {
             const baseMessage = createdMessages[0]
 
-            const newMessage = await botService.deleteMessage(admin, baseMessage._id)
+            const newMessage = await botService.deleteMessage(baseMessage._id)
             expect(newMessage.content).toEqual(baseMessage.content)
             expect(newMessage.label).toEqual(baseMessage.label)
             createdMessages.shift()

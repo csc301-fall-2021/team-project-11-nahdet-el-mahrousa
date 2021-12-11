@@ -20,7 +20,7 @@ jobs:
         run:
           working-directory: ./client-admin
     
-    timeout-minutes: 3
+    timeout-minutes: 4
     
     strategy:
       matrix:
@@ -38,12 +38,9 @@ jobs:
         
     - name: INSTALL PROJECT DEPENDENCIES (NPM CI)
       run: npm ci
-
-    - name: BUILD ENV VARIABLES TO ./.env
-      run: echo $'${{ secrets.ADMIN_ENV_PROD}}' > ./.env
       
-    # - name: SETUP ENV VARS
-    #   run: NODE_ENV='development'
+    - name: SETUP ENV VARS
+      run: NODE_ENV='production'
       
     - name: RUN BUILD
       run: npm run build --if-present
@@ -58,17 +55,11 @@ jobs:
         run:
           working-directory: ./client-admin
 
-    timeout-minutes: 3
+    timeout-minutes: 5
 
     steps:
       - name: CHECK-OUT GIT REPOSITORY
         uses: actions/checkout@v2
-
-      - name: BUILD ENV VARIABLES TO .env
-        run: echo $'${{ secrets.ADMIN_ENV_PROD}}' > .env
-
-      - name: CHECK ENV VARIABLES IN .env
-        run: cat .env
 
       - name: HEROKU DEPLOY
         uses: akhileshns/heroku-deploy@v3.12.12
@@ -77,4 +68,4 @@ jobs:
           heroku_app_name: ${{secrets.HEROKU_PROD_ADMIN_APP_NAME}}
           heroku_email: ${{secrets.HEROKU_PROD_SERVER_EMAIL}}
           appdir: "./client-admin"
-          env_file: ".env"
+          env_file: ".env.production"

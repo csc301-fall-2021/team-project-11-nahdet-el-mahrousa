@@ -15,7 +15,7 @@ async function requestGetAdminAccounts(body) {
             throw new Error(response.msg)
         }
     } catch (err) {
-        console.log(err)
+        console.error(err)
         throw err
     }
 }
@@ -33,7 +33,7 @@ async function requestCreateAdminAccount(body) {
             throw new Error(response.msg)
         }
     } catch (err) {
-        console.log(err)
+        console.error(err)
         throw err
     }
 }
@@ -56,7 +56,7 @@ async function requestDeleteAdminAccount(body) {
             throw new Error(response.msg)
         }
     } catch (err) {
-        console.log(err)
+        console.error(err)
         throw err
     }
 }

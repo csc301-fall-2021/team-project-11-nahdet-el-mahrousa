@@ -57,7 +57,6 @@ export function sendReplyToBackend(
 // send revised/new message to backend to verify
 export function sendMessageToBackend(_id, content, label) {
   label = label ? label : "";
-  console.log(_id);
   if (!_id) {
     // create a new message if no id
     return createMessage({ content, label }, dispatchMessage);

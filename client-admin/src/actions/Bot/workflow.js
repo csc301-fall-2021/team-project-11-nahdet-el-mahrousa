@@ -55,7 +55,7 @@ async function requestGetBotWorkflow(body) {
             throw new Error(response.msg)
         }
     } catch (err) {
-        console.log(err)
+        console.error(err)
         throw err
     }
 }
